@@ -8,6 +8,35 @@ const merge = require('lodash.merge');
 const UserType = require('../../models/User/UserType');
 const User = require('../../models/User/User');
 
+const createUser = {
+  type: UserType,
+  description: 'The mutation that allows you to create a new User',
+  args: {
+    name: {
+      name: 'name',
+      type: GraphQLString,
+    },
+    email: {
+      name: 'email',
+      type: new GraphQLNonNull(GraphQLString),
+    },
+  },
+  resolve: async (user, { name, email }) => {
+    const foundUser = await User.findBy(email);
+
+    if (foundUser) {
+      throw new Error('User exists with the same email');
+    }
+
+    const createUser = {
+      name,
+      email,
+    };
+
+    return foundUser.create(createUser);
+  },
+};
+
 const updateUser = {
   type: UserType,
   description: 'The mutation that allows you to update an existing User by Id',
@@ -16,8 +45,8 @@ const updateUser = {
       name: 'id',
       type: new GraphQLNonNull(GraphQLInt),
     },
-    username: {
-      name: 'username',
+    name: {
+      name: 'name',
       type: GraphQLString,
     },
     email: {
@@ -25,7 +54,7 @@ const updateUser = {
       type: GraphQLString,
     },
   },
-  resolve: async (user, { id, username, email }) => {
+  resolve: async (user, { id, name, email }) => {
     const foundUser = await User.findById(id);
 
     if (!foundUser) {
@@ -33,7 +62,7 @@ const updateUser = {
     }
 
     const updatedUser = merge(foundUser, {
-      username,
+      name,
       email,
     });
 
@@ -60,6 +89,7 @@ const deleteUser = {
 };
 
 module.exports = {
+  createUser,
   updateUser,
   deleteUser,
 };

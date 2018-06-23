@@ -1,14 +1,15 @@
 const {
   GraphQLInt,
   GraphQLString,
+  GraphQLFloat,
   GraphQLList,
 } = require('graphql');
 
-const RestaurantType = require('../../models/Restaurant/RestaurantType');
-const Restaurant = require('../../models/Restaurant/Restaurant');
+const ProductType = require('../../models/Product/ProductType');
+const Product = require('../../models/Product/Product');
 
-const restaurantQuery = {
-  type: new GraphQLList(RestaurantType),
+const productQuery = {
+  type: new GraphQLList(ProductType),
   args: {
     id: {
       name: 'id',
@@ -22,13 +23,9 @@ const restaurantQuery = {
       name: 'description',
       type: GraphQLString,
     },
-    latitude: {
-      name: 'latitude',
-      type: GraphQLString,
-    },
-    longitude: {
-      name: 'longitude',
-      type: GraphQLString,
+    price: {
+      name: 'price',
+      type: GraphQLFloat,
     },
     createdAt: {
       name: 'createdAt',
@@ -39,7 +36,7 @@ const restaurantQuery = {
       type: GraphQLString,
     },
   },
-  resolve: (restaurant, args) => Restaurant.findAll({ where: args }),
+  resolve: (product, args) => Product.findAll({ where: args }),
 };
 
-module.exports = restaurantQuery;
+module.exports = productQuery;

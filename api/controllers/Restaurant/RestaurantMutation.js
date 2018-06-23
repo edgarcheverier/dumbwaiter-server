@@ -8,6 +8,44 @@ const merge = require('lodash.merge');
 const RestaurantType = require('../../models/Restaurant/RestaurantType');
 const Restaurant = require('../../models/Restaurant/Restaurant');
 
+const createRestaurant = {
+  type: RestaurantType,
+  description: 'The mutation that allows you to create a new restaurant',
+  args: {
+    name: {
+      name: 'name',
+      type: GraphQLString,
+    },
+    description: {
+      name: 'description',
+      type: GraphQLString,
+    },
+    latitude: {
+      name: 'latitude',
+      type: GraphQLString,
+    },
+    longitude: {
+      name: 'longitude',
+      type: GraphQLString,
+    },
+  },
+  resolve: async (restaurant, { name, description, latitude, longitude }) => {
+    const foundRestaurant = await Restaurant.findBy(name);
+
+    if (foundRestaurant) {
+      throw new Error('Restaurant already exists with the same name');
+    }
+
+    const createRestaurant = {
+      name,
+      description,
+      latitude,
+      longitude,
+    };
+
+    return foundRestaurant.create(createRestaurant);
+  },
+}
 const updateRestaurant = {
   type: RestaurantType,
   description: 'The mutation that allows you to update an existing Restaurant by Id',
@@ -20,8 +58,20 @@ const updateRestaurant = {
       name: 'name',
       type: GraphQLString,
     },
+    description: {
+      name: 'description',
+      type: GraphQLString,
+    },
+    latitude: {
+      name: 'latitude',
+      type: GraphQLString,
+    },
+    longitude: {
+      name: 'longitude',
+      type: GraphQLString,
+    },
   },
-  resolve: async (user, { id, username, email }) => {
+  resolve: async (restaurant, { id, name, description, latitude, longitude }) => {
     const foundRestaurant = await Restaurant.findById(id);
 
     if (!foundRestaurant) {
@@ -29,8 +79,10 @@ const updateRestaurant = {
     }
 
     const updatedRestaurant = merge(foundRestaurant, {
-      username,
-      email,
+      name,
+      description,
+      latitude,
+      longitude,
     });
 
     return foundRestaurant.update(updatedRestaurant);
@@ -46,7 +98,7 @@ const deleteRestaurant = {
       type: new GraphQLNonNull(GraphQLInt),
     },
   },
-  resolve: (user, { id }) => (
+  resolve: (restaurant, { id }) => (
     Restaurant
       .delete()
       .where({
@@ -56,6 +108,7 @@ const deleteRestaurant = {
 };
 
 module.exports = {
+  createRestaurant,
   updateRestaurant,
   deleteRestaurant,
 };
