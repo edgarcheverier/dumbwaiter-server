@@ -2,12 +2,15 @@ const {
   GraphQLObjectType,
   GraphQLInt,
   GraphQLString,
+  GraphQLFloat,
 } = require('graphql');
+
+const CategoryType = require('../Category/CategoryType');
 
 
 const ProductType = new GraphQLObjectType({
   name: 'Product',
-  description: 'TThis represents to product inventory for the restaurant',
+  description: 'This represents to product inventory for the restaurant',
   fields: () => ({
     id: {
       type: GraphQLInt,
@@ -20,6 +23,11 @@ const ProductType = new GraphQLObjectType({
     description: {
       type: GraphQLString,
       resolve: (product) => product.description,
+
+    },
+    category: {
+      type: new GraphQLList(CategoryType),
+      resolve: (product) => product.getCategories(),
     },
     price: {
       type: GraphQLFloat,
