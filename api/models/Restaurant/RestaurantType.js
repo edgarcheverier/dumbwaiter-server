@@ -13,7 +13,7 @@ const RestaurantType = new GraphQLObjectType({
       resolve: (restaurant) => restaurant.id,
     },
     name: {
-      type: GraphQLInt,
+      type: GraphQLString,
       resolve: (restaurant) => restaurant.name,
     }
   }),
