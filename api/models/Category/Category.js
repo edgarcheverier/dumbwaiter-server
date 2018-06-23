@@ -5,6 +5,9 @@ const sequelize = require('../../../config/database');
 
 const tableName = 'categories';
 
+const Product = require('../Product/Product');
+
+
 
 const Category = sequelize.define('Category', {
 name: {
@@ -12,5 +15,8 @@ name: {
 }
 
 }, {tableName});
+
+Category.hasMany(Product, {through: 'ProductCategory'})
+
 
 module.exports = Category;
