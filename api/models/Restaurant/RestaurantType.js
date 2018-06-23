@@ -15,6 +15,14 @@ const RestaurantType = new GraphQLObjectType({
     name: {
       type: GraphQLString,
       resolve: (restaurant) => restaurant.name,
+    },
+    longitude: {
+      type: GraphQLString,
+      resolve: (restaurant) => restaurant.longitude,
+    },
+    latitude: {
+      type: GraphQLString,
+      resolve: (restaurant) => restaurant.latitude,
     }
   }),
 });
