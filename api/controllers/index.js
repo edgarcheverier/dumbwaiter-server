@@ -14,6 +14,12 @@ const {
   updateNote,
   deleteNote,
 } = require('./Note/NoteMutation');
+const restaurantQuery = require('./Restaurant/RestaurantQuery');
+const {
+  createRestaurant,
+  updateRestaurant,
+  deleteRestaurant,
+} = require('./Restaurant/RestaurantMutation');
 
 const RootQuery = new GraphQLObjectType({
   name: 'rootQuery',
