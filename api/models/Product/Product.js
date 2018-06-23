@@ -14,7 +14,7 @@ description: {
   type: Sequelize.TEXT,
 },
 price: {
-  type: Sequelize.STRING,
+  type: Sequelize.FLOAT,
 }
 
 }, {tableName});

@@ -22,7 +22,7 @@ const ProductType = new GraphQLObjectType({
       resolve: (product) => product.description,
     },
     price: {
-      type: GraphQLString,
+      type: GraphQLFloat,
       resolve: (product) => product.price,
     }
   }),
