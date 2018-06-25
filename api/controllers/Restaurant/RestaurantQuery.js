@@ -14,7 +14,7 @@ const restaurantQuery = {
       name: 'id',
       type: GraphQLInt,
     },
-    name: {
+    restaurantname: {
       name: 'name',
       type: GraphQLString,
     },

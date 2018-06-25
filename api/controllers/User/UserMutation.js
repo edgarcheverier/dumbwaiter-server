@@ -12,7 +12,7 @@ const createUser = {
   type: UserType,
   description: 'The mutation that allows you to create a new User',
   args: {
-    name: {
+    username: {
       name: 'name',
       type: GraphQLString,
     },
@@ -22,7 +22,7 @@ const createUser = {
     },
   },
   resolve: async (user, { name, email }) => {
-    const foundUser = await User.findBy(email);
+    const foundUser = await User.findOne({email});
 
     if (foundUser) {
       throw new Error('User exists with the same email');
@@ -33,7 +33,7 @@ const createUser = {
       email,
     };
 
-    return foundUser.create(createUser);
+    return User.create(createUser);
   },
 };
 

@@ -35,7 +35,7 @@ const createProduct = {
     },
   },
   resolve: async (product, { name, description, price }) => {
-    const foundProduct = await Product.findBy(name);
+    const foundProduct = await Product.findOne({name});
 
     if (foundProduct) {
       throw new Error('Product already exists with the same name');
@@ -47,7 +47,7 @@ const createProduct = {
       price,
     };
 
-    return foundProduct.create(createProduct);
+    return Product.create(createProduct);
   },
 }
 const updateProduct = {
@@ -66,16 +66,12 @@ const updateProduct = {
       name: 'description',
       type: GraphQLString,
     },
-    latitude: {
-      name: 'latitude',
-      type: GraphQLString,
-    },
-    longitude: {
-      name: 'longitude',
-      type: GraphQLString,
-    },
+    price: {
+      name: 'price',
+      type: GraphQLFloat,
+    }
   },
-  resolve: async (product, { id, name, description }) => {
+  resolve: async (product, { id, name, description, price }) => {
     const foundProduct = await Product.findById(id);
 
     if (!foundProduct) {
@@ -85,8 +81,7 @@ const updateProduct = {
     const updatedProduct = merge(foundProduct, {
       name,
       description,
-      latitude,
-      longitude,
+      price,
     });
 
     return foundProduct.update(updatedProduct);

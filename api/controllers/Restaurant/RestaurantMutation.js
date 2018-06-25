@@ -12,7 +12,7 @@ const createRestaurant = {
   type: RestaurantType,
   description: 'The mutation that allows you to create a new restaurant',
   args: {
-    name: {
+    restaurantname: {
       name: 'name',
       type: GraphQLString,
     },
@@ -30,7 +30,7 @@ const createRestaurant = {
     },
   },
   resolve: async (restaurant, { name, description, latitude, longitude }) => {
-    const foundRestaurant = await Restaurant.findBy(name);
+    const foundRestaurant = await Restaurant.findOne({name});
 
     if (foundRestaurant) {
       throw new Error('Restaurant already exists with the same name');
@@ -43,7 +43,7 @@ const createRestaurant = {
       longitude,
     };
 
-    return foundRestaurant.create(createRestaurant);
+    return Restaurant.create(createRestaurant);
   },
 }
 const updateRestaurant = {
@@ -54,7 +54,7 @@ const updateRestaurant = {
       name: 'id',
       type: new GraphQLNonNull(GraphQLInt),
     },
-    name: {
+    restaurantname: {
       name: 'name',
       type: GraphQLString,
     },

@@ -15,7 +15,7 @@ const productQuery = {
       name: 'id',
       type: GraphQLInt,
     },
-    name: {
+    productname: {
       name: 'name',
       type: GraphQLString,
     },

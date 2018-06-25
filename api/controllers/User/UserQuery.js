@@ -11,7 +11,7 @@ const userQuery = {
   type: new GraphQLList(UserType),
   args: {
     id: {
-      name: 'id',
+      username: 'id',
       type: GraphQLInt,
     },
     username: {

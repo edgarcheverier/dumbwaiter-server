@@ -6,7 +6,7 @@ const {
 
 
 const CategoryType = new GraphQLObjectType({
-  name: ' Category',
+  name: 'Category',
   description: 'This groups the various inventory items into subgroups',
   fields: () => ({
     id: {

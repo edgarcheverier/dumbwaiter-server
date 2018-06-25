@@ -2,8 +2,8 @@ const {
   GraphQLObjectType,
   GraphQLInt,
   GraphQLFloat,
+  GraphQLList,
   GraphQLString,
-  GraphQLFloat,
 } = require('graphql');
 
 const CategoryType = require('../Category/CategoryType');
@@ -24,7 +24,6 @@ const ProductType = new GraphQLObjectType({
     description: {
       type: GraphQLString,
       resolve: (product) => product.description,
-
     },
     category: {
       type: new GraphQLList(CategoryType),
