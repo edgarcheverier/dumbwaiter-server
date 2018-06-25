@@ -12,7 +12,7 @@ const createUser = {
   type: UserType,
   description: 'The mutation that allows you to create a new User',
   args: {
-    username: {
+    name: {
       name: 'name',
       type: GraphQLString,
     },

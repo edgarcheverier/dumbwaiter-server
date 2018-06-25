@@ -12,7 +12,7 @@ const createRestaurant = {
   type: RestaurantType,
   description: 'The mutation that allows you to create a new restaurant',
   args: {
-    restaurantname: {
+    name: {
       name: 'name',
       type: GraphQLString,
     },
