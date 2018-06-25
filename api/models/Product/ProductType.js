@@ -8,7 +8,6 @@ const {
 
 const CategoryType = require('../Category/CategoryType');
 
-
 const ProductType = new GraphQLObjectType({
   name: 'Product',
   description: 'This represents to product inventory for the restaurant',

@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 
 const sequelize = require('../../../config/database');
+const Table = require('../Table/table');
 
 const tableName = 'restaurants';
 
@@ -19,4 +20,5 @@ const Restaurant = sequelize.define('Restaurant', {
   },
 }, { tableName });
 
+Restaurant.hasMany(Table, { as: 'tables', foreignKey: 'restaurantId' });
 module.exports = Restaurant;
