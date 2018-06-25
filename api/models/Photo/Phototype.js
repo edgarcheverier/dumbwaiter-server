@@ -17,6 +17,10 @@ const PhotoType = new GraphQLObjectType({
       type: GraphQLString,
       resolve: (photo) => photo.text,
     },
+    externalId: {
+      type: GraphQLInt,
+      resolve: (photo) => photo.externalId,
+    },
 
   }),
 });

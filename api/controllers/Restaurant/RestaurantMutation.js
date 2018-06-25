@@ -78,12 +78,12 @@ const updateRestaurant = {
       throw new Error('Restaurant not found');
     }
 
-    const updatedRestaurant = merge(foundRestaurant, {
+    const updatedRestaurant = {
       name,
       description,
       latitude,
       longitude,
-    });
+    };
 
     return foundRestaurant.update(updatedRestaurant);
   },

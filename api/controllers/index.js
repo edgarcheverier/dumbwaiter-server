@@ -3,24 +3,38 @@ const {
   GraphQLObjectType,
 } = require('graphql');
 
+
+//User querys and mutations
 const userQuery = require('./User/UserQuery');
 const {
   createUser,
   updateUser,
   deleteUser,
 } = require('./User/UserMutation');
+
+//Restaurant querys and mutations
 const restaurantQuery = require('./Restaurant/RestaurantQuery');
 const {
   createRestaurant,
   updateRestaurant,
   deleteRestaurant,
 } = require('./Restaurant/RestaurantMutation');
+
+//Product querys and mutations
 const productQuery = require('./Product/ProductQuery');
 const {
   createProduct,
   updateProduct,
   deleteProduct,
 } = require('./Product/ProductMutation');
+
+//Product querys and mutations
+const productOrderQuery = require('./ProductOrder/ProductOrderQuery');
+const {
+  addProductToOrder,
+  updateProductFromOrder,
+  deleteProductFromOrder,
+} = require('./ProductOrder/ProductOrderMutation');
 
 const RootQuery = new GraphQLObjectType({
   name: 'rootQuery',
@@ -29,6 +43,7 @@ const RootQuery = new GraphQLObjectType({
     restaurant: restaurantQuery,
     user: userQuery,
     product: productQuery,
+    productOrder: productOrderQuery,
   }),
 });
 
@@ -43,6 +58,10 @@ const RootMutation = new GraphQLObjectType({
     createProduct,
     updateProduct,
     deleteProduct,
+
+    addProductToOrder,
+    updateProductFromOrder,
+    deleteProductFromOrder,
 
     createRestaurant,
     updateRestaurant,

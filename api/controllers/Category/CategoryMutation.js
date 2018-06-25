@@ -52,9 +52,9 @@ const updateCategory = {
       throw new Error('Category not found');
     }
 
-    const updatedCategory = merge(foundCategory, {
+    const updatedCategory = {
       name,
-    });
+    };
 
     return foundCategory.update(updatedCategory);
   },

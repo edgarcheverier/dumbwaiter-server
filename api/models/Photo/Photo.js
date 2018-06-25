@@ -8,13 +8,14 @@ const tableName = 'photo';
 const Photo = sequelize.define('Photo', {
 url: {
   type: Sequelize.STRING
-}
+},
 type: {
   type: Sequelize.STRING
 }
+externalId: {
+  type: Sequelize.INTEGER
+}
 
 }, {tableName});
-
-
 
 module.exports = Photo;

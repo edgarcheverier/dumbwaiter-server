@@ -23,6 +23,10 @@ const User = sequelize.define('User', {
   email: {
     type: Sequelize.STRING,
   },
+  type: {
+    type: Sequelize.STRING,
+    default: 'USER', // USER | RESTAURANT_OWNER | RUNNER
+  },
 }, { hooks, tableName });
 
 // eslint-disable-next-line

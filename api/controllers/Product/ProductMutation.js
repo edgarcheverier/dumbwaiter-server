@@ -72,17 +72,17 @@ const updateProduct = {
     }
   },
   resolve: async (product, { id, name, description, price }) => {
-    const foundProduct = await Product.findById(id);
+    const foundProduct = await Product.findOne({ id });
 
     if (!foundProduct) {
       throw new Error('Product not found');
     }
 
-    const updatedProduct = merge(foundProduct, {
+    const updatedProduct = {
       name,
       description,
       price,
-    });
+    };
 
     return foundProduct.update(updatedProduct);
   },
