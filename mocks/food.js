@@ -4,42 +4,42 @@ module.exports = [
     description: "",
     price: "5.95",
     photo: "",
-    categories: ['foods', 'staters']
+    categories: ['foods', 'starters']
   },
   {
     name: "Bruschetta",
     description: "(Contains G, N, MK, E) Topped with Buffalo Mozzarella, Sun-Dried Tomato & Basil Pesto",
     price: "6.95",
     photo: "",
-    categories: ['foods', 'staters']
+    categories: ['foods', 'starters']
   },
   {
     name: "Chicken Wings",
     description: "(Contains MK, CY) Hot ‘n’ Spicy wings, celery spear, blue cheese & garlic dip",
     price: "8.95 ",
     photo: "",
-    categories: ['foods', 'staters']
+    categories: ['foods', 'starters']
   },
   {
     name: "Baby Ribs",
     description: "(Contains MK, S, SP) Slow cooked pork ribs glazed with BBQ sauce and served with chargrilled corn on the cob",
     price: "9.95",
     photo: "",
-    categories: ['foods', 'staters']
+    categories: ['foods', 'starters']
   },
   {
     name: "Feta Cheese Salad",
     description: "(Contains MK, N) Dressed leaves, Cherry tomatoes, Beetroot & Walnuts topped with Feta Cheese",
     price: "6.95",
     photo: "",
-    categories: ['foods', 'staters']
+    categories: ['foods', 'starters']
   },
   {
     name: "Prawn Pil Pil",
     description: "(Contains MK, G, C) Sauté Dublin bay prawns in a hot chilli & garlic oil, sourdough bread",
     price: "12.95",
     photo: "",
-    categories: ['foods', 'staters']
+    categories: ['foods', 'starters']
   },
   {
     name: "Black Pudding Salad",
@@ -47,7 +47,7 @@ module.exports = [
       "(Contains G, E) Tom’s finest black pudding tossed on the pan with bacon, sauté potato & topped with poached egg, tossed leaves & balsamic glaze",
     price: "8.95",
     photo: "",
-    categories: ['foods', 'staters']
+    categories: ['foods', 'starters']
   },
   {
     name: "Nachos",
@@ -55,7 +55,7 @@ module.exports = [
       "(Contains G, MK) Chilli beef nachos, tortilla chips, sour cream & salsa OR Veggies with mix courgette, peppers & onion in a tomato sauce with melting cheese",
     price: "8.95",
     photo: "",
-    categories: ['foods', 'staters']
+    categories: ['foods', 'starters']
   },
   {
     name: "Fish Cakes",
@@ -63,7 +63,7 @@ module.exports = [
       "(Contains G, MK, C, E, SS, N) Fresh cod, salmon & crab meat in a sesame crumb, chilli, coriander & lime mayonnaise, Rocket & pesto dressing",
     price: "8.95",
     photo: "",
-    categories: ['foods', 'staters']
+    categories: ['foods', 'starters']
   },
   {
     name: "Stocky's Sharing Plate",
@@ -71,7 +71,7 @@ module.exports = [
       "(Contains G, MK, CY, E, S) Chicken Wings (Your Way), Crispy Potato Skins, Chilli Beef Nachos & Smoked Applewood Wheel Wings – Choose from Hot ‘n’ Spicy, Sticky Honey Glaze or BBQ Sauce",
     price: "17.95",
     photo: "",
-    categories: ['foods', 'staters']
+    categories: ['foods', 'starters']
   },
   {
     name: "Herb-roasted Beef Tenderloin",
@@ -124,7 +124,7 @@ module.exports = [
     description: "served with glazed potatoes and a vegetable ragout",
     price: "15.00",
     photo: "",
-
+    categories: ['foods', 'mains']
   },
   {
     name: "Curried Chicken",

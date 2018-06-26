@@ -117,31 +117,31 @@ module.exports = [
     name: "Smirnoff",
     price: 5.00,
     photo: "",
-    categories: ['drinks', 'spirits', 'vodka']
+    categories: ['drinks', 'spirits', 'vodkas']
   },
   {
     name: "Absolut",
     price: 5.00,
     photo: "",
-    categories: ['drinks', 'spirits', 'vodka']
+    categories: ['drinks', 'spirits', 'vodkas']
   },
   {
     name: "Sailor Jerry",
     price: 5.00,
     photo: "",
-    categories: ['drinks', 'spirits', 'rum']
+    categories: ['drinks', 'spirits', 'rums']
   },
   {
     name: "Havana club",
     price: 5.00,
     photo: "",
-    categories: ['drinks', 'spirits', 'rum']
+    categories: ['drinks', 'spirits', 'rums']
   },
   {
     name: "Ron Zapata",
     price: 5.00,
     photo: "",
-    categories: ['drinks', 'spirits', 'rum']
+    categories: ['drinks', 'spirits', 'rums']
   }
   ,
   {

@@ -6,12 +6,12 @@ const drinks = require('./drinks');
 const food = require('./food');
 
 const execute = {
-  CREATE_PRODUCT_CATEGORIES: true,
-  CREATE_USERS: true,
-  CREATE_RESTAURANTS: true,
-  CREATE_RESTAURANT_TABLES: true,
-  CREATE_RESTAURANT_PRODUCTS: true,
-  ADD_CATEGORIES_TO_PRODUCTS: false,
+  CREATE_PRODUCT_CATEGORIES: false,
+  CREATE_USERS: false,
+  CREATE_RESTAURANTS: false,
+  CREATE_RESTAURANT_TABLES: false,
+  CREATE_RESTAURANT_PRODUCTS: false,
+  ADD_CATEGORIES_TO_PRODUCTS: true,
 }
 
 const QUERYS = {
@@ -85,7 +85,7 @@ const QUERYS = {
         description: "${product.description}"
         price: "${product.price}"
         photo: "${(product.photo ? product.photo : "https://www.prikentik.be/media/wysiwyg/streekbieren/PrikenTik-bier.jpg")}"
-        restaurantId: 1
+        resturantId: 1
       ) {
         id
       }

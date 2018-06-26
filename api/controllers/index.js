@@ -26,6 +26,7 @@ const {
   createProduct,
   updateProduct,
   deleteProduct,
+  addCategoryToProduct
 } = require('./Product/ProductMutation');
 
 //Category querys and mutations
@@ -89,7 +90,8 @@ const RootMutation = new GraphQLObjectType({
     createProduct,
     updateProduct,
     deleteProduct,
-
+    addCategoryToProduct,
+    
     createCategory,
     updateCategory,
     deleteCategory,

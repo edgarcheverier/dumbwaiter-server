@@ -10,8 +10,8 @@ const merge = require('lodash.merge');
 
 const ProductType = require('../../models/Product/ProductType');
 const Product = require('../../models/Product/Product');
+const Category = require('../../models/Category/Category');
 const Photo = require('../../models/Photo/Photo');
-const CategoryType = require('../../models/Category/CategoryType');
 
 const categoriesInputType = new GraphQLInputObjectType({
   name: 'categoriesInput',
@@ -56,12 +56,6 @@ const createProduct = {
     },
   },
   resolve: async (product, { name, description, price, photo, restaurantId }) => {
-    // const foundRestaurant = await Product.findOne({ id: resturantId });
-    //
-    // if (!foundRestaurant) {
-    //   throw new Error(`Restaurant with id ${resturantId}`);
-    // }
-
     const foundProduct = await Product.findOne({name});
 
     if (foundProduct) {
@@ -115,22 +109,14 @@ const updateProduct = {
     price: {
       name: 'price',
       type: GraphQLFloat,
-    },
-    categories: {
-      name: 'categories',
-      type: new GraphQLList(categoriesInputType)
     }
   },
   resolve: async (product, { id, name, description, price, restaurantId, categories }) => {
-    const foundProduct = id ? await Product.findOne({ id  }) : await Product.findOne({ name });
+    const foundProduct = await Product.findOne({ where: { id } });
 
     if (!foundProduct) {
       throw new Error('Product not found');
     }
-
-    console.log('------------------------');
-    console.log('CATEGORIES', categories);
-    console.log('------------------------');
 
     const updatedProduct = {
       name,
@@ -140,6 +126,40 @@ const updateProduct = {
     };
 
     return foundProduct.update(updatedProduct);
+  },
+};
+
+const addCategoryToProduct = {
+  type: ProductType,
+  description: 'The mutation that allows you to update an existing Product by Id',
+  args: {
+    name: {
+      name: 'name',
+      type: GraphQLString,
+    },
+    categoryName: {
+      name: 'categoryName',
+      type: GraphQLString,
+    },
+  },
+  resolve: async (product, { name, categoryName }) => {
+    const foundProduct = await Product.findOne({where: {name: name}});
+
+    if (!foundProduct) {
+      throw new Error(`Product not found with name ${name}`);
+    }
+
+    const foundCategory = await Category.findOne( {
+      where: { name: categoryName }
+    });
+
+    if (!foundCategory) {
+      throw new Error(`Category not found with name ${categoryName}`);
+    }
+    const categories = await foundProduct.getCategories();
+    await foundProduct.addCategory(foundCategory.id)
+
+    return foundProduct;
   },
 };
 
@@ -165,4 +185,5 @@ module.exports = {
   createProduct,
   updateProduct,
   deleteProduct,
+  addCategoryToProduct,
 };
