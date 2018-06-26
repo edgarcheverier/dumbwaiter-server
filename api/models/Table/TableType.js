@@ -12,9 +12,17 @@ const TableType = new GraphQLObjectType({
       type: GraphQLInt,
       resolve: (table) => table.id,
     },
-    number: {
+    name: {
       type: GraphQLString,
       resolve: (table) => table.name,
+    },
+    positionX: {
+      type: GraphQLInt,
+      resolve: (table) => table.positionX,
+    },
+    positionY: {
+      type: GraphQLInt,
+      resolve: (table) => table.positionY,
     },
   }),
 });

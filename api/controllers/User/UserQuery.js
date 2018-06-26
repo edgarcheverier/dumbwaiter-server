@@ -11,27 +11,15 @@ const userQuery = {
   type: new GraphQLList(UserType),
   args: {
     id: {
-      username: 'id',
+      name: 'id',
       type: GraphQLInt,
     },
-    username: {
-      name: 'username',
+    name: {
+      name: 'name',
       type: GraphQLString,
     },
     email: {
       name: 'email',
-      type: GraphQLString,
-    },
-    notes: {
-      name: 'notes',
-      type: GraphQLString,
-    },
-    createdAt: {
-      name: 'createdAt',
-      type: GraphQLString,
-    },
-    updatedAt: {
-      name: 'updatedAt',
       type: GraphQLString,
     },
   },

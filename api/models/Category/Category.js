@@ -6,7 +6,8 @@ const tableName = 'categories';
 
 const Category = sequelize.define('Category', {
 name: {
-  type: Sequelize.STRING
+  type: Sequelize.STRING,
+  unique: true
 }
 
 }, {tableName});

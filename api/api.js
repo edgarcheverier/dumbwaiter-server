@@ -53,14 +53,18 @@ api.use('/graphql', bodyParser.json(), graphqlExpress({ schema, cacheControl: tr
 
 api.get('/explore', expressPlayground({ endpoint: '/graphql' }));
 api.get('/ppl', () => {
-  const QUERYS = require('./ppl');
+  const QUERYS = require('../mocks/ppl');
   const {graphql} = require('graphql');
   for(const group in QUERYS) {
     console.log(`Loading data ${group}...`);
-    QUERYS[group].forEach((query) => {
-      graphql(schema, query).then(result => {
-        if(result.errors) console.log('Error loading data', result.errors)
-      });
+    QUERYS[group].forEach(async (query) => {
+      console.log(query);
+
+       setTimeout(() => {
+         graphql(schema, query).then(result => {
+         if(result.errors) console.log('Error loading data', result.errors);
+       });
+     }, 100);
     });
   }
 });

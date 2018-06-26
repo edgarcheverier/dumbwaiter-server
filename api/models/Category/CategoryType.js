@@ -17,7 +17,6 @@ const CategoryType = new GraphQLObjectType({
       type: GraphQLString,
       resolve: (category) => category.name,
     },
-
   }),
 });
 

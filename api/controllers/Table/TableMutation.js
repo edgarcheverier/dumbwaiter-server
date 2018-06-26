@@ -7,21 +7,34 @@ const merge = require('lodash.merge');
 
 const TableType = require('../../models/Table/TableType');
 const Table = require('../../models/Table/Table');
+const Restaurant = require('../../models/Restaurant/Restaurant');
 
-const createTable = {
+const addTable = {
   type: TableType,
   description: 'The mutation that allows you to create a new Table',
   args: {
-    Tablename: {
+    name: {
       name: 'name',
       type: GraphQLNonNull(GraphQLString),
     },
+    restaurantId: {
+      name: 'restaurantId',
+      type: GraphQLNonNull(GraphQLString),
+    },
   },
-  resolve: async (Table, { name, restaurantId }) => {
+  resolve: async (table, { name, restaurantId }) => {
+    console.log('find restaurant');
+    // const foundRestaurant = await Restaurant.findOne({id: restaurantId});
+    //
+    // if (!foundRestaurant) {
+    //   throw new Error(`Restaurant with id ${restaurantId} does not exist`);
+    // }
+
+    console.log('find table');
     const foundTable = await Table.findOne({name, restaurantId});
 
     if (foundTable) {
-      throw new Error('Table exists with the same name in this restaurant');
+      throw new Error(`Table exists with the same name ${name} in this restaurant`);
     }
 
     const createTable = {
@@ -80,7 +93,7 @@ const deleteTable = {
 };
 
 module.exports = {
-  createTable,
+  addTable,
   updateTable,
   deleteTable,
 };

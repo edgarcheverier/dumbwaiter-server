@@ -28,6 +28,30 @@ const {
   deleteProduct,
 } = require('./Product/ProductMutation');
 
+//Category querys and mutations
+const categoryQuery = require('./Category/CategoryQuery');
+const {
+  createCategory,
+  updateCategory,
+  deleteCategory,
+} = require('./Category/CategoryMutation');
+
+//Photo querys and mutations
+const photoQuery = require('./Photo/PhotoQuery');
+const {
+  addPhoto,
+  updatePhoto,
+  deletePhoto,
+} = require('./Photo/PhotoMutation');
+
+//Table querys and mutations
+const tableQuery = require('./Table/TableQuery');
+const {
+  addTable,
+  updateTable,
+  deleteTable,
+} = require('./Table/TableMutation');
+
 //Product querys and mutations
 const productOrderQuery = require('./ProductOrder/ProductOrderQuery');
 const {
@@ -44,6 +68,9 @@ const RootQuery = new GraphQLObjectType({
     user: userQuery,
     product: productQuery,
     productOrder: productOrderQuery,
+    photo: photoQuery,
+    table: tableQuery,
+    category: categoryQuery,
   }),
 });
 
@@ -55,9 +82,17 @@ const RootMutation = new GraphQLObjectType({
     updateUser,
     deleteUser,
 
+    addPhoto,
+    updatePhoto,
+    deletePhoto,
+
     createProduct,
     updateProduct,
     deleteProduct,
+
+    createCategory,
+    updateCategory,
+    deleteCategory,
 
     addProductToOrder,
     updateProductFromOrder,
@@ -66,6 +101,10 @@ const RootMutation = new GraphQLObjectType({
     createRestaurant,
     updateRestaurant,
     deleteRestaurant,
+
+    addTable,
+    updateTable,
+    deleteTable,
   }),
 });
 

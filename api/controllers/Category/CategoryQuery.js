@@ -4,11 +4,11 @@ const {
   GraphQLList,
 } = require('graphql');
 
-const TableType = require('../../models/Table/TableType');
-const Table = require('../../models/Table/Table');
+const CategoryType = require('../../models/Category/CategoryType');
+const Category = require('../../models/Category/Category');
 
-const tableQuery = {
-  type: new GraphQLList(TableType),
+const categoryQuery = {
+  type: new GraphQLList(CategoryType),
   args: {
     id: {
       name: 'id',
@@ -27,7 +27,7 @@ const tableQuery = {
       type: GraphQLString,
     },
   },
-  resolve: (user, args) => Table.findAll({ where: args }),
+  resolve: (user, args) => Category.findAll({ where: args }),
 };
 
-module.exports = userQuery;
+module.exports = categoryQuery;

@@ -17,7 +17,6 @@ const AuthController = () => {
           password,
         });
         const token = authService().issue({ id: user.id });
-
         return res.status(200).json({ token, user });
       } catch (err) {
         console.log(err);

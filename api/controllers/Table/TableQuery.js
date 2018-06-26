@@ -27,7 +27,7 @@ const tableQuery = {
       type: GraphQLString,
     },
   },
-  resolve: (user, args) => Table.findAll({ where: args }),
+  resolve: (table, args) => Table.findAll({ where: args }),
 };
 
-module.exports = userQuery;
+module.exports = tableQuery;

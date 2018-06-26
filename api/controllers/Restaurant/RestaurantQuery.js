@@ -7,27 +7,28 @@ const {
 const RestaurantType = require('../../models/Restaurant/RestaurantType');
 const Restaurant = require('../../models/Restaurant/Restaurant');
 
+const ProductType = require('../../models/Product/ProductType');
+const TableType = require('../../models/Table/TableType');
+
 const restaurantQuery = {
   type: new GraphQLList(RestaurantType),
   args: {
     id: {
-      name: 'id',
       type: GraphQLInt,
     },
-    restaurantname: {
-      name: 'name',
+    name: {
+      type: GraphQLString,
+    },
+    type: {
       type: GraphQLString,
     },
     description: {
-      name: 'description',
       type: GraphQLString,
     },
     latitude: {
-      name: 'latitude',
       type: GraphQLString,
     },
     longitude: {
-      name: 'longitude',
       type: GraphQLString,
     },
     createdAt: {

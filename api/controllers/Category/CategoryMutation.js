@@ -17,7 +17,7 @@ const createCategory = {
       type: GraphQLNonNull(GraphQLString),
     },
   },
-  resolve: async (Category, { name }) => {
+  resolve: async (category, { name }) => {
     const foundCategory = await Category.findOne({ name });
 
     if (foundCategory) {

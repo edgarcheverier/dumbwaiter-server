@@ -7,6 +7,7 @@ const merge = require('lodash.merge');
 
 const RestaurantType = require('../../models/Restaurant/RestaurantType');
 const Restaurant = require('../../models/Restaurant/Restaurant');
+const Photo = require('../../models/Photo/Photo');
 
 const createRestaurant = {
   type: RestaurantType,
@@ -14,6 +15,14 @@ const createRestaurant = {
   args: {
     name: {
       name: 'name',
+      type: GraphQLString,
+    },
+    type: {
+      name: 'type',
+      type: GraphQLString,
+    },
+    photo: {
+      name: 'photo',
       type: GraphQLString,
     },
     description: {
@@ -29,7 +38,7 @@ const createRestaurant = {
       type: GraphQLString,
     },
   },
-  resolve: async (restaurant, { name, description, latitude, longitude }) => {
+  resolve: async (restaurant, { name, description, latitude, longitude, type, photo }) => {
     const foundRestaurant = await Restaurant.findOne({name});
 
     if (foundRestaurant) {
@@ -41,9 +50,20 @@ const createRestaurant = {
       description,
       latitude,
       longitude,
+      type,
     };
 
-    return Restaurant.create(createRestaurant);
+    const newRestaurant = await Restaurant.create(createRestaurant);
+
+    if(photo) {
+        Photo.create({
+          url: photo,
+          type: 'RESTAURANT',
+          externalId: newRestaurant.id
+        })
+    }
+
+    return newRestaurant;
   },
 }
 const updateRestaurant = {
@@ -54,8 +74,12 @@ const updateRestaurant = {
       name: 'id',
       type: new GraphQLNonNull(GraphQLInt),
     },
-    restaurantname: {
+    name: {
       name: 'name',
+      type: GraphQLString,
+    },
+    type: {
+      name: 'type',
       type: GraphQLString,
     },
     description: {
@@ -71,7 +95,7 @@ const updateRestaurant = {
       type: GraphQLString,
     },
   },
-  resolve: async (restaurant, { id, name, description, latitude, longitude }) => {
+  resolve: async (restaurant, { id, name, description, latitude, longitude, type }) => {
     const foundRestaurant = await Restaurant.findById(id);
 
     if (!foundRestaurant) {
@@ -83,6 +107,7 @@ const updateRestaurant = {
       description,
       latitude,
       longitude,
+      type,
     };
 
     return foundRestaurant.update(updatedRestaurant);

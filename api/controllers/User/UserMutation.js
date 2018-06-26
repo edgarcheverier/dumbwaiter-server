@@ -7,6 +7,7 @@ const merge = require('lodash.merge');
 
 const UserType = require('../../models/User/UserType');
 const User = require('../../models/User/User');
+const Photo = require('../../models/Photo/Photo');
 
 const createUser = {
   type: UserType,
@@ -16,24 +17,43 @@ const createUser = {
       name: 'name',
       type: GraphQLString,
     },
+    type: {
+      name: 'type',
+      type: new GraphQLNonNull(GraphQLString),
+    },
+    photo: {
+      name: 'type',
+      type: GraphQLString,
+    },
     email: {
       name: 'email',
       type: new GraphQLNonNull(GraphQLString),
     },
   },
-  resolve: async (user, { name, email }) => {
-    const foundUser = await User.findOne({email});
+  resolve: async (user, { name, email, type, photo }) => {
+    const foundUser = await User.findOne({ email });
 
-    if (foundUser) {
+    if (foundUser && email !== '') {
       throw new Error('User exists with the same email');
     }
 
     const createUser = {
       name,
       email,
+      type,
     };
 
-    return User.create(createUser);
+    const newUser = await User.create(createUser);
+
+    if(photo) {
+        Photo.create({
+          url: photo,
+          type: 'PRODUCT',
+          externalId: newUser.id
+        })
+    }
+
+    return newUser;
   },
 };
 

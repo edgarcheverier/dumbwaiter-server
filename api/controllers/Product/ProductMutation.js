@@ -2,12 +2,25 @@ const {
   GraphQLString,
   GraphQLInt,
   GraphQLFloat,
+  GraphQLList,
   GraphQLNonNull,
+  GraphQLInputObjectType,
 } = require('graphql');
 const merge = require('lodash.merge');
 
 const ProductType = require('../../models/Product/ProductType');
 const Product = require('../../models/Product/Product');
+const Photo = require('../../models/Photo/Photo');
+const CategoryType = require('../../models/Category/CategoryType');
+
+const categoriesInputType = new GraphQLInputObjectType({
+  name: 'categoriesInput',
+  fields: {
+    name: {
+      type: new GraphQLNonNull(GraphQLString)
+    },
+  }
+});
 
 const createProduct = {
   type: ProductType,
@@ -23,7 +36,15 @@ const createProduct = {
     },
     price: {
       name: 'price',
-      type: GraphQLFloat,
+      type: GraphQLString,
+    },
+    photo: {
+      name: 'photo',
+      type: GraphQLString,
+    },
+    restaurantId: {
+      name: 'resturantId',
+      type: GraphQLInt,
     },
     createdAt: {
       name: 'createdAt',
@@ -34,20 +55,41 @@ const createProduct = {
       type: GraphQLString,
     },
   },
-  resolve: async (product, { name, description, price }) => {
+  resolve: async (product, { name, description, price, photo, restaurantId }) => {
+    // const foundRestaurant = await Product.findOne({ id: resturantId });
+    //
+    // if (!foundRestaurant) {
+    //   throw new Error(`Restaurant with id ${resturantId}`);
+    // }
+
     const foundProduct = await Product.findOne({name});
 
     if (foundProduct) {
       throw new Error('Product already exists with the same name');
     }
 
+    if (!name) {
+      throw new Error('Name is mandatory');
+    }
+
     const createProduct = {
       name,
       description,
-      price,
+      price: parseFloat(price),
+      restaurantId
     };
 
-    return Product.create(createProduct);
+    const newProduct = await Product.create(createProduct);
+
+    if(photo) {
+        Photo.create({
+          url: photo,
+          type: 'PRODUCT',
+          externalId: newProduct.id
+        })
+    }
+
+    return newProduct;
   },
 }
 const updateProduct = {
@@ -56,11 +98,15 @@ const updateProduct = {
   args: {
     id: {
       name: 'id',
-      type: new GraphQLNonNull(GraphQLInt),
+      type: GraphQLInt,
     },
     name: {
       name: 'name',
       type: GraphQLString,
+    },
+    resturantId: {
+      name: 'resturantId',
+      type: GraphQLInt,
     },
     description: {
       name: 'description',
@@ -69,19 +115,28 @@ const updateProduct = {
     price: {
       name: 'price',
       type: GraphQLFloat,
+    },
+    categories: {
+      name: 'categories',
+      type: new GraphQLList(categoriesInputType)
     }
   },
-  resolve: async (product, { id, name, description, price }) => {
-    const foundProduct = await Product.findOne({ id });
+  resolve: async (product, { id, name, description, price, restaurantId, categories }) => {
+    const foundProduct = id ? await Product.findOne({ id  }) : await Product.findOne({ name });
 
     if (!foundProduct) {
       throw new Error('Product not found');
     }
 
+    console.log('------------------------');
+    console.log('CATEGORIES', categories);
+    console.log('------------------------');
+
     const updatedProduct = {
       name,
       description,
-      price,
+      price: parseFloat(price),
+      restaurantId
     };
 
     return foundProduct.update(updatedProduct);
