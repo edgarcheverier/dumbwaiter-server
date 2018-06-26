@@ -1,0 +1,51 @@
+module.exports = [
+  {
+    name: 'Marlon Becker',
+    password: 'test',
+    email: 'marlon.mbs@gmail.com',
+    photo: 'https://media.nngroup.com/media/people/photos/IMG_2366-copy-400x400.jpg.400x400_q95_autocrop_crop_upscale.jpg',
+    type: 'USER',
+  },
+  {
+    name: 'Benjamin Kemp',
+    password: 'test',
+    email: 'benjokemp@gmail.com',
+    photo: 'https://media.nngroup.com/media/people/photos/IMG_2366-copy-400x400.jpg.400x400_q95_autocrop_crop_upscale.jpg',
+    type: 'USER',
+  },
+  {
+    name: 'Edgar Cheverier',
+    password: 'test',
+    email: 'edgarcheverier@gmail.com',
+    photo: 'https://media.nngroup.com/media/people/photos/IMG_2366-copy-400x400.jpg.400x400_q95_autocrop_crop_upscale.jpg',
+    type: 'USER',
+  },
+  {
+    name: 'Henri Viiralt',
+    password: 'test',
+    email: 'viiralt.h@gmail.com',
+    photo: 'https://media.nngroup.com/media/people/photos/IMG_2366-copy-400x400.jpg.400x400_q95_autocrop_crop_upscale.jpg',
+    type: 'USER',
+  },
+  {
+    name: 'Lars Berger',
+    password: 'test',
+    email: 'lars.berger@yahoo.com',
+    photo: 'https://media.nngroup.com/media/people/photos/IMG_2366-copy-400x400.jpg.400x400_q95_autocrop_crop_upscale.jpg',
+    type: 'USER',
+  },
+  {
+    name: 'John C. Unt',
+    password: 'test',
+    email: '',
+    photo: 'https://media.nngroup.com/media/people/photos/IMG_2366-copy-400x400.jpg.400x400_q95_autocrop_crop_upscale.jpg',
+    type: 'RESTAURANT_OWNER',
+  },
+  {
+    name: 'Mc Donalds',
+    password: 'test',
+    email: '',
+    photo: 'https://media.nngroup.com/media/people/photos/IMG_2366-copy-400x400.jpg.400x400_q95_autocrop_crop_upscale.jpg',
+    type: 'RESTAURANT_OWNER',
+  },
+]
