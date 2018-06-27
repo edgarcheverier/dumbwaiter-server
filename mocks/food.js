@@ -4,70 +4,70 @@ module.exports = [
     description: "",
     price: "5.95",
     photo: "https://firebasestorage.googleapis.com/v0/b/dumbwaiter-69a9a.appspot.com/o/food__0000s_0000s_0029_chicken%20soup.jpg?alt=media&token=ef8ddf80-1867-4352-88f8-80d183ebc39d",
-    categories: ['foods', 'staters']
+    categories: ['foods', 'starters']
   },
   {
     name: "Bruschetta",
     description: "(Contains G, N, MK, E) Topped with Buffalo Mozzarella, Sun-Dried Tomato & Basil Pesto",
     price: "6.95",
     photo: "",
-    categories: ['foods', 'staters']
+    categories: ['foods', 'starters']
   },
   {
     name: "Chicken Wings",
     description: "(Contains MK, CY) Hot ‘n’ Spicy wings, celery spear, blue cheese & garlic dip",
     price: "8.95 ",
     photo: "https://firebasestorage.googleapis.com/v0/b/dumbwaiter-69a9a.appspot.com/o/food__0000s_0000s_0028_chicken%20wings.jpg?alt=media&token=d01c481a-217b-42c2-b593-9492e3540689",
-    categories: ['foods', 'staters']
+    categories: ['foods', 'starters']
   },
   {
     name: "Baby Ribs",
     description: "(Contains MK, S, SP) Slow cooked pork ribs glazed with BBQ sauce and served with chargrilled corn on the cob",
     price: "9.95",
     photo: "https://firebasestorage.googleapis.com/v0/b/dumbwaiter-69a9a.appspot.com/o/food__0000s_0000s_0027_ribs.jpg?alt=media&token=8c7d8b60-143d-4a89-b680-8a177532eb30",
-    categories: ['foods', 'staters']
+    categories: ['foods', 'starters']
   },
   {
     name: "Feta Cheese Salad",
     description: "(Contains MK, N) Dressed leaves, Cherry tomatoes, Beetroot & Walnuts topped with Feta Cheese",
     price: "6.95",
     photo: "https://firebasestorage.googleapis.com/v0/b/dumbwaiter-69a9a.appspot.com/o/food__0000s_0000s_0026_feta.jpg?alt=media&token=755354c7-ce23-41d5-8c72-2c4c4530d01a",
-    categories: ['foods', 'staters']
+    categories: ['foods', 'starters']
   },
   {
     name: "Prawn Pil Pil",
     description: "(Contains MK, G, C) Sauté Dublin bay prawns in a hot chilli & garlic oil, sourdough bread",
     price: "12.95",
     photo: "https://firebasestorage.googleapis.com/v0/b/dumbwaiter-69a9a.appspot.com/o/food__0000s_0000s_0025_prawns.jpg?alt=media&token=1829c021-dfc6-4391-ac69-872e83e1ce52",
-    categories: ['foods', 'staters']
+    categories: ['foods', 'starters']
   },
   {
     name: "Black Pudding Salad",
     description: "(Contains G, E) Tom’s finest black pudding tossed on the pan with bacon, sauté potato & topped with poached egg, tossed leaves & balsamic glaze",
     price: "8.95",
     photo: "https://firebasestorage.googleapis.com/v0/b/dumbwaiter-69a9a.appspot.com/o/food__0000s_0000s_0024_black%20pudding%20salad.jpg?alt=media&token=e4116067-fe46-4baf-9a62-0c2c1b823780",
-    categories: ['foods', 'staters']
+    categories: ['foods', 'starters']
   },
   {
     name: "Nachos",
     description: "(Contains G, MK) Chilli beef nachos, tortilla chips, sour cream & salsa OR Veggies with mix courgette, peppers & onion in a tomato sauce with melting cheese",
     price: "8.95",
     photo: "https://firebasestorage.googleapis.com/v0/b/dumbwaiter-69a9a.appspot.com/o/food__0000s_0000s_0020_nachos.jpg?alt=media&token=cc6b278f-fe63-49aa-b53a-f17a29936ad9",
-    categories: ['foods', 'staters']
+    categories: ['foods', 'starters']
   },
   {
     name: "Fish Cakes",
     description:  "(Contains G, MK, C, E, SS, N) Fresh cod, salmon & crab meat in a sesame crumb, chilli, coriander & lime mayonnaise, Rocket & pesto dressing",
     price: "8.95",
     photo: "https://firebasestorage.googleapis.com/v0/b/dumbwaiter-69a9a.appspot.com/o/food__0000s_0000s_0023_fish%20cakes.jpg?alt=media&token=171fc2ec-cd28-4002-93d5-bb1b04e88622",
-    categories: ['foods', 'staters']
+    categories: ['foods', 'starters']
   },
   {
     name: "Stocky's Sharing Plate",
     description: "(Contains G, MK, CY, E, S) Chicken Wings (Your Way), Crispy Potato Skins, Chilli Beef Nachos & Smoked Applewood Wheel Wings – Choose from Hot ‘n’ Spicy, Sticky Honey Glaze or BBQ Sauce",
     price: "17.95",
     photo: "https://firebasestorage.googleapis.com/v0/b/dumbwaiter-69a9a.appspot.com/o/food__0000s_0000s_0022_sharing%20platter.jpg?alt=media&token=867a3eae-2dec-4fd5-9d45-241a81e8855b",
-    categories: ['foods', 'staters']
+    categories: ['foods', 'starters']
   },
   {
     name: "Herb-roasted Beef Tenderloin",
@@ -116,7 +116,7 @@ module.exports = [
     description: "served with glazed potatoes and a vegetable ragout",
     price: "15.00",
     photo: "https://firebasestorage.googleapis.com/v0/b/dumbwaiter-69a9a.appspot.com/o/food__0000s_0000s_0015_herb%20basted%20chicken%20breast.jpg?alt=media&token=abdfc03a-73a6-430e-8721-6ea580353c7d",
-
+    categories: ['foods', 'mains']
   },
   {
     name: "Curried Chicken",

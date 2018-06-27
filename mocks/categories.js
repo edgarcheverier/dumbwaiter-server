@@ -8,11 +8,11 @@ module.exports = [
   {name: 'gins'},
   {name: 'vodkas'},
   {name: 'rums'},
-  {name: 'winess'},
+  {name: 'wines'},
   {name: 'reds'},
   {name: 'whites'},
   {name: 'roses'},
-  {name: 'food'},
+  {name: 'foods'},
   {name: 'starters'},
   {name: 'mains'},
   {name: 'desserts'}

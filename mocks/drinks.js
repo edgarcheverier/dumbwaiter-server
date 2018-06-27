@@ -117,31 +117,31 @@ module.exports = [
     name: "Smirnoff",
     price: 5.00,
     photo: "https://firebasestorage.googleapis.com/v0/b/dumbwaiter-69a9a.appspot.com/o/pics__0000s_0005_smirnoff.jpg?alt=media&token=c08a7cf6-7185-45e2-a226-14250d8561bc",
-    categories: ['drinks', 'spirits', 'vodka']
+    categories: ['drinks', 'spirits', 'vodkas']
   },
   {
     name: "Absolut",
     price: 5.00,
     photo: "https://firebasestorage.googleapis.com/v0/b/dumbwaiter-69a9a.appspot.com/o/pics__0000s_0004_absolut.jpg?alt=media&token=e03d19bf-f767-4589-a39e-fbe4a4f88604",
-    categories: ['drinks', 'spirits', 'vodka']
+    categories: ['drinks', 'spirits', 'vodkas']
   },
   {
     name: "Sailor Jerry",
     price: 5.00,
     photo: "https://firebasestorage.googleapis.com/v0/b/dumbwaiter-69a9a.appspot.com/o/pics__0000s_0003_sailor%20jerry.jpg?alt=media&token=a9a89d50-358f-47cd-8790-5bd9a6afab17",
-    categories: ['drinks', 'spirits', 'rum']
+    categories: ['drinks', 'spirits', 'rums']
   },
   {
     name: "Havana club",
     price: 5.00,
     photo: "https://firebasestorage.googleapis.com/v0/b/dumbwaiter-69a9a.appspot.com/o/pics__0000s_0002_havana%20club.jpg?alt=media&token=554e0f58-1076-4059-bf9a-b0b722c4fa83",
-    categories: ['drinks', 'spirits', 'rum']
+    categories: ['drinks', 'spirits', 'rums']
   },
   {
     name: "Bacardi",
     price: 5.00,
     photo: "https://firebasestorage.googleapis.com/v0/b/dumbwaiter-69a9a.appspot.com/o/pics__0000s_0001_bacardi.jpg?alt=media&token=1dc8ff6f-8119-46d5-97d8-1474177c9889",
-    categories: ['drinks', 'spirits', 'rum']
+    categories: ['drinks', 'spirits', 'rums']
   }
   ,
   {

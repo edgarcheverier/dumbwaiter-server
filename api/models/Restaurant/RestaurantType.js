@@ -29,6 +29,7 @@ const RestaurantType = new GraphQLObjectType({
     photo: {
       type: GraphQLList(GraphQLString),
       resolve: (restaurant) => {
+        //TODO add connection to Photo model
         return [
           "https://media.nngroup.com/media/people/photos/IMG_2366-copy-400x400.jpg.400x400_q95_autocrop_crop_upscale.jpg",
           "https://media.nngroup.com/media/people/photos/IMG_2366-copy-400x400.jpg.400x400_q95_autocrop_crop_upscale.jpg",
