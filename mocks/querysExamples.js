@@ -63,14 +63,14 @@ mutation {
     latitude
     longitude
     photo
-    tables {
-      name
-      positionX
-      positionY
-    }
     products {
       name
       price
+      categories {
+        name
+      }
+      photos {
+        url
+      }
     }
   }
-}
