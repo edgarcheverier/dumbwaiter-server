@@ -3,49 +3,49 @@ module.exports = [
     name: "Coke",
     price: 1.00,
     photo: "https://firebasestorage.googleapis.com/v0/b/dumbwaiter-69a9a.appspot.com/o/pics__0000s_0023_coke.jpg?alt=media&token=243a4c6e-51dc-4b97-9705-6deaf933642e",
-    categories: ['drinks','soft_drinks']
+    categories: ['drinks','soft drinks']
   },
   {
     name: "Coke Zero",
     price: 5.00,
     photo: "https://firebasestorage.googleapis.com/v0/b/dumbwaiter-69a9a.appspot.com/o/pics__0000s_0024_cokezero.jpg?alt=media&token=4203f35f-3ada-4d25-90af-509b414dd860",
-    categories: ['drinks','soft_drinks']
+    categories: ['drinks','soft drinks']
   },
   {
     name: "Fanta",
     price: 5.00,
     photo: "https://firebasestorage.googleapis.com/v0/b/dumbwaiter-69a9a.appspot.com/o/pics__0000s_0022_fanta.jpg?alt=media&token=6e16645e-5b94-44e0-81d9-38c17a8a6619",
-    categories: ['drinks','soft_drinks']
+    categories: ['drinks','soft drinks']
   },
   {
     name: "Lemonade",
     price: 5.00,
     photo: "https://firebasestorage.googleapis.com/v0/b/dumbwaiter-69a9a.appspot.com/o/pics__0000s_0021_lemonade.jpg?alt=media&token=77ca9a30-cde9-4e90-9532-eca8762a6f25",
-    categories: ['drinks','soft_drinks']
+    categories: ['drinks','soft drinks']
   },
   {
     name: "Ginger Ale",
     price: 5.00,
     photo: "https://firebasestorage.googleapis.com/v0/b/dumbwaiter-69a9a.appspot.com/o/pics__0000s_0020_ginger%20ale.jpg?alt=media&token=950cd53c-fb43-45b4-bc85-ec2a8c9a638d",
-    categories: ['drinks','soft_drinks']
+    categories: ['drinks','soft drinks']
   },
   {
     name: "Tonic",
     price: 5.00,
     photo: "https://firebasestorage.googleapis.com/v0/b/dumbwaiter-69a9a.appspot.com/o/pics__0000s_0019_tonic%20water.jpg?alt=media&token=1353d59b-acac-4553-a96e-86a57d0e9bd4",
-    categories: ['drinks','soft_drinks']
+    categories: ['drinks','soft drinks']
   },
   {
     name: "Soda",
     price: 5.00,
     photo: "https://firebasestorage.googleapis.com/v0/b/dumbwaiter-69a9a.appspot.com/o/pics__0000s_0017_mineral%20water.jpg?alt=media&token=b60198bd-0104-409a-9160-b3503575fe30",
-    categories: ['drinks','soft_drinks']
+    categories: ['drinks','soft drinks']
   },
   {
     name: "Mineral Water",
     price: 5.00,
     photo: "https://firebasestorage.googleapis.com/v0/b/dumbwaiter-69a9a.appspot.com/o/pics__0000s_0018_sparkling%20water.jpg?alt=media&token=e9bc790e-7094-4e5a-8058-e2c62d5e882c",
-    categories: ['drinks','soft_drinks']
+    categories: ['drinks','soft drinks']
   },
   {
     name: "Castle",

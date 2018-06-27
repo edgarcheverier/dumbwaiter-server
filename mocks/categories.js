@@ -1,6 +1,6 @@
 module.exports = [
   {name: 'drinks'},
-  {name: 'soft_drinks'},
+  {name: 'soft drinks'},
   {name: 'beers'},
   {name: 'spirits'},
   {name: 'whiskeys'},

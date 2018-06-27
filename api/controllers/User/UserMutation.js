@@ -48,7 +48,7 @@ const createUser = {
     if(photo) {
         Photo.create({
           url: photo,
-          type: 'PRODUCT',
+          type: 'USER',
           externalId: newUser.id
         })
     }
