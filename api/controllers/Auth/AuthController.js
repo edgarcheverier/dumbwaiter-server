@@ -28,6 +28,7 @@ const AuthController = () => {
     return res.status(400).json({ msg: 'Bad Request: Passwords don\'t match' });
   };
 
+
   const loginCustomer = async (req, res) => {
       const authorization = atob(req.headers.authorization.split('Basic ').pop()).split(':');
       const externalLoginId = authorization[0];
