@@ -22,6 +22,8 @@ const QUERYS = {
         createUser(
           name: "${user.name}"
           email: "${user.email}"
+          password: "${user.password}"
+          externalLoginId: "${user.externalLoginId}"
           type: "${user.type}"
           photo: "${user.photo}"
         ) {

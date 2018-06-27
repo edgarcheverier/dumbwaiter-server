@@ -19,18 +19,15 @@ const UserType = new GraphQLObjectType({
       type: GraphQLString,
       resolve: (user) => user.name,
     },
-    facebookId: {
+    externalLoginId: {
       type: GraphQLInt,
-      resolve: (user) => user.facebookId,
+      resolve: (user) => user.externalLoginId,
     },
     email: {
       type: GraphQLString,
       resolve: (user) => user.email,
     },
-    // notes: {
-    //   type: new GraphQLList(NoteType),
-    //   resolve: (user) => user.getNotes(),
-    // },
+
     createdAt: {
       type: GraphQLString,
       resolve: (user) => user.createdAt,

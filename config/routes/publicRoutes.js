@@ -1,6 +1,7 @@
 const publicRoutes = {
   'POST /register': 'AuthController.register',
-  'POST /login': 'AuthController.login',
+  'POST /validate-customer': 'AuthController.loginCustomer',
+  'POST /login-rms': 'AuthController.loginRms',
   'POST /validate': 'AuthController.validate',
 };
 

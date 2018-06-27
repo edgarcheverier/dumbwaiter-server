@@ -14,9 +14,8 @@ const tableName = 'users';
 const User = sequelize.define('User', {
   name: {
     type: Sequelize.STRING,
-    unique: true,
   },
-  facebookId: {
+  externalLoginId: {
     type: Sequelize.STRING,
   },
   password: {
@@ -24,6 +23,7 @@ const User = sequelize.define('User', {
   },
   email: {
     type: Sequelize.STRING,
+    unique: true,
   },
   type: {
     type: Sequelize.STRING,
