@@ -1,5 +1,5 @@
 const development = {
-  database: 'dumbwaiter_develop',
+  database: 'dumbwaiter_testing',
   username: 'root',
   password: 'password',
   host: 'localhost',
@@ -7,11 +7,11 @@ const development = {
 };
 
 const testing = {
-  database: 'databasename',
-  username: 'username',
+  database: 'dumbwaiter_testing',
+  username: 'root',
   password: 'password',
   host: 'localhost',
-  dialect: 'sqlite' || 'mysql' || 'postgres',
+  dialect: 'mysql' || 'sqlite' ||  'postgres',
 };
 
 const production = {

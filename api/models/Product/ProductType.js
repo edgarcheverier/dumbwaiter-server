@@ -10,8 +10,6 @@ const CategoryType = require('../Category/CategoryType');
 const PhotoType = require('../Photo/PhotoType');
 const Photo = require('../Photo/Photo');
 
-
-
 const ProductType = new GraphQLObjectType({
   name: 'Product',
   description: 'This represents to product inventory for the restaurant',

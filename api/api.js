@@ -59,7 +59,6 @@ api.get('/ppl', () => {
     console.log(`Loading data ${group}...`);
     QUERYS[group].forEach(async (query) => {
       console.log(query);
-
        setTimeout(() => {
          graphql(schema, query).then(result => {
          if(result.errors) console.log('Error loading data', result.errors);

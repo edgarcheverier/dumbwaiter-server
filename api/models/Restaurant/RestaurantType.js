@@ -9,6 +9,8 @@ const CategoryType = require('../Category/CategoryType');
 const ProductType = require('../Product/ProductType');
 const TableType = require('../Table/TableType');
 const UserType = require('../User/UserType');
+const PhotoType = require('../Photo/PhotoType');
+const Photo = require('../Photo/Photo');
 
 const RestaurantType = new GraphQLObjectType({
   name: 'Restaurant',
@@ -26,15 +28,20 @@ const RestaurantType = new GraphQLObjectType({
       type: GraphQLString,
       resolve: (restaurant) => restaurant.name,
     },
-    photo: {
-      type: GraphQLList(GraphQLString),
-      resolve: (restaurant) => {
-        //TODO add connection to Photo model
-        return [
-          "https://media.nngroup.com/media/people/photos/IMG_2366-copy-400x400.jpg.400x400_q95_autocrop_crop_upscale.jpg",
-          "https://media.nngroup.com/media/people/photos/IMG_2366-copy-400x400.jpg.400x400_q95_autocrop_crop_upscale.jpg",
-        ]
-      },
+    photos: {
+      type: GraphQLList(PhotoType),
+      resolve: async (restaurant) => {
+        const listPhotos = [];
+        return await Photo.findAll({ where: {
+          externalId: restaurant.id, type: 'RESTAURANT' }
+        }).then(res => {
+          res.forEach((resultSetItem) => {
+            const photo = resultSetItem.get();
+            listPhotos.push({ url: photo.url });
+          });
+          return listPhotos;
+        });
+      }
     },
     type: {
       type: GraphQLString,
