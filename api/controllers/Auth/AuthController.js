@@ -23,13 +23,11 @@ const AuthController = () => {
         return res.status(500).json({ msg: 'Internal server error' });
       }
     }
-
     return res.status(400).json({ msg: 'Bad Request: Passwords don\'t match' });
   };
 
   const login = async (req, res) => {
     const { email, password } = req.body;
-
     if (email && password) {
       try {
         const user = await User.findOne({
