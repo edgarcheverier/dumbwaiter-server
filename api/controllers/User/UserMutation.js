@@ -21,6 +21,14 @@ const createUser = {
       name: 'type',
       type: new GraphQLNonNull(GraphQLString),
     },
+    externalLoginId: {
+      name: 'externalLoginId',
+      type: GraphQLString,
+    },
+    password: {
+      name: 'password',
+      type: new GraphQLNonNull(GraphQLString),
+    },
     photo: {
       name: 'type',
       type: GraphQLString,
@@ -30,7 +38,7 @@ const createUser = {
       type: new GraphQLNonNull(GraphQLString),
     },
   },
-  resolve: async (user, { name, email, type, photo }) => {
+  resolve: async (user, { name, email, type, photo, password, externalLoginId }) => {
     const foundUser = await User.findOne({ email });
 
     if (foundUser && email !== '') {
@@ -41,6 +49,8 @@ const createUser = {
       name,
       email,
       type,
+      password,
+      externalLoginId,
     };
 
     const newUser = await User.create(createUser);
@@ -69,12 +79,16 @@ const updateUser = {
       name: 'name',
       type: GraphQLString,
     },
+    externalLoginId: {
+      name: 'externalLoginId',
+      type: GraphQLString,
+    },
     email: {
       name: 'email',
       type: GraphQLString,
     },
   },
-  resolve: async (user, { id, name, email }) => {
+  resolve: async (user, { id, name, email, externalLoginId }) => {
     const foundUser = await User.findById(id);
 
     if (!foundUser) {
@@ -84,6 +98,7 @@ const updateUser = {
     const updatedUser = merge(foundUser, {
       name,
       email,
+      externalLoginId,
     });
 
     return foundUser.update(updatedUser);
