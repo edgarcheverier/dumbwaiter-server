@@ -6,6 +6,7 @@ const {
 
 const RestaurantType = require('../../models/Restaurant/RestaurantType');
 const Restaurant = require('../../models/Restaurant/Restaurant');
+const { protectRMSRestaurant } = require('../protectDecorator');
 
 const ProductType = require('../../models/Product/ProductType');
 const TableType = require('../../models/Table/TableType');
@@ -44,7 +45,16 @@ const restaurantQuery = {
       type: GraphQLString,
     },
   },
-  resolve: (restaurant, args) => Restaurant.findAll({ where: args }),
+  resolve: (restaurant, args) => {
+    if(args.restaurantId) {
+      args.id = args.restaurantId;
+      delete args.restaurantId;
+    }
+    return Restaurant.findAll({ where: args })
+  },
 };
 
-module.exports = restaurantQuery;
+module.exports = {
+  restaurantQueryRms: protectRMSRestaurant(restaurantQuery),
+  restaurantQuery
+}
