@@ -6,7 +6,8 @@ const {
   GraphQLNonNull,
   GraphQLInputObjectType,
 } = require('graphql');
-const merge = require('lodash.merge');
+
+const { protectRMSRestaurant } = require('../protectDecorator');
 
 const ProductType = require('../../models/Product/ProductType');
 const Product = require('../../models/Product/Product');
@@ -56,7 +57,7 @@ const createProduct = {
     },
   },
   resolve: async (product, { name, description, price, photo, restaurantId }) => {
-    const foundProduct = await Product.findOne({name});
+    const foundProduct = await Product.findOne({ where: { name, restaurantId } });
 
     if (foundProduct) {
       throw new Error('Product already exists with the same name');
@@ -182,8 +183,8 @@ const deleteProduct = {
 };
 
 module.exports = {
-  createProduct,
-  updateProduct,
-  deleteProduct,
-  addCategoryToProduct,
+  createProduct: protectRMSRestaurant(createProduct),
+  updateProduct: protectRMSRestaurant(updateProduct),
+  deleteProduct: protectRMSRestaurant(deleteProduct),
+  addCategoryToProduct: protectRMSRestaurant(addCategoryToProduct),
 };

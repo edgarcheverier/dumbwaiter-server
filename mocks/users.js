@@ -32,7 +32,7 @@ module.exports = [
     password: 'test',
     externalLoginId: 100004,
     email: 'lars.berger@yahoo.com',
-    type: 'USER',
+    type: 'RESTAURANT_OWNER',
   },
   {
     name: 'McMardigan',

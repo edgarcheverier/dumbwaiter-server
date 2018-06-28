@@ -21,7 +21,7 @@ const {
 } = require('./Restaurant/RestaurantMutation');
 
 //Product querys and mutations
-const productQuery = require('./Product/ProductQuery');
+const { productQuery, productQueryRms } = require('./Product/ProductQuery');
 const {
   createProduct,
   updateProduct,
@@ -68,6 +68,7 @@ const RootQuery = new GraphQLObjectType({
     restaurant: restaurantQuery,
     user: userQuery,
     product: productQuery,
+    productRms: productQueryRms,
     productOrder: productOrderQuery,
     photo: photoQuery,
     table: tableQuery,
@@ -91,7 +92,7 @@ const RootMutation = new GraphQLObjectType({
     updateProduct,
     deleteProduct,
     addCategoryToProduct,
-    
+
     createCategory,
     updateCategory,
     deleteCategory,

@@ -56,11 +56,11 @@ const createUser = {
     const newUser = await User.create(createUser);
 
     if(photo) {
-        Photo.create({
-          url: photo,
-          type: 'USER',
-          externalId: newUser.id
-        })
+      Photo.create({
+        url: photo,
+        type: 'USER',
+        externalId: newUser.id
+      })
     }
 
     return newUser;
