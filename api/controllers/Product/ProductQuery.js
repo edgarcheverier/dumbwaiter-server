@@ -5,6 +5,7 @@ const {
   GraphQLList,
 } = require('graphql');
 
+const { protectRMSRestaurant } = require('../protectDecorator');
 const ProductType = require('../../models/Product/ProductType');
 const Product = require('../../models/Product/Product');
 
@@ -36,7 +37,14 @@ const productQuery = {
       type: GraphQLString,
     },
   },
-  resolve: (product, args) => Product.findAll({ where: args }),
+  resolve: (product, args, context, more, ctx) => {
+    console.log('Args', args);
+    console.log('Context', context);
+    return Product.findAll({ where: args })
+  },
 };
 
-module.exports = productQuery;
+module.exports = {
+  productQuery,
+  productQueryRms: protectRMSRestaurant(productQuery)
+}

@@ -35,6 +35,10 @@ const restaurantQuery = {
       name: 'createdAt',
       type: GraphQLString,
     },
+    userId: {
+      name: 'userId',
+      type: GraphQLInt
+    },
     updatedAt: {
       name: 'updatedAt',
       type: GraphQLString,

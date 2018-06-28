@@ -1,25 +1,30 @@
 /**
  * third party libraries
  */
-const bodyParser = require('body-parser');
 const cors = require('cors');
-const express = require('express');
-const { graphqlExpress } = require('apollo-server-express');
-const helmet = require('helmet');
 const http = require('http');
+const helmet = require('helmet');
+const express = require('express');
+const bodyParser = require('body-parser');
 const mapRoutes = require('express-routes-mapper');
+const { graphqlExpress } = require('apollo-server-express');
 const expressPlayground = require('graphql-playground-middleware-express').default;
 
 /**
  * server configuration
  */
 const config = require('../config/');
+const schema = require('./controllers/');
 const auth = require('./policies/auth.policy');
 const dbService = require('./services/db.service');
-const schema = require('./controllers/');
+const authService = require('./services/auth.service');
 
-// environment: development, testing, production
 const environment = process.env.NODE_ENV;
+
+/**
+* Custome middleware
+*/
+const authorization = require('./middlewares/authorization');
 
 /**
  * express application
@@ -40,6 +45,9 @@ api.use(helmet({
   ieNoOpen: false,
 }));
 
+//Get the user from the JWT if there is one
+api.use(authorization);
+
 // parsing the request bodys
 api.use(bodyParser.urlencoded({ extended: false }));
 api.use(bodyParser.json());
@@ -49,8 +57,9 @@ api.use('/', mappedRoutes);
 
 // private GraphQL API
 api.all('/graphql');
-api.use('/graphql', bodyParser.json(), graphqlExpress({ schema, cacheControl: true }));
+api.use('/graphql', bodyParser.json(), graphqlExpress(req => ({ schema, context: { user: req.user }, cacheControl: true })));
 
+//Playground tool for GraphQL
 api.get('/explore', expressPlayground({ endpoint: '/graphql' }));
 
 server.listen(config.port, () => {
