@@ -8,27 +8,32 @@ const bcryptService = require('../../services/bcrypt.service');
 const AuthController = () => {
   const register = async (req, res) => {
     const {
+      name,
+      lastname,
       email,
       password,
-      password2,
     } = req.body;
 
-    if (password === password2) {
       try {
         const user = await User.create({
+          name,
+          lastname,
           email,
           password,
         });
-        const token = authService().issue({
-          id: user.id,
-          type: 'USER'
+
+        const restaurant = await Restaurant.create({
+          name: 'Add your restaurant name',
+          description: 'Add your restaurant description',
         });
-        return res.status(200).json({ token, user });
+
+        restaurant.setUser(user);
+        restaurant.save();
+
+        return res.status(200).json({ restaurant, user });
       } catch (err) {
         return res.status(500).json({ msg: 'Internal server error' });
       }
-    }
-    return res.status(400).json({ msg: 'Bad Request: Passwords don\'t match' });
   };
 
   const loginCustomer = async (req, res) => {

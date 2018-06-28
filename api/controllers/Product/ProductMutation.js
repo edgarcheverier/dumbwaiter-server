@@ -134,6 +134,10 @@ const addCategoryToProduct = {
   type: ProductType,
   description: 'The mutation that allows you to update an existing Product by Id',
   args: {
+    id: {
+      name: 'id',
+      type: GraphQLInt,
+    },
     name: {
       name: 'name',
       type: GraphQLString,
@@ -143,11 +147,14 @@ const addCategoryToProduct = {
       type: GraphQLString,
     },
   },
-  resolve: async (product, { name, categoryName }) => {
-    const foundProduct = await Product.findOne({where: {name: name}});
+  resolve: async (product, { id, categoryName, name }) => {
+    let foundProduct = await Product.findOne({where: {id}});
+
+    //TODO remove name search (only while loading mocks)
+    if(!foundProduct) foundProduct = await Product.findOne({where: {name}});
 
     if (!foundProduct) {
-      throw new Error(`Product not found with name ${name}`);
+      throw new Error(`Product not found with id ${id}`);
     }
 
     const foundCategory = await Category.findOne( {

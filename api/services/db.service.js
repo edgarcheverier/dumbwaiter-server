@@ -33,8 +33,8 @@ const dbService = (environment, migrate) => {
     try {
 
       //TODO remove this after development is finished
-      await dropDB();
-      await syncDB();
+      // await dropDB();
+      // await syncDB();
       successfulDBStart();
     } catch (err) {
       errorDBStart(err);

@@ -13,7 +13,7 @@ const {
 } = require('./User/UserMutation');
 
 //Restaurant querys and mutations
-const restaurantQuery = require('./Restaurant/RestaurantQuery');
+const { restaurantQuery, restaurantQueryRms } = require('./Restaurant/RestaurantQuery');
 const {
   createRestaurant,
   updateRestaurant,
@@ -66,6 +66,7 @@ const RootQuery = new GraphQLObjectType({
   description: 'This is the root query which holds all possible READ entrypoints for the GraphQL API',
   fields: () => ({
     restaurant: restaurantQuery,
+    restaurantRms: restaurantQueryRms,
     user: userQuery,
     product: productQuery,
     productRms: productQueryRms,

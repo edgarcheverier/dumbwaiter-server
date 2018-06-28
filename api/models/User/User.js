@@ -15,6 +15,12 @@ const User = sequelize.define('User', {
   name: {
     type: Sequelize.STRING,
   },
+  lastname: {
+    type: Sequelize.STRING,
+  },
+  address: {
+    type: Sequelize.STRING,
+  },
   externalLoginId: {
     type: Sequelize.STRING,
   },
