@@ -1,8 +1,9 @@
-const atob = require('atob');
-const bcrypt = require('bcrypt-nodejs');
-const User = require('../../models/User/User');
-const Restaurant = require('../../models/Restaurant/Restaurant');
-const authService = require('../../services/auth.service');
+const FB            = require('fb');
+const atob          = require('atob');
+const bcrypt        = require('bcrypt-nodejs');
+const User          = require('../../models/User/User');
+const Restaurant    = require('../../models/Restaurant/Restaurant');
+const authService   = require('../../services/auth.service');
 const bcryptService = require('../../services/bcrypt.service');
 
 const AuthController = () => {
@@ -36,23 +37,58 @@ const AuthController = () => {
       }
   };
 
-  const loginCustomer = async (req, res) => {
-      const authorization = atob(req.headers.authorization.split('Basic ').pop()).split(':');
-      const externalLoginId = authorization[0];
-      if (externalLoginId) {
-        try {
-          const user = await User.findOne({
-            where: {
-              externalLoginId,
-              type: 'USER'
-            },
-          });
+  const authFacebook = async (req, res) => {
+      const { accessToken, userID, expiresIn, signedRequest } = req.body;
 
-          if (!user) {
-            return res.status(400).json({ msg: 'Bad Request: User not found' });
+      console.log('BODY', req.body);
+      console.log(accessToken, userID, expiresIn, signedRequest);
+
+      FB.options({
+        appId: process.env.FACEBOOK_APP_ID,
+        appSecret: process.env.FACEBOOK_APP_SECRET,
+        version: process.env.FACEBOOK_API_VERSION,
+        accessToken: accessToken,
+      });
+
+      console.log({
+        appId: process.env.FACEBOOK_APP_ID,
+        appSecret: process.env.FACEBOOK_APP_SECRET,
+        version: process.env.FACEBOOK_API_VERSION,
+        accessToken: accessToken,
+      });
+
+      FB.api('/me', async (response) => {
+        if(!response || res.error) {
+          console.log(!response ? 'error occurred' : res.error);
+          return;
+        }
+        console.log('RESPONSE', response);
+        try {
+          let user = {};
+          if(response.email) {
+            user = await User.findOne({
+              where: {
+                email: response.email,
+                type: 'USER'
+              },
+            });
+          } else if(response.name) {
+            user = await User.findOne({
+              where: {
+                email: response.name,
+                type: 'USER'
+              },
+            });
           }
 
-          const token = authService().issue({
+          if (!user) {
+            user = await User.create({
+              name: response.name,
+              externalLoginId: userID
+            });
+          }
+
+          const token = await authService().issue({
             id: user.id,
             type: 'USER'
           });
@@ -62,9 +98,8 @@ const AuthController = () => {
           console.log(err);
           return res.status(500).json({ msg: 'Internal server error' });
         }
-      }
-
-      return res.status(400).json({ msg: 'Bad Request: Email and password don\'t match' });
+        return res.status(400).json({ msg: 'Bad Request: Email and password don\'t match' });
+      });
   }
 
   const loginRms = async (req, res) => {
@@ -109,17 +144,23 @@ const AuthController = () => {
     return res.status(400).json({ msg: 'Bad Request: Email and password don\'t match' });
   };
 
-  const validate = (req, res) => {
+  const validate = async (req, res) => {
     const tokenToVerify = req.body.token;
-
+    console.log(req.body);
+    console.log(tokenToVerify);
     try {
-      const err = authService().verify(tokenToVerify);
-
-      if (err) {
+      const response = authService().verify(tokenToVerify);
+      if ((response && !response.id) || !response) {
         return res.status(401).json({ isvalid: false, err: 'Unauthorized: Invalid Token' });
       }
 
-      return res.status(200).json({ isvalid: true });
+      const user = await User.findOne({
+        where: {
+          id: response.id
+        },
+      });
+
+      return res.status(200).json({ isvalid: true, user });
     } catch (err) {
       console.log(err);
       return res.status(500).json({ msg: 'Internal server error' });
@@ -127,7 +168,7 @@ const AuthController = () => {
   };
 
   return {
-    loginCustomer,
+    authFacebook,
     register,
     loginRms,
     validate,

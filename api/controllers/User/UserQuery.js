@@ -22,6 +22,10 @@ const userQuery = {
       name: 'email',
       type: GraphQLString,
     },
+    externalLoginId: {
+      name: 'externalLoginId',
+      type: GraphQLInt,
+    },
   },
   resolve: (user, args) => User.findAll({ where: args }),
 };
