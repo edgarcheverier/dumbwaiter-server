@@ -1,25 +1,26 @@
+require('dotenv').config()
 /**
  * third party libraries
  */
-const cors = require('cors');
-const http = require('http');
-const helmet = require('helmet');
-const express = require('express');
-const bodyParser = require('body-parser');
-const mapRoutes = require('express-routes-mapper');
-const { graphqlExpress } = require('apollo-server-express');
-const expressPlayground = require('graphql-playground-middleware-express').default;
+const cors                = require('cors');
+const http                = require('http');
+const helmet              = require('helmet');
+const express             = require('express');
+const morgan              = require('morgan')('combined');
+const bodyParser          = require('body-parser');
+const mapRoutes           = require('express-routes-mapper');
+const { graphqlExpress }  = require('apollo-server-express');
+const expressPlayground   = require('graphql-playground-middleware-express').default;
 
 /**
  * server configuration
  */
-const config = require('../config/');
-const schema = require('./controllers/');
-const auth = require('./policies/auth.policy');
-const dbService = require('./services/db.service');
-const authService = require('./services/auth.service');
-
-const environment = process.env.NODE_ENV;
+const config              = require('../config/');
+const schema              = require('./controllers/');
+const auth                = require('./policies/auth.policy');
+const dbService           = require('./services/db.service');
+const authService         = require('./services/auth.service');
+const environment         = process.env.NODE_ENV;
 
 /**
 * Custome middleware
@@ -37,6 +38,7 @@ const DB = dbService(environment, config.migrate).start();
 // allow cross origin requests
 // configure to allow only requests from certain origins
 api.use(cors());
+api.use(morgan);
 
 // secure express app
 api.use(helmet({

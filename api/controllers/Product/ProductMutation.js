@@ -87,6 +87,7 @@ const createProduct = {
     return newProduct;
   },
 }
+
 const updateProduct = {
   type: ProductType,
   description: 'The mutation that allows you to update an existing Product by Id',
