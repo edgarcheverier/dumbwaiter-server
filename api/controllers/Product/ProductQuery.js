@@ -38,8 +38,6 @@ const productQuery = {
     },
   },
   resolve: (product, args, context, more, ctx) => {
-    console.log('Args', args);
-    console.log('Context', context);
     return Product.findAll({ where: args })
   },
 };

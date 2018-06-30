@@ -21,4 +21,5 @@ const ConnectionType = new GraphQLObjectType({
   }),
 });
 
+
 module.exports = ConnectionType;

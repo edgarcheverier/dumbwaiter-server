@@ -59,7 +59,7 @@ api.use('/', mappedRoutes);
 
 // private GraphQL API
 api.all('/graphql');
-api.use('/graphql', bodyParser.json(), graphqlExpress(req => ({ schema, context: { user: req.user }, cacheControl: true })));
+api.use('/graphql', bodyParser.json(), graphqlExpress(req => ({ schema, context: { auth: req.auth }, cacheControl: true })));
 
 //Playground tool for GraphQL
 api.get('/explore', expressPlayground({ endpoint: '/graphql' }));

@@ -23,15 +23,7 @@ const addTable = {
     },
   },
   resolve: async (table, { name, restaurantId }) => {
-    console.log('find restaurant');
-    // const foundRestaurant = await Restaurant.findOne({id: restaurantId});
-    //
-    // if (!foundRestaurant) {
-    //   throw new Error(`Restaurant with id ${restaurantId} does not exist`);
-    // }
-
-    console.log('find table');
-    const foundTable = await Table.findOne({name, restaurantId});
+    const foundTable = await Table.findOne( {where: {name, restaurantId} });
 
     if (foundTable) {
       throw new Error(`Table exists with the same name ${name} in this restaurant`);

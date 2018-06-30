@@ -3,7 +3,7 @@ const Sequelize = require('sequelize');
 const sequelize = require('../../../config/database');
 const Product = require('../Product/Product');
 const Table = require('../Table/Table');
-const User = require('../User/User');
+const Owner = require('../Owner/Owner');
 
 const tableName = 'restaurants';
 
@@ -27,5 +27,5 @@ const Restaurant = sequelize.define('Restaurant', {
 
 Restaurant.hasMany(Table, { as: 'tables', foreignKey: 'restaurantId' });
 Restaurant.hasMany(Product, { as: 'products', foreignKey: 'restaurantId' });
-Restaurant.belongsTo(User);
+Restaurant.belongsTo(Owner, {foreignKey: 'ownerId'});
 module.exports = Restaurant;
