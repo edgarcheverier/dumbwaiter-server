@@ -4,14 +4,14 @@ const bcryptSevice = require('../../services/bcrypt.service');
 const sequelize = require('../../../config/database');
 
 const hooks = {
-  beforeCreate(user) {
-    user.password = bcryptSevice().password(user); // eslint-disable-line no-param-reassign
+  beforeCreate(owner) {
+    owner.password = bcryptSevice().password(owner); // eslint-disable-line no-param-reassign
   },
 };
 
-const tableName = 'users';
+const tableName = 'owners';
 
-const User = sequelize.define('User', {
+const Owner = sequelize.define('Owner', {
   name: {
     type: Sequelize.STRING,
   },
@@ -21,27 +21,20 @@ const User = sequelize.define('User', {
   address: {
     type: Sequelize.STRING,
   },
-  externalLoginId: {
-    type: Sequelize.STRING,
-  },
   password: {
     type: Sequelize.STRING,
   },
   email: {
     type: Sequelize.STRING,
     unique: true,
-  },
-  type: {
-    type: Sequelize.STRING,
-    default: 'USER', // USER | OWNER | RUNNER
-  },
+  }
 }, { hooks, tableName });
 
 // eslint-disable-next-line
-User.prototype.toJSON = function () {
+Owner.prototype.toJSON = function () {
   const values = Object.assign({}, this.get());
   delete values.password;
   return values;
 };
 
-module.exports = User;
+module.exports = Owner;

@@ -7,7 +7,9 @@ const {
   GraphQLInputObjectType,
 } = require('graphql');
 
-const { protectRMSRestaurant } = require('../protectDecorator');
+const {
+  protectRMSRestaurant,
+} = require('../protectDecorator');
 
 const ProductType = require('../../models/Product/ProductType');
 const Product = require('../../models/Product/Product');
@@ -18,14 +20,15 @@ const categoriesInputType = new GraphQLInputObjectType({
   name: 'categoriesInput',
   fields: {
     name: {
-      type: new GraphQLNonNull(GraphQLString)
+      type: new GraphQLNonNull(GraphQLString),
     },
-  }
+  },
 });
 
 const createProduct = {
   type: ProductType,
-  description: 'The mutation that allows you to create a new product',
+  description:
+    'The mutation that allows you to create a new product',
   args: {
     name: {
       name: 'name',
@@ -44,7 +47,7 @@ const createProduct = {
       type: GraphQLString,
     },
     restaurantId: {
-      name: 'resturantId',
+      name: 'restaurantId',
       type: GraphQLInt,
     },
     createdAt: {
@@ -56,11 +59,18 @@ const createProduct = {
       type: GraphQLString,
     },
   },
-  resolve: async (product, { name, description, price, photo, restaurantId }) => {
-    const foundProduct = await Product.findOne({ where: { name, restaurantId } });
+  resolve: async (
+    product,
+    { name, description, price, photo, restaurantId }
+  ) => {
+    const foundProduct = await Product.findOne({
+      where: { name, restaurantId },
+    });
 
     if (foundProduct) {
-      throw new Error('Product already exists with the same name');
+      throw new Error(
+        'Product already exists with the same name'
+      );
     }
 
     if (!name) {
@@ -71,26 +81,27 @@ const createProduct = {
       name,
       description,
       price: parseFloat(price),
-      restaurantId
+      restaurantId,
     };
 
     const newProduct = await Product.create(createProduct);
 
-    if(photo) {
-        Photo.create({
-          url: photo,
-          type: 'PRODUCT',
-          externalId: newProduct.id
-        })
+    if (photo) {
+      Photo.create({
+        url: photo,
+        type: 'PRODUCT',
+        externalId: newProduct.id,
+      });
     }
 
     return newProduct;
   },
-}
+};
 
 const updateProduct = {
   type: ProductType,
-  description: 'The mutation that allows you to update an existing Product by Id',
+  description:
+    'The mutation that allows you to update an existing Product by Id',
   args: {
     id: {
       name: 'id',
@@ -100,8 +111,8 @@ const updateProduct = {
       name: 'name',
       type: GraphQLString,
     },
-    resturantId: {
-      name: 'resturantId',
+    restaurantId: {
+      name: 'restaurantId',
       type: GraphQLInt,
     },
     description: {
@@ -111,10 +122,22 @@ const updateProduct = {
     price: {
       name: 'price',
       type: GraphQLFloat,
-    }
+    },
   },
-  resolve: async (product, { id, name, description, price, restaurantId, categories }) => {
-    const foundProduct = await Product.findOne({ where: { id } });
+  resolve: async (
+    product,
+    {
+      id,
+      name,
+      description,
+      price,
+      restaurantId,
+      categories,
+    }
+  ) => {
+    const foundProduct = await Product.findOne({
+      where: { id },
+    });
 
     if (!foundProduct) {
       throw new Error('Product not found');
@@ -124,7 +147,7 @@ const updateProduct = {
       name,
       description,
       price: parseFloat(price),
-      restaurantId
+      restaurantId,
     };
 
     return foundProduct.update(updatedProduct);
@@ -133,7 +156,8 @@ const updateProduct = {
 
 const addCategoryToProduct = {
   type: ProductType,
-  description: 'The mutation that allows you to update an existing Product by Id',
+  description:
+    'The mutation that allows you to update an existing Product by Id',
   args: {
     id: {
       name: 'id',
@@ -143,16 +167,25 @@ const addCategoryToProduct = {
       name: 'name',
       type: GraphQLString,
     },
+    restaurantId: {
+      name: 'restaurantId',
+      type: GraphQLInt,
+    },
     categoryName: {
       name: 'categoryName',
       type: GraphQLString,
     },
   },
-  resolve: async (product, { id, categoryName, name }) => {
-    let foundProduct = await Product.findOne({where: {id}});
+  resolve: async (
+    product,
+    { id, categoryName, name, restaurantId }
+  ) => {
+    let foundProduct = await Product.findOne({
+      where: { id, restaurantId },
+    });
 
     //TODO remove name search (only while loading mocks)
-    if(!foundProduct) foundProduct = await Product.findOne({where: {name}});
+    if(!foundProduct) foundProduct = await Product.findOne({ where: { name , restaurantId } });
 
     if (!foundProduct) {
       throw new Error(`Product not found with id ${id}`);
@@ -174,25 +207,25 @@ const addCategoryToProduct = {
 
 const deleteProduct = {
   type: ProductType,
-  description: 'The mutation that allows you to delete a existing Product by Id',
+  description:
+    'The mutation that allows you to delete a existing Product by Id',
   args: {
     id: {
       name: 'id',
       type: new GraphQLNonNull(GraphQLInt),
     },
   },
-  resolve: (product, { id }) => (
-    Product
-      .delete()
-      .where({
-        id,
-      })
-  ),
+  resolve: (product, { id }) =>
+    Product.delete().where({
+      id,
+    }),
 };
 
 module.exports = {
   createProduct: protectRMSRestaurant(createProduct),
   updateProduct: protectRMSRestaurant(updateProduct),
   deleteProduct: protectRMSRestaurant(deleteProduct),
-  addCategoryToProduct: protectRMSRestaurant(addCategoryToProduct),
+  addCategoryToProduct: protectRMSRestaurant(
+    addCategoryToProduct
+  ),
 };

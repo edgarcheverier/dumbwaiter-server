@@ -1,32 +1,20 @@
 {
-  "env": {
-    "browser": true,
-    "es6": true
-  },
-  "extends": "eslint:recommended",
+  "root": true,
   "parserOptions": {
     "sourceType": "module",
+    "parser": "babel-eslint",
     "ecmaVersion": 2017
   },
-  "rules": {
-    "indent": ["error", 2],
-    "linebreak-style": ["error", "unix"],
-    "semi": ["error", "always"],
-    "no-use-before-define": 0,
-    "no-unused-vars": 0,
-    "no-console": 0,
-    "no-undef": 0
+  "env": {
+    "browser": true
   },
-  "prettier/prettier": [
-    "error",
-    {
-      "trailingComma": "es5",
-      "singleQuote": true,
-      "printWidth": 80
-    }
-  ],
-  "plugins": [
-    "prettier"
-  ]
+  "extends": ["prettier", "prettier/standard"],
+  "plugins": ["prettier"],
+  "rules": {
+    "prettier/prettier": "error",
+    "curly": ["error", "all"],
+    "no-mixed-operators": "error",
+    "no-unexpected-multiline": "error",
+    "quotes": ["error", "single"]
+  }
 }
-

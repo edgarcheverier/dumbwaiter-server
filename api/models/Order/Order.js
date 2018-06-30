@@ -8,7 +8,7 @@ const tableName = 'notification';
 const Notification = sequelize.define('Notification', {
 text: {
   type: Sequelize.STRING
-}
+},
 type: {
   type: Sequelize.STRING
 }

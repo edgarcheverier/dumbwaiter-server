@@ -27,25 +27,4 @@ module.exports = [
     email: 'viiralt.h@gmail.com',
     type: 'USER',
   },
-  {
-    name: 'Lars Berger',
-    password: 'test',
-    externalLoginId: 100004,
-    email: 'lars.berger@yahoo.com',
-    type: 'RESTAURANT_OWNER',
-  },
-  {
-    name: 'McMardigan',
-    password: 'test',
-    externalLoginId: null,
-    email: 'mcmardigan@dumbwaiter.com',
-    type: 'RESTAURANT_OWNER',
-  },
-  {
-    name: 'McDonalds',
-    password: 'test',
-    externalLoginId: null,
-    email: 'mcdonals@dumbwaiter.com',
-    type: 'RESTAURANT_OWNER',
-  },
 ]

@@ -12,6 +12,14 @@ const {
   deleteUser,
 } = require('./User/UserMutation');
 
+//Owner querys and mutations
+const ownerQuery = require('./Owner/OwnerQuery');
+const {
+  createOwner,
+  updateOwner,
+  deleteOwner,
+} = require('./Owner/OwnerMutation');
+
 //Restaurant querys and mutations
 const { restaurantQuery, restaurantQueryRms } = require('./Restaurant/RestaurantQuery');
 const {
@@ -68,6 +76,7 @@ const RootQuery = new GraphQLObjectType({
     restaurant: restaurantQuery,
     restaurantRms: restaurantQueryRms,
     user: userQuery,
+    owner: ownerQuery,
     product: productQuery,
     productRms: productQueryRms,
     productOrder: productOrderQuery,
@@ -84,6 +93,10 @@ const RootMutation = new GraphQLObjectType({
     createUser,
     updateUser,
     deleteUser,
+
+    createOwner,
+    updateOwner,
+    deleteOwner,
 
     addPhoto,
     updatePhoto,

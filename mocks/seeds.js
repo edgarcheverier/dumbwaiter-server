@@ -1,4 +1,4 @@
-const users = require('./users');
+const owners = require('./owners');
 const restaurants = require('./restaurants');
 const categories = require('./categories');
 const tables = require('./tables');
@@ -7,32 +7,15 @@ const food = require('./food');
 
 const execute = {
   CREATE_PRODUCT_CATEGORIES: true,
-  CREATE_USERS: true,
+  CREATE_OWNERS: true,
   CREATE_RESTAURANTS: true,
   CREATE_RESTAURANT_TABLES: true,
-  CREATE_RESTAURANT_PRODUCTS: true,
-  ADD_CATEGORIES_TO_PRODUCTS: false,
+  CREATE_RESTAURANT_PRODUCTS_1: true,
+  CREATE_RESTAURANT_PRODUCTS_2: true,
+  CREATE_RESTAURANT_PRODUCTS_3: true,
 }
 
 const QUERYS = {
-  CREATE_USERS: [
-    ...users.map(user => {
-      return `
-      mutation {
-        createUser(
-          name: "${user.name}"
-          email: "${user.email}"
-          password: "${user.password}"
-          externalLoginId: "${user.externalLoginId}"
-          type: "${user.type}"
-          photo: "${user.photo}"
-        ) {
-          id
-        }
-      }
-      `
-    })
-  ],
   CREATE_RESTAURANTS: [
     ...restaurants.map(restaurant => {
       return `
@@ -43,6 +26,23 @@ const QUERYS = {
           latitude: "${restaurant.latitude}"
           longitude: "${restaurant.longitude}"
           photo: "${restaurant.photo}"
+        ) {
+          id
+        }
+      }
+      `
+    })
+  ],
+  CREATE_OWNERS: [
+    ...owners.map(user => {
+      return `
+      mutation {
+        createOwner(
+          name: "${user.name}"
+          email: "${user.email}"
+          password: "${user.password}"
+          photo: "${user.photo}"
+          restaurantId: ${user.restaurantId}
         ) {
           id
         }
@@ -78,7 +78,7 @@ const QUERYS = {
     })
 
   ],
-  CREATE_RESTAURANT_PRODUCTS: [
+  CREATE_RESTAURANT_PRODUCTS_1: [
     ...[...drinks, ...food].map(product => {
     return `
     mutation {
@@ -95,24 +95,40 @@ const QUERYS = {
     `
     })
   ],
-  ADD_CATEGORIES_TO_PRODUCTS: [
+  CREATE_RESTAURANT_PRODUCTS_2: [
     ...[...drinks, ...food].map(product => {
-      const categories = product.categories;
-      const result = [...categories].map(category => {
-        return `
-        mutation {
-          addCategoryToProduct(
-            name: "${product.name}"
-            categoryName: "${category}"
-          ) {
-            name
-          }
-        }
-        `
-      });
-      return [...result];
+    return `
+    mutation {
+      createProduct(
+        name: "${product.name}"
+        description: "${product.description}"
+        price: "${product.price}"
+        photo: "${(product.photo ? product.photo : "https://www.prikentik.be/media/wysiwyg/streekbieren/PrikenTik-bier.jpg")}"
+        restaurantId: 2
+      ) {
+        id
+      }
+    }
+    `
     })
-  ]
+  ],
+  CREATE_RESTAURANT_PRODUCTS_3: [
+    ...[...drinks, ...food].map(product => {
+    return `
+    mutation {
+      createProduct(
+        name: "${product.name}"
+        description: "${product.description}"
+        price: "${product.price}"
+        photo: "${(product.photo ? product.photo : "https://www.prikentik.be/media/wysiwyg/streekbieren/PrikenTik-bier.jpg")}"
+        restaurantId: 3
+      ) {
+        id
+      }
+    }
+    `
+    })
+  ],
 }
 
 const schema = require('../api/controllers');
