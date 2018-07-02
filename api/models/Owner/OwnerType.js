@@ -13,23 +13,23 @@ const OwnerType = new GraphQLObjectType({
   fields: () => ({
     id: {
       type: GraphQLInt,
-      resolve: (owner) => owner.id,
+      resolve: owner => owner.id,
     },
     name: {
       type: GraphQLString,
-      resolve: (owner) => owner.name,
+      resolve: owner => owner.name,
     },
     email: {
       type: GraphQLString,
-      resolve: (owner) => owner.email,
+      resolve: owner => owner.email,
     },
     createdAt: {
       type: GraphQLString,
-      resolve: (owner) => owner.createdAt,
+      resolve: owner => owner.createdAt,
     },
     updatedAt: {
       type: GraphQLString,
-      resolve: (owner) => owner.updatedAt,
+      resolve: owner => owner.updatedAt,
     },
   }),
 });

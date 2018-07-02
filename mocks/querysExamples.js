@@ -62,8 +62,13 @@ mutation {
     description
     latitude
     longitude
-    photo
+    photos {
+      url
+    }
     tables {
+      activeCode {
+        code
+      }
       name
       positionX
       positionY
@@ -76,6 +81,44 @@ mutation {
       }
       photos {
         url
+      }
+    }
+  }
+}
+
+//Logged user sending Bearer
+mutation {
+  addConnection(restaurantId: 1, code: "DDCF"){
+    id
+    type
+    status
+  }
+}
+
+//Logged restaurant sending Bearer
+mutation {
+  generateTableCode(id: "1") {
+    activeCode {
+      code
+    }
+  }
+}
+
+//Get all active connections
+{
+  connection(status: "ACTIVE") {
+    id
+    status
+    createdAt
+    users {
+      id
+      name
+    }
+    table {
+      id
+      name
+      activeCode {
+      	code
       }
     }
   }

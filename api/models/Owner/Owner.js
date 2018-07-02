@@ -11,27 +11,31 @@ const hooks = {
 
 const tableName = 'owners';
 
-const Owner = sequelize.define('Owner', {
-  name: {
-    type: Sequelize.STRING,
+const Owner = sequelize.define(
+  'Owner',
+  {
+    name: {
+      type: Sequelize.STRING,
+    },
+    lastname: {
+      type: Sequelize.STRING,
+    },
+    address: {
+      type: Sequelize.STRING,
+    },
+    password: {
+      type: Sequelize.STRING,
+    },
+    email: {
+      type: Sequelize.STRING,
+      unique: true,
+    },
   },
-  lastname: {
-    type: Sequelize.STRING,
-  },
-  address: {
-    type: Sequelize.STRING,
-  },
-  password: {
-    type: Sequelize.STRING,
-  },
-  email: {
-    type: Sequelize.STRING,
-    unique: true,
-  }
-}, { hooks, tableName });
+  { hooks, tableName }
+);
 
 // eslint-disable-next-line
-Owner.prototype.toJSON = function () {
+Owner.prototype.toJSON = function() {
   const values = Object.assign({}, this.get());
   delete values.password;
   return values;

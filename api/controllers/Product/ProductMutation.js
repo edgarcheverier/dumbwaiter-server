@@ -87,7 +87,7 @@ const createProduct = {
     const newProduct = await Product.create(createProduct);
 
     if (photo) {
-      Photo.create({
+      await Photo.create({
         url: photo,
         type: 'PRODUCT',
         externalId: newProduct.id,
@@ -185,21 +185,27 @@ const addCategoryToProduct = {
     });
 
     //TODO remove name search (only while loading mocks)
-    if(!foundProduct) foundProduct = await Product.findOne({ where: { name , restaurantId } });
+    if (!foundProduct) {
+      foundProduct = await Product.findOne({
+        where: { name, restaurantId },
+      });
+    }
 
     if (!foundProduct) {
       throw new Error(`Product not found with id ${id}`);
     }
 
-    const foundCategory = await Category.findOne( {
-      where: { name: categoryName }
+    const foundCategory = await Category.findOne({
+      where: { name: categoryName },
     });
 
     if (!foundCategory) {
-      throw new Error(`Category not found with name ${categoryName}`);
+      throw new Error(
+        `Category not found with name ${categoryName}`
+      );
     }
     const categories = await foundProduct.getCategories();
-    await foundProduct.addCategory(foundCategory.id)
+    await foundProduct.addCategory(foundCategory.id);
 
     return foundProduct;
   },

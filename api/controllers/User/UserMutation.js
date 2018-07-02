@@ -11,7 +11,8 @@ const Photo = require('../../models/Photo/Photo');
 
 const createUser = {
   type: UserType,
-  description: 'The mutation that allows you to create a new User',
+  description:
+    'The mutation that allows you to create a new User',
   args: {
     name: {
       name: 'name',
@@ -38,8 +39,13 @@ const createUser = {
       type: new GraphQLNonNull(GraphQLString),
     },
   },
-  resolve: async (user, { name, email, type, photo, password, externalLoginId }) => {
-    const foundUser = await User.findOne({ email });
+  resolve: async (
+    user,
+    { name, email, type, photo, password, externalLoginId }
+  ) => {
+    const foundUser = await User.findOne({
+      where: { email },
+    });
 
     if (foundUser && email !== '') {
       throw new Error('User exists with the same email');
@@ -55,12 +61,12 @@ const createUser = {
 
     const newUser = await User.create(createUser);
 
-    if(photo) {
+    if (photo) {
       Photo.create({
         url: photo,
         type: 'USER',
-        externalId: newUser.id
-      })
+        externalId: newUser.id,
+      });
     }
 
     return newUser;
@@ -69,7 +75,8 @@ const createUser = {
 
 const updateUser = {
   type: UserType,
-  description: 'The mutation that allows you to update an existing User by Id',
+  description:
+    'The mutation that allows you to update an existing User by Id',
   args: {
     id: {
       name: 'id',
@@ -88,7 +95,10 @@ const updateUser = {
       type: GraphQLString,
     },
   },
-  resolve: async (user, { id, name, email, externalLoginId }) => {
+  resolve: async (
+    user,
+    { id, name, email, externalLoginId }
+  ) => {
     const foundUser = await User.findById(id);
 
     if (!foundUser) {
@@ -107,20 +117,18 @@ const updateUser = {
 
 const deleteUser = {
   type: UserType,
-  description: 'The mutation that allows you to delete a existing User by Id',
+  description:
+    'The mutation that allows you to delete a existing User by Id',
   args: {
     id: {
       name: 'id',
       type: new GraphQLNonNull(GraphQLInt),
     },
   },
-  resolve: (user, { id }) => (
-    User
-      .delete()
-      .where({
-        id,
-      })
-  ),
+  resolve: (user, { id }) =>
+    User.delete().where({
+      id,
+    }),
 };
 
 module.exports = {
