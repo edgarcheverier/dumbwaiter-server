@@ -1,20 +1,23 @@
 const Sequelize = require('sequelize');
 
 const sequelize = require('../../../config/database');
-// const Product = require('../Product/Product');
+const ProductOrder = require('../ProductOrder/ProductOrder');
 
-const tableName = 'notification';
+const tableName = 'order';
 
-const Notification = sequelize.define('Notification', {
-text: {
-  type: Sequelize.STRING
-},
-type: {
-  type: Sequelize.STRING
-}
+const Order = sequelize.define(
+  'Order',
+  {
+    status: {
+      type: Sequelize.STRING, //PENDING_PAYMENT | PAID | CANCELLED
+      default: 'PENDING_PAYMENT',
+    },
+  },
+  { tableName }
+);
 
-}, {tableName});
-
-
-
-module.exports = Notification;
+Order.hasMany(ProductOrder, {
+  as: 'Products',
+  foreignKey: 'orderId',
+});
+module.exports = Order;

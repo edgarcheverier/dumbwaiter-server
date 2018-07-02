@@ -5,7 +5,7 @@ const protectCustomer = subject => {
       if (!context.auth || context.auth.type != 'USER')
         throw new Error('Customer not authenticated');
       args.userId = context.auth.id;
-      subject.resolve(entity, args, context, next);
+      return subject.resolve(entity, args, context, next);
     },
   };
 };
@@ -13,13 +13,13 @@ const protectCustomer = subject => {
 const protectRMSUser = subject => {
   return {
     ...subject,
-    resolve: (entity, args, context, next) => {
+    resolve: async (entity, args, context, next) => {
       if (!context.auth || context.auth.type != 'OWNER')
         throw new Error(
           'Restaurant Owner not authenticated'
         );
       args.userId = context.auth.id;
-      subject.resolve(entity, args, context, next);
+      return subject.resolve(entity, args, context, next);
     },
   };
 };

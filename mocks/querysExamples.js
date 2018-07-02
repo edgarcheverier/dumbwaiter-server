@@ -86,14 +86,6 @@ mutation {
   }
 }
 
-//Logged user sending Bearer
-mutation {
-  addConnection(restaurantId: 1, code: "DDCF"){
-    id
-    type
-    status
-  }
-}
 
 //Logged restaurant sending Bearer
 mutation {
@@ -101,6 +93,15 @@ mutation {
     activeCode {
       code
     }
+  }
+}
+
+//Logged user sending Bearer
+mutation {
+  addConnection(restaurantId: 1, code: "CDF3"){
+    id
+    type
+    status
   }
 }
 
@@ -113,6 +114,68 @@ mutation {
     users {
       id
       name
+    }
+    table {
+      id
+      name
+      activeCode {
+      	code
+      }
+    }
+  }
+}
+mutation {
+  createOrder(products: [1,2,3,4,5], connectionId: 1) {
+
+  } 
+}
+
+//Create new order sending User Bearer
+mutation {
+  createOrder(
+    products: [1, 2, 3, 4, 5, 5, 5]
+    connectionId: 1
+    price: 31.00
+  ) {
+    id
+    status
+    products {
+      product {
+        name
+        price
+        categories {
+          name
+        }
+      }
+      price
+    }
+  }
+}
+
+
+//
+{
+  connection(status: "ACTIVE") {
+    id
+    status
+    createdAt
+    users {
+      id
+      name
+    }
+    orders{
+      id
+    	status
+    	products {
+        product {
+          name
+          price
+          categories {
+            name
+          }
+      	}
+      	price
+    	}
     }
     table {
       id

@@ -86,16 +86,14 @@ const addConnection = {
     });
 
     //Check if the user already is in this Connection
-    if (foundUser.length > 0) {
-      throw new Error('User is already connected');
-    } else {
+    if (!foundUser || foundUser.length === 0) {
       const user = await User.findOne({
         where: { id: userId },
       });
       //Connect user to table
       await currentConnection.addUser(user.id);
-      return currentConnection;
     }
+    return currentConnection;
   },
 };
 

@@ -19,6 +19,13 @@ const {
   deleteOwner,
 } = require('./Owner/OwnerMutation');
 
+//Owner querys and mutations
+const orderQuery = require('./Order/OrderQuery');
+const {
+  createOrder,
+  updateOrder,
+} = require('./Order/OrderMutation');
+
 //Restaurant querys and mutations
 const {
   restaurantQuery,
@@ -106,7 +113,8 @@ const RootQuery = new GraphQLObjectType({
     connection: connectionQuery,
     photo: photoQuery,
     table: tableQuery,
-    table: tableCodeQuery,
+    tableCode: tableCodeQuery,
+    order: orderQuery,
     category: categoryQuery,
   }),
 });
@@ -154,6 +162,9 @@ const RootMutation = new GraphQLObjectType({
     updateConnection,
     deleteConnection,
     closeConnection,
+
+    createOrder,
+    updateOrder,
   }),
 });
 

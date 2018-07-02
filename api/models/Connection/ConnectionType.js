@@ -55,6 +55,10 @@ const ConnectionType = new GraphQLObjectType({
       type: new GraphQLList(UserType),
       resolve: connection => connection.getUsers(),
     },
+    orders: {
+      type: new GraphQLList(OrderType),
+      resolve: connection => connection.getOrders(),
+    },
   }),
 });
 
