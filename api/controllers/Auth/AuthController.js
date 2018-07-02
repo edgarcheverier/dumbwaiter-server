@@ -9,8 +9,15 @@ const bcryptService = require('../../services/bcrypt.service');
 
 const AuthController = () => {
   const registerOwner = async (req, res) => {
-    const { name, lastname, email, password } = req.body;
-
+    const {
+      name,
+      lastname,
+      email,
+      password,
+      restaurantname,
+      latitude,
+      longitude,
+    } = req.body;
     try {
       const owner = await Owner.create({
         name,
@@ -20,7 +27,9 @@ const AuthController = () => {
       });
 
       const restaurant = await Restaurant.create({
-        name: 'Add your restaurant name',
+        name: restaurantname,
+        latitude,
+        longitude,
         description: 'Add your restaurant description',
       });
 
@@ -33,6 +42,9 @@ const AuthController = () => {
         .status(500)
         .json({ msg: 'Internal server error' });
     }
+    return res
+      .status(500)
+      .json({ msg: 'Error creating the restaurant' });
   };
 
   const authFacebook = async (req, res) => {
@@ -175,7 +187,6 @@ const AuthController = () => {
           err: 'Unauthorized: Invalid Token',
         });
       }
-      console.log(response);
       let user = {};
       if (response.type == 'USER') {
         user = await User.findOne({
@@ -192,6 +203,13 @@ const AuthController = () => {
           },
         });
         console.log(user);
+      }
+
+      if (!user) {
+        return res.status(401).json({
+          isvalid: false,
+          err: 'Unauthorized: Invalid Token',
+        });
       }
 
       return res.status(200).json({ isvalid: true, user });

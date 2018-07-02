@@ -3,15 +3,21 @@ const Sequelize = require('sequelize');
 const sequelize = require('../../../config/database');
 
 const tableName = 'productorder';
+const Product = require('../Product/Product');
 
-const ProductOrder = sequelize.define('ProductOrder', {
-  status: {
-    type: Sequelize.STRING,
-    default: 'ORDERED' ,// ORDERED | SERVER | CANCELLED
+const ProductOrder = sequelize.define(
+  'ProductOrder',
+  {
+    status: {
+      type: Sequelize.STRING,
+      default: 'ORDERED', // ORDERED | SERVED | CANCELLED
+    },
+    price: {
+      type: Sequelize.STRING,
+    },
   },
-  price: {
-    type: Sequelize.STRING
-  }
-}, {tableName});
+  { tableName }
+);
 
+ProductOrder.hasOne(Product, { foreignKey: 'productId' });
 module.exports = ProductOrder;

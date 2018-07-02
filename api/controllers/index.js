@@ -3,7 +3,6 @@ const {
   GraphQLObjectType,
 } = require('graphql');
 
-
 //User querys and mutations
 const userQuery = require('./User/UserQuery');
 const {
@@ -20,21 +19,50 @@ const {
   deleteOwner,
 } = require('./Owner/OwnerMutation');
 
+//Owner querys and mutations
+const orderQuery = require('./Order/OrderQuery');
+const {
+  createOrder,
+  updateOrder,
+} = require('./Order/OrderMutation');
+
 //Restaurant querys and mutations
-const { restaurantQuery, restaurantQueryRms } = require('./Restaurant/RestaurantQuery');
+const {
+  restaurantQuery,
+  restaurantQueryRms,
+} = require('./Restaurant/RestaurantQuery');
 const {
   createRestaurant,
   updateRestaurant,
   deleteRestaurant,
 } = require('./Restaurant/RestaurantMutation');
 
+//Table querys and mutations
+const tableQuery = require('./Table/TableQuery');
+const {
+  addTable,
+  updateTable,
+  deleteTable,
+  generateTableCode,
+} = require('./Table/TableMutation');
+
+//Table Codes querys and mutations
+const tableCodeQuery = require('./TableCode/TableCodeQuery');
+const {
+  updateTableCode,
+  deleteTableCode,
+} = require('./TableCode/TableCodeMutation');
+
 //Product querys and mutations
-const { productQuery, productQueryRms } = require('./Product/ProductQuery');
+const {
+  productQuery,
+  productQueryRms,
+} = require('./Product/ProductQuery');
 const {
   createProduct,
   updateProduct,
   deleteProduct,
-  addCategoryToProduct
+  addCategoryToProduct,
 } = require('./Product/ProductMutation');
 
 //Category querys and mutations
@@ -53,13 +81,14 @@ const {
   deletePhoto,
 } = require('./Photo/PhotoMutation');
 
-//Table querys and mutations
-const tableQuery = require('./Table/TableQuery');
+//User querys and mutations
+const connectionQuery = require('./Connection/ConnectionQuery');
 const {
-  addTable,
-  updateTable,
-  deleteTable,
-} = require('./Table/TableMutation');
+  addConnection,
+  updateConnection,
+  deleteConnection,
+  closeConnection,
+} = require('./Connection/ConnectionMutation');
 
 //Product querys and mutations
 const productOrderQuery = require('./ProductOrder/ProductOrderQuery');
@@ -71,7 +100,8 @@ const {
 
 const RootQuery = new GraphQLObjectType({
   name: 'rootQuery',
-  description: 'This is the root query which holds all possible READ entrypoints for the GraphQL API',
+  description:
+    'This is the root query which holds all possible READ entrypoints for the GraphQL API',
   fields: () => ({
     restaurant: restaurantQuery,
     restaurantRms: restaurantQueryRms,
@@ -80,15 +110,19 @@ const RootQuery = new GraphQLObjectType({
     product: productQuery,
     productRms: productQueryRms,
     productOrder: productOrderQuery,
+    connection: connectionQuery,
     photo: photoQuery,
     table: tableQuery,
+    tableCode: tableCodeQuery,
+    order: orderQuery,
     category: categoryQuery,
   }),
 });
 
 const RootMutation = new GraphQLObjectType({
   name: 'rootMutation',
-  description: 'This is the root mutation which holds all possible WRITE entrypoints for the GraphQL API',
+  description:
+    'This is the root mutation which holds all possible WRITE entrypoints for the GraphQL API',
   fields: () => ({
     createUser,
     updateUser,
@@ -122,6 +156,15 @@ const RootMutation = new GraphQLObjectType({
     addTable,
     updateTable,
     deleteTable,
+    generateTableCode,
+
+    addConnection,
+    updateConnection,
+    deleteConnection,
+    closeConnection,
+
+    createOrder,
+    updateOrder,
   }),
 });
 

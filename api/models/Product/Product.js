@@ -1,23 +1,31 @@
 const Sequelize = require('sequelize');
 
 const sequelize = require('../../../config/database');
-const Category  = require('../Category/Category')
+const Category = require('../Category/Category');
 
-const tableName  = 'products';
+const tableName = 'products';
 
-const Product = sequelize.define('Product', {
-  name: {
-    type: Sequelize.STRING
+const Product = sequelize.define(
+  'Product',
+  {
+    name: {
+      type: Sequelize.STRING,
+    },
+    description: {
+      type: Sequelize.TEXT,
+    },
+    price: {
+      type: Sequelize.FLOAT,
+    },
   },
-  description: {
-    type: Sequelize.TEXT
-  },
-  price: {
-    type: Sequelize.FLOAT
-  }
-}, {tableName});
+  { tableName }
+);
 
-Category.belongsToMany(Product, {through: 'ProductCategory'});
-Product.belongsToMany(Category, {through: 'ProductCategory'});
+Category.belongsToMany(Product, {
+  through: 'ProductCategory',
+});
+Product.belongsToMany(Category, {
+  through: 'ProductCategory',
+});
 
 module.exports = Product;
