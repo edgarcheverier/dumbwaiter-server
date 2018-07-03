@@ -3,6 +3,7 @@ const {
   GraphQLInt,
   GraphQLString,
   GraphQLList,
+  GraphQLFloat,
 } = require('graphql');
 
 const TableCodeType = require('../TableCode/TableCodeType');
@@ -10,8 +11,7 @@ const Table = require('../Table/Table');
 
 const TableType = new GraphQLObjectType({
   name: 'Table',
-  description:
-    'This represents each table within the restaurant',
+  description: 'This represents each table within the restaurant',
   fields: () => ({
     id: {
       type: GraphQLInt,
@@ -22,11 +22,19 @@ const TableType = new GraphQLObjectType({
       resolve: table => table.name,
     },
     positionX: {
-      type: GraphQLInt,
+      type: GraphQLFloat,
       resolve: table => table.positionX,
     },
     positionY: {
-      type: GraphQLInt,
+      type: GraphQLFloat,
+      resolve: table => table.positionY,
+    },
+    width: {
+      type: GraphQLFloat,
+      resolve: table => table.positionX,
+    },
+    height: {
+      type: GraphQLFloat,
       resolve: table => table.positionY,
     },
     activeCode: {

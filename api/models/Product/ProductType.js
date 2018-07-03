@@ -16,39 +16,47 @@ const ProductType = new GraphQLObjectType({
   fields: () => ({
     id: {
       type: GraphQLInt,
-      resolve: (product) => product.id,
+      resolve: product => product.id,
     },
     name: {
       type: GraphQLString,
-      resolve: (product) => product.name,
+      resolve: product => product.name,
     },
     description: {
       type: GraphQLString,
-      resolve: (product) => product.description,
+      resolve: product => product.description,
+    },
+    similar: {
+      type: GraphQLList(GraphQLString),
+      resolve: product => {
+        return ['Product 1', 'Product 2', 'Product 3'];
+      },
     },
     photos: {
       type: GraphQLList(PhotoType),
-      resolve: async (product) => {
+      resolve: async product => {
         const listPhotos = [];
-        return await Photo.findAll({ where: {
-          externalId: product.id, type: 'PRODUCT' }
+        return await Photo.findAll({
+          where: {
+            externalId: product.id,
+            type: 'PRODUCT',
+          },
         }).then(res => {
-          res.forEach((resultSetItem) => {
+          res.forEach(resultSetItem => {
             const photo = resultSetItem.get();
             listPhotos.push({ url: photo.url });
           });
-          return listPhotos;
         });
-      }
+      },
     },
     categories: {
       type: new GraphQLList(CategoryType),
-      resolve: (product) => product.getCategories(),
+      resolve: product => product.getCategories(),
     },
     price: {
       type: GraphQLFloat,
-      resolve: (product) => product.price,
-    }
+      resolve: product => product.price,
+    },
   }),
 });
 
