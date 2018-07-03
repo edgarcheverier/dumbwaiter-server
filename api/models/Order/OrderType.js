@@ -23,6 +23,10 @@ const OrderType = new GraphQLObjectType({
       type: GraphQLList(ProductOrderType),
       resolve: order => order.getProducts(),
     },
+    createdAt: {
+      type: GraphQLString,
+      resolve: order => order.createdAt,
+    },
   }),
 });
 
