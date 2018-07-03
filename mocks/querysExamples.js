@@ -152,7 +152,6 @@ mutation {
   }
 }
 
-
 //
 {
   connection(status: "ACTIVE") {

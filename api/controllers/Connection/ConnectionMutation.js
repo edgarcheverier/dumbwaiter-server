@@ -7,6 +7,9 @@ const {
 
 const { protectCustomer } = require('../protectDecorator');
 
+const { withFilter } = require('graphql-subscriptions'); // will narrow down the changes subscriptions listen to
+const { socket } = require('../../subscriptions'); // import socket object for subscriptions to work
+
 const User = require('../../models/User/User');
 const Table = require('../../models/Table/Table');
 const TableCode = require('../../models/TableCode/TableCode');
@@ -33,10 +36,7 @@ const addConnection = {
       type: GraphQLInt,
     },
   },
-  resolve: async (
-    connection,
-    { userId, restaurantId, code }
-  ) => {
+  resolve: async (connection, { userId, restaurantId, code }) => {
     const foundTable = await Table.findOne({
       where: { restaurantId },
       include: [
@@ -51,15 +51,11 @@ const addConnection = {
     });
 
     if (!foundTable) {
-      throw new Error(
-        'The code is not valid for this table'
-      );
+      throw new Error('The code is not valid for this table');
     }
 
     if (foundTable.restaurantId !== restaurantId) {
-      throw new Error(
-        'This table is not from this restaurant'
-      );
+      throw new Error('This table is not from this restaurant');
     }
 
     //Check if a connection exists with this code and create if not
@@ -92,6 +88,9 @@ const addConnection = {
       });
       //Connect user to table
       await currentConnection.addUser(user.id);
+      socket.publish('CONNECTION_CREATED', {
+        newConnection: currentConnection,
+      });
     }
     return currentConnection;
   },
@@ -119,10 +118,7 @@ const updateConnection = {
       type: GraphQLInt,
     },
   },
-  resolve: async (
-    connection,
-    { url, order, type, externalId }
-  ) => {
+  resolve: async (connection, { url, order, type, externalId }) => {
     const foundConnection = await Connection.findOne({
       url,
       order,

@@ -1,15 +1,8 @@
-const {
-  GraphQLSchema,
-  GraphQLObjectType,
-} = require('graphql');
+const { GraphQLSchema, GraphQLObjectType, GraphQLString } = require('graphql');
 
 //User querys and mutations
 const userQuery = require('./User/UserQuery');
-const {
-  createUser,
-  updateUser,
-  deleteUser,
-} = require('./User/UserMutation');
+const { createUser, updateUser, deleteUser } = require('./User/UserMutation');
 
 //Owner querys and mutations
 const ownerQuery = require('./Owner/OwnerQuery');
@@ -21,10 +14,7 @@ const {
 
 //Owner querys and mutations
 const orderQuery = require('./Order/OrderQuery');
-const {
-  createOrder,
-  updateOrder,
-} = require('./Order/OrderMutation');
+const { createOrder, updateOrder } = require('./Order/OrderMutation');
 
 //Restaurant querys and mutations
 const {
@@ -54,10 +44,7 @@ const {
 } = require('./TableCode/TableCodeMutation');
 
 //Product querys and mutations
-const {
-  productQuery,
-  productQueryRms,
-} = require('./Product/ProductQuery');
+const { productQuery, productQueryRms } = require('./Product/ProductQuery');
 const {
   createProduct,
   updateProduct,
@@ -75,11 +62,7 @@ const {
 
 //Photo querys and mutations
 const photoQuery = require('./Photo/PhotoQuery');
-const {
-  addPhoto,
-  updatePhoto,
-  deletePhoto,
-} = require('./Photo/PhotoMutation');
+const { addPhoto, updatePhoto, deletePhoto } = require('./Photo/PhotoMutation');
 
 //User querys and mutations
 const connectionQuery = require('./Connection/ConnectionQuery');
@@ -167,10 +150,16 @@ const RootMutation = new GraphQLObjectType({
     updateOrder,
   }),
 });
+const subscriptions = require('./subscriptions');
+const rootSubscriptions = new GraphQLObjectType({
+  name: 'Subscription',
+  fields: subscriptions,
+});
 
 const schema = new GraphQLSchema({
   query: RootQuery,
   mutation: RootMutation,
+  subscription: rootSubscriptions,
 });
 
 module.exports = schema;

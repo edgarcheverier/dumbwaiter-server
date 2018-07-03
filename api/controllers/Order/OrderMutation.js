@@ -8,6 +8,9 @@ const {
 
 const { protectCustomer } = require('../protectDecorator');
 
+const { withFilter } = require('graphql-subscriptions'); // will narrow down the changes subscriptions listen to
+const { pubsub } = require('../../subscriptions'); // import pubsub object for subscriptions to work
+
 const Order = require('../../models/Order/Order');
 const Product = require('../../models/Product/Product');
 const OrderType = require('../../models/Order/OrderType');
@@ -36,10 +39,7 @@ const createOrder = {
       type: new GraphQLList(GraphQLInt),
     },
   },
-  resolve: async (
-    order,
-    { connectionId, products, userId, price }
-  ) => {
+  resolve: async (order, { connectionId, products, userId, price }) => {
     if (products.length === 0) {
       throw new Error('No products sent to the order');
     }
@@ -64,11 +64,8 @@ const createOrder = {
     const productsCreate = [];
     for (const prop in productsTotals) {
       calculatedPrice +=
-        productsTotals[prop].price *
-        productsTotals[prop].total;
+        productsTotals[prop].price * productsTotals[prop].total;
     }
-
-    console.log(calculatedPrice);
 
     if (calculatedPrice != price) {
       throw new Error(
@@ -77,10 +74,9 @@ const createOrder = {
     }
 
     //Check that the connection still active
-    const connection = await Connection.findById(
-      connectionId,
-      { where: { status: 'ACTIVE' } }
-    );
+    const connection = await Connection.findById(connectionId, {
+      where: { status: 'ACTIVE' },
+    });
 
     if (!connection) {
       throw new Error('Connection is not active anymore');
@@ -95,13 +91,16 @@ const createOrder = {
         const newProductOrder = await ProductOrder.create({
           price: productsTotals[prop].price,
         });
-        await newProductOrder.setProduct(
-          productsTotals[prop].productId
-        );
+        await newProductOrder.setProduct(productsTotals[prop].productId);
         await newProductOrder.save();
         await newOrder.addProducts(newProductOrder.id);
       }
     }
+
+    console.log('publish onConnectionCreated');
+    //Sending message to channel
+
+    pubsub.publish('onOrderCreated', { newOrder });
 
     //Add order to the connection
     await connection.addOrder(newOrder.id);
@@ -111,8 +110,7 @@ const createOrder = {
 
 const updateOrder = {
   type: OrderType,
-  description:
-    'The mutation that allows you to change the status of an order',
+  description: 'The mutation that allows you to change the status of an order',
   args: {
     id: {
       name: 'id',

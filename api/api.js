@@ -6,10 +6,13 @@ const cors = require('cors');
 const http = require('http');
 const helmet = require('helmet');
 const express = require('express');
-const morgan = require('morgan')('combined');
 const bodyParser = require('body-parser');
+const morgan = require('morgan')('combined');
+const { execute, subscribe } = require('graphql');
+const { pubsub } = require('./subscriptions');
 const mapRoutes = require('express-routes-mapper');
 const { graphqlExpress } = require('apollo-server-express');
+const { SubscriptionServer } = require('subscriptions-transport-ws');
 const expressPlayground = require('graphql-playground-middleware-express')
   .default;
 
@@ -33,10 +36,7 @@ const authorization = require('./middlewares/authorization');
  */
 const api = express();
 const server = http.Server(api);
-const mappedRoutes = mapRoutes(
-  config.publicRoutes,
-  'api/controllers/Auth/'
-);
+const mappedRoutes = mapRoutes(config.publicRoutes, 'api/controllers/Auth/');
 const DB = dbService(environment, config.migrate).start();
 
 // allow cross origin requests
@@ -78,10 +78,43 @@ api.use(
 //Playground tool for GraphQL
 api.get(
   '/explore',
-  expressPlayground({ endpoint: '/graphql' })
+  expressPlayground({
+    endpoint: '/graphql',
+    subscriptionsEndpoint: `ws://localhost:${process.env.PORT}/subscriptions`,
+  })
 );
 
 server.listen(config.port, () => {
+  new SubscriptionServer(
+    {
+      execute,
+      subscribe,
+      schema,
+      onConnect: (connectionParams, webSocket, context) => {
+        console.log('Subscription server connected');
+      },
+      onOperation: (message, params, webSocket) => {
+        console.log('Subscription server operation');
+        console.log(message);
+        console.log(params);
+        return message;
+      },
+      onOperationComplete: webSocket => {
+        console.log('Subscription server operation complete');
+      },
+      onDisconnect: (webSocket, context) => {
+        console.log('Subscription server disconnected');
+      },
+    },
+    {
+      server: server,
+      path: '/subscriptions',
+    }
+  );
+
+  console.log('GraphQL Server is now running');
+  console.log('Subscriptions are running on /subscriptions');
+
   if (
     environment !== 'production' &&
     environment !== 'development' &&
