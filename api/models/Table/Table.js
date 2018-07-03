@@ -13,10 +13,20 @@ const Table = sequelize.define(
       type: Sequelize.STRING,
     },
     positionX: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.FLOAT,
+      default: 0.0,
     },
     positionY: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.FLOAT,
+      default: 0.0,
+    },
+    width: {
+      type: Sequelize.FLOAT,
+      default: 20.0,
+    },
+    height: {
+      type: Sequelize.FLOAT,
+      efault: 20.0,
     },
   },
   { tableName }

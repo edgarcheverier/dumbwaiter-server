@@ -2,12 +2,11 @@ const {
   GraphQLString,
   GraphQLInt,
   GraphQLNonNull,
+  GraphQLFloat,
 } = require('graphql');
 const randomstring = require('randomstring');
 
-const {
-  protectRMSRestaurant,
-} = require('../protectDecorator');
+const { protectRMSRestaurant } = require('../protectDecorator');
 
 const TableType = require('../../models/Table/TableType');
 const Table = require('../../models/Table/Table');
@@ -16,8 +15,7 @@ const Restaurant = require('../../models/Restaurant/Restaurant');
 
 const addTable = {
   type: TableType,
-  description:
-    'The mutation that allows you to create a new Table',
+  description: 'The mutation that allows you to create a new Table',
   args: {
     name: {
       name: 'name',
@@ -50,8 +48,7 @@ const addTable = {
 
 const updateTable = {
   type: TableType,
-  description:
-    'The mutation that allows you to update an existing Table by Id',
+  description: 'The mutation that allows you to update an existing Table by Id',
   args: {
     id: {
       name: 'id',
@@ -60,6 +57,22 @@ const updateTable = {
     name: {
       name: 'name',
       type: GraphQLString,
+    },
+    width: {
+      name: 'width',
+      type: GraphQLFloat,
+    },
+    height: {
+      name: 'height',
+      type: GraphQLFloat,
+    },
+    positionX: {
+      name: 'positionX',
+      type: GraphQLFloat,
+    },
+    positionY: {
+      name: 'positioY',
+      type: GraphQLFloat,
     },
   },
   resolve: async (table, { id, name }) => {
@@ -79,8 +92,7 @@ const updateTable = {
 
 const deleteTable = {
   type: TableType,
-  description:
-    'The mutation that allows you to delete a existing Table by Id',
+  description: 'The mutation that allows you to delete a existing Table by Id',
   args: {
     id: {
       name: 'id',
@@ -95,8 +107,7 @@ const deleteTable = {
 
 const generateTableCode = {
   type: TableType,
-  description:
-    'The mutation that allows you to create a new table code',
+  description: 'The mutation that allows you to create a new table code',
   args: {
     id: {
       name: 'id',
@@ -152,7 +163,5 @@ module.exports = {
   addTable,
   updateTable,
   deleteTable,
-  generateTableCode: protectRMSRestaurant(
-    generateTableCode
-  ),
+  generateTableCode: protectRMSRestaurant(generateTableCode),
 };

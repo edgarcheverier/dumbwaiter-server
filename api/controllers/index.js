@@ -81,6 +81,12 @@ const {
   deleteProductFromOrder,
 } = require('./ProductOrder/ProductOrderMutation');
 
+//Notifications mutations
+const {
+  createNotification,
+  deleteNotification,
+} = require('./Notification/NotificationMutation');
+
 const RootQuery = new GraphQLObjectType({
   name: 'rootQuery',
   description:
@@ -148,6 +154,9 @@ const RootMutation = new GraphQLObjectType({
 
     createOrder,
     updateOrder,
+
+    createNotification,
+    deleteNotification,
   }),
 });
 const subscriptions = require('./subscriptions');
