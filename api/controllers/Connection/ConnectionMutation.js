@@ -7,6 +7,9 @@ const {
 
 const { protectCustomer } = require('../protectDecorator');
 
+const { withFilter } = require('graphql-subscriptions'); // will narrow down the changes subscriptions listen to
+const { pubsub } = require('../../subscriptions'); // import socket object for subscriptions to work
+
 const User = require('../../models/User/User');
 const Table = require('../../models/Table/Table');
 const TableCode = require('../../models/TableCode/TableCode');
@@ -33,10 +36,7 @@ const addConnection = {
       type: GraphQLInt,
     },
   },
-  resolve: async (
-    connection,
-    { userId, restaurantId, code }
-  ) => {
+  resolve: async (connection, { userId, restaurantId, code }) => {
     const foundTable = await Table.findOne({
       where: { restaurantId },
       include: [
@@ -51,15 +51,11 @@ const addConnection = {
     });
 
     if (!foundTable) {
-      throw new Error(
-        'The code is not valid for this table'
-      );
+      throw new Error('The code is not valid for this table');
     }
 
     if (foundTable.restaurantId !== restaurantId) {
-      throw new Error(
-        'This table is not from this restaurant'
-      );
+      throw new Error('This table is not from this restaurant');
     }
 
     //Check if a connection exists with this code and create if not
@@ -90,8 +86,12 @@ const addConnection = {
       const user = await User.findOne({
         where: { id: userId },
       });
+      console.log(userId);
       //Connect user to table
       await currentConnection.addUser(user.id);
+      pubsub.publish('CONNECTION_CREATED', {
+        newConnection: currentConnection,
+      });
     }
     return currentConnection;
   },
@@ -102,42 +102,24 @@ const updateConnection = {
   description:
     'The mutation that allows you to create connect an user with a table from a restaurant',
   args: {
-    externalId: {
+    id: {
       name: 'externalId',
       type: GraphQLInt,
     },
-    order: {
+    status: {
       name: 'order',
-      type: GraphQLInt,
-    },
-    type: {
-      name: 'type',
       type: GraphQLString,
     },
-    url: {
-      name: 'url',
-      type: GraphQLInt,
-    },
   },
-  resolve: async (
-    connection,
-    { url, order, type, externalId }
-  ) => {
-    const foundConnection = await Connection.findOne({
-      url,
-      order,
-      externalId,
-      type,
-      order,
-    });
+  resolve: async (connection, { id, status }) => {
+    const foundConnection = await Connection.findById(id);
 
     if (!foundConnection) {
       throw new Error('Connection not found');
     }
 
     const updatedConnection = {
-      url,
-      order,
+      status,
     };
 
     return foundConnection.update(updatedConnection);

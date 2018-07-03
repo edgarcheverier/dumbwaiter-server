@@ -98,7 +98,7 @@ mutation {
 
 //Logged user sending Bearer
 mutation {
-  addConnection(restaurantId: 1, code: "CDF3"){
+  addConnection(restaurantId: 1, code: "B7E2"){
     id
     type
     status
@@ -151,7 +151,6 @@ mutation {
     }
   }
 }
-
 
 //
 {

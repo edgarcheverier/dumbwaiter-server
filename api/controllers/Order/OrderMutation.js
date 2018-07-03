@@ -8,6 +8,9 @@ const {
 
 const { protectCustomer } = require('../protectDecorator');
 
+const { withFilter } = require('graphql-subscriptions'); // will narrow down the changes subscriptions listen to
+const { pubsub } = require('../../subscriptions'); // import pubsub object for subscriptions to work
+
 const Order = require('../../models/Order/Order');
 const Product = require('../../models/Product/Product');
 const OrderType = require('../../models/Order/OrderType');
@@ -25,7 +28,7 @@ const createOrder = {
     },
     products: {
       name: 'products',
-      type: GraphQLNonNull(new GraphQLList(GraphQLInt)),
+      type: GraphQLNonNull(GraphQLString),
     },
     price: {
       name: 'price',
@@ -36,17 +39,15 @@ const createOrder = {
       type: new GraphQLList(GraphQLInt),
     },
   },
-  resolve: async (
-    order,
-    { connectionId, products, userId, price }
-  ) => {
-    if (products.length === 0) {
+  resolve: async (order, { connectionId, products, userId, price }) => {
+    let productsList = products.split(',').map(e => Number(e));
+    if (productsList.length === 0) {
       throw new Error('No products sent to the order');
     }
 
     const productsTotals = {};
-    for (var i = 0; i < products.length; i++) {
-      const productId = products[i];
+    for (var i = 0; i < productsList.length; i++) {
+      const productId = productsList[i];
       if (!productsTotals.hasOwnProperty(productId)) {
         const product = await Product.findById(productId);
         productsTotals[productId] = {
@@ -64,11 +65,8 @@ const createOrder = {
     const productsCreate = [];
     for (const prop in productsTotals) {
       calculatedPrice +=
-        productsTotals[prop].price *
-        productsTotals[prop].total;
+        Number(productsTotals[prop].price) * Number(productsTotals[prop].total);
     }
-
-    console.log(calculatedPrice);
 
     if (calculatedPrice != price) {
       throw new Error(
@@ -77,10 +75,9 @@ const createOrder = {
     }
 
     //Check that the connection still active
-    const connection = await Connection.findById(
-      connectionId,
-      { where: { status: 'ACTIVE' } }
-    );
+    const connection = await Connection.findById(connectionId, {
+      where: { status: 'ACTIVE' },
+    });
 
     if (!connection) {
       throw new Error('Connection is not active anymore');
@@ -90,18 +87,21 @@ const createOrder = {
     const newOrder = await Order.create({
       status: 'PENDING_PAYMENT',
     });
+    console.log(productsTotals);
     for (const prop in productsTotals) {
       for (var i = 0; i < productsTotals[prop].total; i++) {
         const newProductOrder = await ProductOrder.create({
+          status: 'ORDERED',
           price: productsTotals[prop].price,
         });
-        await newProductOrder.setProduct(
-          productsTotals[prop].productId
-        );
+        await newProductOrder.setProduct(productsTotals[prop].productId);
         await newProductOrder.save();
         await newOrder.addProducts(newProductOrder.id);
       }
     }
+
+    //Sending message to channel
+    pubsub.publish('onOrderCreated', { onOrderCreated: { newOrder } });
 
     //Add order to the connection
     await connection.addOrder(newOrder.id);
@@ -111,8 +111,7 @@ const createOrder = {
 
 const updateOrder = {
   type: OrderType,
-  description:
-    'The mutation that allows you to change the status of an order',
+  description: 'The mutation that allows you to change the status of an order',
   args: {
     id: {
       name: 'id',
