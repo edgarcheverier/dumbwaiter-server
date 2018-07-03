@@ -28,7 +28,7 @@ const createOrder = {
     },
     products: {
       name: 'products',
-      type: GraphQLNonNull(new GraphQLList(GraphQLInt)),
+      type: GraphQLNonNull(GraphQLString),
     },
     price: {
       name: 'price',
@@ -40,13 +40,14 @@ const createOrder = {
     },
   },
   resolve: async (order, { connectionId, products, userId, price }) => {
-    if (products.length === 0) {
+    let productsList = products.split(',').map(e => Number(e));
+    if (productsList.length === 0) {
       throw new Error('No products sent to the order');
     }
 
     const productsTotals = {};
-    for (var i = 0; i < products.length; i++) {
-      const productId = products[i];
+    for (var i = 0; i < productsList.length; i++) {
+      const productId = productsList[i];
       if (!productsTotals.hasOwnProperty(productId)) {
         const product = await Product.findById(productId);
         productsTotals[productId] = {
@@ -64,7 +65,7 @@ const createOrder = {
     const productsCreate = [];
     for (const prop in productsTotals) {
       calculatedPrice +=
-        productsTotals[prop].price * productsTotals[prop].total;
+        Number(productsTotals[prop].price) * Number(productsTotals[prop].total);
     }
 
     if (calculatedPrice != price) {
@@ -86,9 +87,11 @@ const createOrder = {
     const newOrder = await Order.create({
       status: 'PENDING_PAYMENT',
     });
+    console.log(productsTotals);
     for (const prop in productsTotals) {
       for (var i = 0; i < productsTotals[prop].total; i++) {
         const newProductOrder = await ProductOrder.create({
+          status: 'ORDERED',
           price: productsTotals[prop].price,
         });
         await newProductOrder.setProduct(productsTotals[prop].productId);
@@ -97,10 +100,8 @@ const createOrder = {
       }
     }
 
-    console.log('publish onConnectionCreated');
     //Sending message to channel
-
-    pubsub.publish('onOrderCreated', { newOrder });
+    pubsub.publish('onOrderCreated', { onOrderCreated: { newOrder } });
 
     //Add order to the connection
     await connection.addOrder(newOrder.id);

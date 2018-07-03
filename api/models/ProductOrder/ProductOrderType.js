@@ -2,6 +2,7 @@ const {
   GraphQLObjectType,
   GraphQLInt,
   GraphQLString,
+  GraphQLFloat,
 } = require('graphql');
 
 const ProductType = require('../Product/ProductType');
@@ -16,11 +17,15 @@ const ProductOrderType = new GraphQLObjectType({
       resolve: productorder => productorder.id,
     },
     status: {
-      type: GraphQLInt,
+      type: GraphQLString,
       resolve: productorder => productorder.status,
     },
+    orderId: {
+      type: GraphQLInt,
+      resolve: productorder => productorder.orderId,
+    },
     price: {
-      type: GraphQLString,
+      type: GraphQLFloat,
       resolve: productorder => productorder.price,
     },
     product: {

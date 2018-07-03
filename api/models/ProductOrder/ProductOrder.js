@@ -19,5 +19,5 @@ const ProductOrder = sequelize.define(
   { tableName }
 );
 
-ProductOrder.hasOne(Product, { foreignKey: 'productId' });
+ProductOrder.belongsTo(Product, { foreignKey: 'productId' });
 module.exports = ProductOrder;

@@ -80,7 +80,7 @@ api.get(
   '/explore',
   expressPlayground({
     endpoint: '/graphql',
-    subscriptionsEndpoint: `ws://localhost:${process.env.PORT}/subscriptions`,
+    subscriptionsEndpoint: 'ws://localhost:2017/subscriptions',
   })
 );
 
@@ -91,19 +91,19 @@ server.listen(config.port, () => {
       subscribe,
       schema,
       onConnect: (connectionParams, webSocket, context) => {
-        console.log('Subscription server connected');
+        // console.log('Subscription server connected');
       },
       onOperation: (message, params, webSocket) => {
-        console.log('Subscription server operation');
-        console.log(message);
-        console.log(params);
+        // console.log('Subscription server operation');
+        // console.log(message);
+        // console.log(params);
         return message;
       },
       onOperationComplete: webSocket => {
-        console.log('Subscription server operation complete');
+        // console.log('Subscription server operation complete');
       },
       onDisconnect: (webSocket, context) => {
-        console.log('Subscription server disconnected');
+        // console.log('Subscription server disconnected');
       },
     },
     {

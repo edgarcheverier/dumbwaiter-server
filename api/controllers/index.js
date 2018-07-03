@@ -77,7 +77,7 @@ const {
 const productOrderQuery = require('./ProductOrder/ProductOrderQuery');
 const {
   addProductToOrder,
-  updateProductFromOrder,
+  updateOrderProduct,
   deleteProductFromOrder,
 } = require('./ProductOrder/ProductOrderMutation');
 
@@ -129,7 +129,7 @@ const RootMutation = new GraphQLObjectType({
     deleteCategory,
 
     addProductToOrder,
-    updateProductFromOrder,
+    updateOrderProduct,
     deleteProductFromOrder,
 
     createRestaurant,
