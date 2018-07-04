@@ -81,7 +81,7 @@ const updateTable = {
       type: GraphQLFloat,
     },
     positionY: {
-      name: 'positioY',
+      name: 'positionY',
       type: GraphQLFloat,
     },
   },

@@ -35,6 +35,22 @@ const createOwner = {
       name: 'restaurantId',
       type: GraphQLInt,
     },
+    restaurantName: {
+      name: 'restaurantName',
+      type: GraphQLInt,
+    },
+    latitude: {
+      name: 'latitude',
+      type: GraphQLString,
+    },
+    longitude: {
+      name: 'longitude',
+      type: GraphQLString,
+    },
+    address: {
+      name: 'address',
+      type: GraphQLString,
+    },
   },
   resolve: async (
     owner,

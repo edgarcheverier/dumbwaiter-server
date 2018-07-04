@@ -26,12 +26,6 @@ const ProductType = new GraphQLObjectType({
       type: GraphQLString,
       resolve: product => product.description,
     },
-    similar: {
-      type: GraphQLList(GraphQLString),
-      resolve: product => {
-        return ['Product 1', 'Product 2', 'Product 3'];
-      },
-    },
     photos: {
       type: GraphQLList(PhotoType),
       resolve: async product => {
@@ -46,6 +40,7 @@ const ProductType = new GraphQLObjectType({
             const photo = resultSetItem.get();
             listPhotos.push({ url: photo.url });
           });
+          return listPhotos;
         });
       },
     },
