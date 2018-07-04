@@ -46,7 +46,6 @@ const ProductType = new GraphQLObjectType({
             const photo = resultSetItem.get();
             listPhotos.push({ url: photo.url });
           });
-          return listPhotos;
         });
       },
     },

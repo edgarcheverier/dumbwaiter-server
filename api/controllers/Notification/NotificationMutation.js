@@ -1,5 +1,6 @@
 const { GraphQLString, GraphQLInt, GraphQLNonNull } = require('graphql');
 
+
 const { ON_ORDER_PRODUCT_CHANGED } = require('../Subscriptions/events'); // import pubsub object for subscriptions to work
 
 const NotificationType = require('../../models/Notification/NotificationType');

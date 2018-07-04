@@ -13,9 +13,6 @@ const Notification = sequelize.define(
     type: {
       type: Sequelize.STRING,
     },
-    externalId: {
-      type: Sequelize.STRING,
-    },
   },
   { tableName }
 );
