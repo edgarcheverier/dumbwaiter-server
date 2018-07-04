@@ -1,9 +1,14 @@
-const onConnectionCreated = require('./onConnectionCreated');
-const onOrderCreated = require('./onOrderCreated');
-const onNotificationCreated = require('./onNotificationCreated');
+//Customer susbscriptions
+const onOrderProductChanged = require('./onProductOrderChanged');
+
+//Restaurant Subscriptions
+const onCustomerCallsWaiter = require('./onCustomerCallsWaiter');
+const onCustomerConnection = require('./onCustomerConnection');
+const onCustomerOrder = require('./onCustomerOrder');
 
 module.exports = {
-  onOrderCreated,
-  onConnectionCreated,
-  onNotificationCreated,
+  onCustomerConnection,
+  onCustomerOrder,
+  onCustomerCallsWaiter,
+  onOrderProductChanged,
 };

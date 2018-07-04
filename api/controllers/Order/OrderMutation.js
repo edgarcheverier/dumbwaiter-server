@@ -9,12 +9,13 @@ const {
 const { protectCustomer } = require('../protectDecorator');
 
 const { withFilter } = require('graphql-subscriptions'); // will narrow down the changes subscriptions listen to
-const { pubsub } = require('../../subscriptions'); // import pubsub object for subscriptions to work
 
 const Order = require('../../models/Order/Order');
+const { emit } = require('../Subscriptions/actions');
 const Product = require('../../models/Product/Product');
 const OrderType = require('../../models/Order/OrderType');
 const Connection = require('../../models/Connection/Connection');
+const { ON_CUSTOMER_ORDER } = require('../Subscriptions/events');
 const ProductOrder = require('../../models/ProductOrder/ProductOrder');
 
 const createOrder = {
@@ -68,11 +69,11 @@ const createOrder = {
         Number(productsTotals[prop].price) * Number(productsTotals[prop].total);
     }
 
-    if (calculatedPrice != price) {
-      throw new Error(
-        'Price has changed since the user added the product to the cart'
-      );
-    }
+    // if (calculatedPrice != price) {
+    //   throw new Error(
+    //     `Price has changed since the user added the product to the cart ${calculatedPrice} != ${price}`
+    //   );
+    // }
 
     //Check that the connection still active
     const connection = await Connection.findById(connectionId, {
@@ -87,7 +88,7 @@ const createOrder = {
     const newOrder = await Order.create({
       status: 'PENDING_PAYMENT',
     });
-    console.log(productsTotals);
+
     for (const prop in productsTotals) {
       for (var i = 0; i < productsTotals[prop].total; i++) {
         const newProductOrder = await ProductOrder.create({
@@ -101,7 +102,14 @@ const createOrder = {
     }
 
     //Sending message to channel
-    pubsub.publish('onOrderCreated', { onOrderCreated: { newOrder } });
+    emit('onCustomerOrder', {
+      text: 'New order created',
+      userId: userId,
+      connectionId: connection.id,
+      restaurantId: connection.restaurantId,
+      orderId: newOrder.id,
+      type: 'restaurant',
+    });
 
     //Add order to the connection
     await connection.addOrder(newOrder.id);

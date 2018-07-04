@@ -12,8 +12,10 @@ const { pubsub } = require('../../subscriptions'); // import socket object for s
 
 const User = require('../../models/User/User');
 const Table = require('../../models/Table/Table');
+const { emit } = require('../Subscriptions/actions');
 const TableCode = require('../../models/TableCode/TableCode');
 const Connection = require('../../models/Connection/Connection');
+const { ON_CUSTOMER_CONNECTION } = require('../Subscriptions/events');
 const ConnectionType = require('../../models/Connection/ConnectionType');
 
 const generateCodeForTable = {};
@@ -77,22 +79,26 @@ const addConnection = {
       throw new Error('Connection is not active anymore');
     }
 
-    const foundUser = await currentConnection.getUsers({
+    let foundUser = await currentConnection.getUsers({
       where: { id: userId },
     });
 
     //Check if the user already is in this Connection
     if (!foundUser || foundUser.length === 0) {
-      const user = await User.findOne({
+      foundUser = await User.findOne({
         where: { id: userId },
       });
-      console.log(userId);
       //Connect user to table
-      await currentConnection.addUser(user.id);
-      pubsub.publish('CONNECTION_CREATED', {
-        newConnection: currentConnection,
-      });
+      await currentConnection.addUser(foundUser.id);
     }
+    console.log('EMITING CONNECTION!');
+    //Sending message to channel
+    emit('onCustomerConnection', {
+      restaurantId,
+      userId,
+      userName: foundUser.name,
+      connectionId: currentConnection.id,
+    });
     return currentConnection;
   },
 };

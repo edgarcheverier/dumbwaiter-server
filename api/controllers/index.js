@@ -2,7 +2,12 @@ const { GraphQLSchema, GraphQLObjectType, GraphQLString } = require('graphql');
 
 //User querys and mutations
 const userQuery = require('./User/UserQuery');
-const { createUser, updateUser, deleteUser } = require('./User/UserMutation');
+const {
+  createUser,
+  updateUser,
+  deleteUser,
+  callWaiter,
+} = require('./User/UserMutation');
 
 //Owner querys and mutations
 const ownerQuery = require('./Owner/OwnerQuery');
@@ -116,6 +121,7 @@ const RootMutation = new GraphQLObjectType({
     createUser,
     updateUser,
     deleteUser,
+    callWaiter,
 
     createOwner,
     updateOwner,

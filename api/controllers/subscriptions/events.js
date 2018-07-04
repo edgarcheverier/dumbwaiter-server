@@ -1,5 +1,6 @@
 module.exports = {
-  ON_NOTIFICATION_CREATED: 'onNotificationCreated',
-  ON_CONNECTION_CREATED: 'onConnectionCreated',
-  ON_ORDER_CREATED: 'onOrderCreated',
+  ON_ORDER_PRODUCT_CHANGED: 'onOrderProductChanged',
+  ON_CUSTOMER_CONNECTION: 'onCustomerConnection',
+  ON_CUSTOMER_ORDER: 'onCustomerOrder',
+  ON_CUSTOMER_CALL_WAITER: 'onCustomerCallsWaiter',
 };

@@ -31,11 +31,11 @@ const TableType = new GraphQLObjectType({
     },
     width: {
       type: GraphQLFloat,
-      resolve: table => table.positionX,
+      resolve: table => table.width,
     },
     height: {
       type: GraphQLFloat,
-      resolve: table => table.positionY,
+      resolve: table => table.height,
     },
     activeCode: {
       type: GraphQLList(TableCodeType),
@@ -50,7 +50,6 @@ const TableType = new GraphQLObjectType({
             },
           })
           .then(res => {
-            console.log(res);
             return res;
           });
       },

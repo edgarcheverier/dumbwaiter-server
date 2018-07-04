@@ -1,7 +1,7 @@
 const { GraphQLString, GraphQLInt, GraphQLNonNull } = require('graphql');
 
-const { pubsub } = require('../../subscriptions'); // import pubsub object for subscriptions to work
-const { ON_NOTIFICATION_CREATED } = require('../subscriptions/events'); // import pubsub object for subscriptions to work
+
+const { ON_ORDER_PRODUCT_CHANGED } = require('../Subscriptions/events'); // import pubsub object for subscriptions to work
 
 const NotificationType = require('../../models/Notification/NotificationType');
 const Notification = require('../../models/Notification/Notification');
@@ -24,12 +24,7 @@ const createNotification = {
       text,
       type,
     };
-
     const newNotification = await Notification.create(createNotification);
-
-    pubsub.publish(ON_NOTIFICATION_CREATED, {
-      ON_NOTIFICATION_CREATED: newNotification,
-    });
     return newNotification;
   },
 };
