@@ -1,18 +1,17 @@
-const {
-  GraphQLString,
-  GraphQLInt,
-  GraphQLNonNull,
-} = require('graphql');
+const { GraphQLString, GraphQLInt, GraphQLNonNull } = require('graphql');
 const merge = require('lodash.merge');
 
-const UserType = require('../../models/User/UserType');
+const { protectCustomer } = require('../protectDecorator');
+
 const User = require('../../models/User/User');
 const Photo = require('../../models/Photo/Photo');
+const { emit } = require('../Subscriptions/actions');
+const UserType = require('../../models/User/UserType');
+const NotificationType = require('../../models/Notification/NotificationType');
 
 const createUser = {
   type: UserType,
-  description:
-    'The mutation that allows you to create a new User',
+  description: 'The mutation that allows you to create a new User',
   args: {
     name: {
       name: 'name',
@@ -75,8 +74,7 @@ const createUser = {
 
 const updateUser = {
   type: UserType,
-  description:
-    'The mutation that allows you to update an existing User by Id',
+  description: 'The mutation that allows you to update an existing User by Id',
   args: {
     id: {
       name: 'id',
@@ -95,10 +93,7 @@ const updateUser = {
       type: GraphQLString,
     },
   },
-  resolve: async (
-    user,
-    { id, name, email, externalLoginId }
-  ) => {
+  resolve: async (user, { id, name, email, externalLoginId }) => {
     const foundUser = await User.findById(id);
 
     if (!foundUser) {
@@ -117,8 +112,7 @@ const updateUser = {
 
 const deleteUser = {
   type: UserType,
-  description:
-    'The mutation that allows you to delete a existing User by Id',
+  description: 'The mutation that allows you to delete a existing User by Id',
   args: {
     id: {
       name: 'id',
@@ -131,8 +125,45 @@ const deleteUser = {
     }),
 };
 
+const callWaiter = {
+  type: NotificationType,
+  description:
+    'The mutation that allows to call a waiter from the current restaurant of the user',
+  args: {
+    userId: {
+      name: 'userId',
+      type: GraphQLInt,
+    },
+    restaurantId: {
+      name: 'restaurantId',
+      type: GraphQLInt,
+    },
+    connectionId: {
+      name: 'connectionId',
+      type: GraphQLInt,
+    },
+    tableCode: {
+      name: 'tableCode',
+      type: GraphQLString,
+    },
+  },
+  resolve: async (user, { userId, restaurantId, tableCode, connectionId }) => {
+    //Get the real connection of t
+    const foundUser = await User.findById(userId);
+    emit('onCustomerCallsWaiter', {
+      userId,
+      restaurantId,
+      tableCode,
+      userName: foundUser.name,
+    });
+
+    return { id: userId, restaurantId, tableCode, userName: foundUser.name };
+  },
+};
+
 module.exports = {
   createUser,
   updateUser,
   deleteUser,
+  callWaiter: protectCustomer(callWaiter),
 };

@@ -1,7 +1,6 @@
 const Sequelize = require('sequelize');
 
 const sequelize = require('../../../config/database');
-// const Product = require('../Product/Product');
 
 const tableName = 'notification';
 
@@ -12,6 +11,9 @@ const Notification = sequelize.define(
       type: Sequelize.STRING,
     },
     type: {
+      type: Sequelize.STRING,
+    },
+    externalId: {
       type: Sequelize.STRING,
     },
   },

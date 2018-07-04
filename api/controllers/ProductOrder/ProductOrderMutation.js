@@ -96,6 +96,15 @@ const updateOrderProduct = {
     const foundOrder = await Order.findById(orderId);
     const foundOrderProducts = await foundOrder.getProducts();
 
+    //Sending message to channel
+    emit(ON_ORDER_PRODUCT_CHANGED, {
+      text: 'Product status changed',
+      orderId: orderId,
+      productOrderId: id,
+      productStatus: status,
+      type: 'customer',
+    });
+
     if (
       foundOrderProducts.filter(
         el => el.status === 'ORDERED' || el.status === 'IN_PROGRESS'

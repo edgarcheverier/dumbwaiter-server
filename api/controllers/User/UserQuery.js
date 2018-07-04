@@ -1,8 +1,4 @@
-const {
-  GraphQLInt,
-  GraphQLString,
-  GraphQLList,
-} = require('graphql');
+const { GraphQLInt, GraphQLString, GraphQLList } = require('graphql');
 
 const UserType = require('../../models/User/UserType');
 const User = require('../../models/User/User');

@@ -5,6 +5,7 @@ const User = require('../../models/User/User');
 const Owner = require('../../models/Owner/Owner');
 const Restaurant = require('../../models/Restaurant/Restaurant');
 const authService = require('../../services/auth.service');
+const authUserService = require('../../services/auth.user.service');
 const bcryptService = require('../../services/bcrypt.service');
 
 const AuthController = () => {
@@ -38,23 +39,13 @@ const AuthController = () => {
 
       return res.status(200).json({ restaurant, owner });
     } catch (err) {
-      return res
-        .status(500)
-        .json({ msg: 'Internal server error' });
+      return res.status(500).json({ msg: 'Internal server error' });
     }
-    return res
-      .status(500)
-      .json({ msg: 'Error creating the restaurant' });
+    return res.status(500).json({ msg: 'Error creating the restaurant' });
   };
 
   const authFacebook = async (req, res) => {
-    const {
-      accessToken,
-      userID,
-      expiresIn,
-      signedRequest,
-    } = req.body;
-
+    const { accessToken, userID, expiresIn, signedRequest } = req.body;
     FB.options({
       appId: process.env.FACEBOOK_APP_ID,
       appSecret: process.env.FACEBOOK_APP_SECRET,
@@ -71,9 +62,7 @@ const AuthController = () => {
 
     FB.api('/me', async response => {
       if (!response || res.error) {
-        console.log(
-          !response ? 'error occurred' : res.error
-        );
+        console.log(!response ? 'error occurred' : res.error);
         return;
       }
       try {
@@ -109,9 +98,7 @@ const AuthController = () => {
         return res.status(200).json({ token, user });
       } catch (err) {
         console.log(err);
-        return res
-          .status(500)
-          .json({ msg: 'Internal server error' });
+        return res.status(500).json({ msg: 'Internal server error' });
       }
       return res.status(400).json({
         msg: "Bad Request: Email and password don't match",
@@ -138,21 +125,14 @@ const AuthController = () => {
         });
 
         if (!owner) {
-          return res
-            .status(400)
-            .json({ msg: 'Bad Request: User not found' });
+          return res.status(400).json({ msg: 'Bad Request: User not found' });
         }
 
         const restaurant = await Restaurant.findOne({
           where: { ownerId: owner.id },
         });
 
-        if (
-          bcryptService().comparePassword(
-            password,
-            owner.password
-          )
-        ) {
+        if (bcryptService().comparePassword(password, owner.password)) {
           const token = authService().issue({
             id: owner.id,
             type: 'OWNER',
@@ -161,14 +141,10 @@ const AuthController = () => {
           return res.status(200).json({ token, owner });
         }
 
-        return res
-          .status(401)
-          .json({ msg: 'Unauthorized' });
+        return res.status(401).json({ msg: 'Unauthorized' });
       } catch (err) {
         console.log(err);
-        return res
-          .status(500)
-          .json({ msg: 'Internal server error' });
+        return res.status(500).json({ msg: 'Internal server error' });
       }
     }
 
@@ -180,31 +156,7 @@ const AuthController = () => {
   const validate = async (req, res) => {
     const tokenToVerify = req.body.token;
     try {
-      const response = authService().verify(tokenToVerify);
-      if ((response && !response.id) || !response) {
-        return res.status(401).json({
-          isvalid: false,
-          err: 'Unauthorized: Invalid Token',
-        });
-      }
-      let user = {};
-      if (response.type == 'USER') {
-        user = await User.findOne({
-          where: {
-            id: response.id,
-          },
-        });
-      }
-
-      if (response.type == 'OWNER') {
-        user = await Owner.findOne({
-          where: {
-            id: response.id,
-          },
-        });
-        console.log(user);
-      }
-
+      const user = await authUserService().getUser(tokenToVerify);
       if (!user) {
         return res.status(401).json({
           isvalid: false,
@@ -215,9 +167,7 @@ const AuthController = () => {
       return res.status(200).json({ isvalid: true, user });
     } catch (err) {
       console.log(err);
-      return res
-        .status(500)
-        .json({ msg: 'Internal server error' });
+      return res.status(500).json({ msg: 'Internal server error' });
     }
   };
 

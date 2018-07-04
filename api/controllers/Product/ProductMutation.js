@@ -7,9 +7,7 @@ const {
   GraphQLInputObjectType,
 } = require('graphql');
 
-const {
-  protectRMSRestaurant,
-} = require('../protectDecorator');
+const { protectRMSRestaurant } = require('../protectDecorator');
 
 const ProductType = require('../../models/Product/ProductType');
 const Product = require('../../models/Product/Product');
@@ -27,8 +25,7 @@ const categoriesInputType = new GraphQLInputObjectType({
 
 const createProduct = {
   type: ProductType,
-  description:
-    'The mutation that allows you to create a new product',
+  description: 'The mutation that allows you to create a new product',
   args: {
     name: {
       name: 'name',
@@ -68,9 +65,7 @@ const createProduct = {
     });
 
     if (foundProduct) {
-      throw new Error(
-        'Product already exists with the same name'
-      );
+      throw new Error('Product already exists with the same name');
     }
 
     if (!name) {
@@ -126,14 +121,7 @@ const updateProduct = {
   },
   resolve: async (
     product,
-    {
-      id,
-      name,
-      description,
-      price,
-      restaurantId,
-      categories,
-    }
+    { id, name, description, price, restaurantId, categories }
   ) => {
     const foundProduct = await Product.findOne({
       where: { id },
@@ -176,10 +164,7 @@ const addCategoryToProduct = {
       type: GraphQLString,
     },
   },
-  resolve: async (
-    product,
-    { id, categoryName, name, restaurantId }
-  ) => {
+  resolve: async (product, { id, categoryName, name, restaurantId }) => {
     let foundProduct = await Product.findOne({
       where: { id, restaurantId },
     });
@@ -200,9 +185,7 @@ const addCategoryToProduct = {
     });
 
     if (!foundCategory) {
-      throw new Error(
-        `Category not found with name ${categoryName}`
-      );
+      throw new Error(`Category not found with name ${categoryName}`);
     }
     const categories = await foundProduct.getCategories();
     await foundProduct.addCategory(foundCategory.id);
@@ -221,17 +204,18 @@ const deleteProduct = {
       type: new GraphQLNonNull(GraphQLInt),
     },
   },
-  resolve: (product, { id }) =>
-    Product.delete().where({
-      id,
-    }),
+  resolve: async (product, { id }) => {
+    const foundProduct = await Product.findById(id);
+    if (foundProduct) {
+      foundProduct.destroy();
+    }
+    return { id };
+  },
 };
 
 module.exports = {
   createProduct: protectRMSRestaurant(createProduct),
   updateProduct: protectRMSRestaurant(updateProduct),
   deleteProduct: protectRMSRestaurant(deleteProduct),
-  addCategoryToProduct: protectRMSRestaurant(
-    addCategoryToProduct
-  ),
+  addCategoryToProduct: protectRMSRestaurant(addCategoryToProduct),
 };

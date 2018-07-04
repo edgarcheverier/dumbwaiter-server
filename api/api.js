@@ -11,6 +11,7 @@ const morgan = require('morgan')('combined');
 const { execute, subscribe } = require('graphql');
 const { pubsub } = require('./subscriptions');
 const mapRoutes = require('express-routes-mapper');
+const authUserService = require('./services/auth.user.service');
 const { graphqlExpress } = require('apollo-server-express');
 const { SubscriptionServer } = require('subscriptions-transport-ws');
 const expressPlayground = require('graphql-playground-middleware-express')
@@ -90,7 +91,24 @@ server.listen(config.port, () => {
       execute,
       subscribe,
       schema,
-      onConnect: (connectionParams, webSocket, context) => {
+      onConnect: async (connectionParams, webSocket, context) => {
+        let token = false;
+        if (connectionParams.token) {
+          token = connectionParams.token;
+        } else {
+          const matches = connectionParams.Authorization.match(/Bearer\s(\S+)/);
+          if (matches) {
+            token = matches[1];
+          }
+        }
+        if (token) {
+          const user = await authUserService().getUser(token);
+          console.log('Connected throuh socket', user.type, user.id);
+          if (user) {
+            return { user };
+          }
+          throw new Error('Missing auth token!');
+        }
         // console.log('Subscription server connected');
       },
       onOperation: (message, params, webSocket) => {

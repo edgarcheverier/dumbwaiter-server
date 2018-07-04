@@ -25,8 +25,16 @@ const addTable = {
       name: 'restaurantId',
       type: GraphQLNonNull(GraphQLString),
     },
+    width: {
+      name: 'width',
+      type: GraphQLFloat,
+    },
+    height: {
+      name: 'height',
+      type: GraphQLFloat,
+    },
   },
-  resolve: async (table, { name, restaurantId }) => {
+  resolve: async (table, { name, restaurantId, width, height }) => {
     const foundTable = await Table.findOne({
       where: { name, restaurantId },
     });
@@ -40,6 +48,8 @@ const addTable = {
     const createTable = {
       name,
       restaurantId,
+      width,
+      height,
     };
 
     return Table.create(createTable);
@@ -75,16 +85,20 @@ const updateTable = {
       type: GraphQLFloat,
     },
   },
-  resolve: async (table, { id, name }) => {
+  resolve: async (table, { id, name, width, height, positionX, positionY }) => {
     const foundTable = await Table.findById(id);
 
     if (!foundTable) {
       throw new Error('Table not found');
     }
 
-    const updatedTable = merge(foundTable, {
+    const updatedTable = {
       name,
-    });
+      width,
+      height,
+      positionX,
+      positionY,
+    };
 
     return foundTable.update(updatedTable);
   },
@@ -99,10 +113,13 @@ const deleteTable = {
       type: new GraphQLNonNull(GraphQLInt),
     },
   },
-  resolve: (table, { id }) =>
-    Table.delete().where({
-      id,
-    }),
+  resolve: async (table, { id }) => {
+    const foundTable = await Table.findById(id);
+    if (foundTable) {
+      await foundTable.destroy();
+    }
+    return { id };
+  },
 };
 
 const generateTableCode = {
@@ -120,11 +137,8 @@ const generateTableCode = {
   },
   resolve: async (table, { id, restaurantId }) => {
     let code = '';
-    let msg = '';
 
     const foundTable = await Table.findById(id);
-    console.log('TABLE ID', id);
-    console.log(foundTable);
     if (!foundTable) {
       throw new Error('Table does not exist');
     }
@@ -140,7 +154,6 @@ const generateTableCode = {
     });
 
     if (!code.length) {
-      msg = 'New code generated';
       code = randomstring.generate({
         length: 4,
         charset: 'ABCDEFG1234567890',
@@ -151,7 +164,6 @@ const generateTableCode = {
       });
       await foundTable.addCode(tableCode);
     } else {
-      msg = 'Active code already exists for this table';
       code = activeCode.code;
     }
     //Return new code
