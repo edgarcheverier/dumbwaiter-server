@@ -1,0 +1,20 @@
+{
+  "root": true,
+  "parserOptions": {
+    "sourceType": "module",
+    "parser": "babel-eslint",
+    "ecmaVersion": 2017
+  },
+  "env": {
+    "browser": true
+  },
+  "extends": ["prettier", "prettier/standard"],
+  "plugins": ["prettier"],
+  "rules": {
+    "prettier/prettier": "error",
+    "curly": ["error", "all"],
+    "no-mixed-operators": "error",
+    "no-unexpected-multiline": "error",
+    "quotes": ["error", "single"]
+  }
+}
