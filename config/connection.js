@@ -1,17 +1,17 @@
 const development = {
-  database: 'dumbwaiter_testing',
+  database: 'dumbwaiter_develop',
   username: 'root',
   password: 'password',
   host: 'localhost',
-  dialect: 'mysql' || 'sqlite' ||  'postgres',
+  dialect: 'mysql' || 'sqlite' || 'postgres',
 };
 
 const testing = {
-  database: 'dumbwaiter_testing',
+  database: 'dumbwaiter_develop',
   username: 'root',
   password: 'password',
   host: 'localhost',
-  dialect: 'mysql' || 'sqlite' ||  'postgres',
+  dialect: 'mysql' || 'sqlite' || 'postgres',
 };
 
 const production = {

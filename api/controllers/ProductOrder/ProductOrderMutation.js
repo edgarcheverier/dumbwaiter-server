@@ -6,9 +6,10 @@ const {
 } = require('graphql');
 const merge = require('lodash.merge');
 
-const ProductOrderType = require('../../models/ProductOrder/ProductOrderType');
-const ProductOrder = require('../../models/ProductOrder/ProductOrder');
 const Order = require('../../models/Order/Order');
+const { emit } = require('../Subscriptions/actions');
+const ProductOrder = require('../../models/ProductOrder/ProductOrder');
+const ProductOrderType = require('../../models/ProductOrder/ProductOrderType');
 
 const addProductToOrder = {
   type: ProductOrderType,
@@ -96,8 +97,8 @@ const updateOrderProduct = {
     const foundOrder = await Order.findById(orderId);
     const foundOrderProducts = await foundOrder.getProducts();
 
-    //Sending message to channel
-    emit(ON_ORDER_PRODUCT_CHANGED, {
+    console.log('emiting!');
+    emit('onProductOrderChanged', {
       text: 'Product status changed',
       orderId: orderId,
       productOrderId: id,

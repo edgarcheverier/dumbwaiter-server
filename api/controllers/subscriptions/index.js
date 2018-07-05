@@ -1,5 +1,5 @@
 //Customer susbscriptions
-const onOrderProductChanged = require('./onProductOrderChanged');
+const onProductOrderChanged = require('./onProductOrderChanged');
 
 //Restaurant Subscriptions
 const onCustomerCallsWaiter = require('./onCustomerCallsWaiter');
@@ -10,5 +10,5 @@ module.exports = {
   onCustomerConnection,
   onCustomerOrder,
   onCustomerCallsWaiter,
-  onOrderProductChanged,
+  onProductOrderChanged,
 };

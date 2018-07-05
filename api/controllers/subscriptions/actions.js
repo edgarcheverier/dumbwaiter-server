@@ -12,9 +12,11 @@ const emit = (channel, options) => {
         onCustomerConnection: options,
       });
 
-    case 'onOrderProductChanged':
-      return pubsub.publish('onOrderProductChanged', {
-        onOrderProductChanged: options,
+    case 'onProductOrderChanged':
+      console.log('channel!', channel);
+      console.log(options);
+      return pubsub.publish('onProductOrderChanged', {
+        onProductOrderChanged: options,
       });
 
     case 'onCustomerCallsWaiter':

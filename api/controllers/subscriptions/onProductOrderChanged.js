@@ -1,13 +1,12 @@
 const { GraphQLInt } = require('graphql');
 
 const { pubsub } = require('../../subscriptions');
-const { ON_ORDER_PRODUCT_CHANGED } = require('./events');
 const NotificationType = require('../../models/Notification/NotificationType');
 const { withFilter } = require('graphql-subscriptions');
 
 const { protectCustomer } = require('../protectDecorator');
 
-const productOrderChangeSubscription = {
+module.exports = {
   type: NotificationType,
   args: {
     orderId: {
@@ -32,16 +31,19 @@ const productOrderChangeSubscription = {
     },
   },
   subscribe: withFilter(
-    () => pubsub.asyncIterator('onOrderProductChanged'),
+    () => {
+      return pubsub.asyncIterator('onProductOrderChanged');
+    },
     (payload, args) => {
+      console.log('firing!');
       if (args.userId) {
-        if (payload.onOrderProductChanged.userId == args.userId) {
+        if (payload.onProductOrderChanged.userId == args.userId) {
           return true;
         }
       }
-      return false;
+      //TODO it's not filtering by user because the order is not related to the user, only to the connection
+      //This should return false if the userId is not the same...
+      return true;
     }
   ),
 };
-
-module.exports = productOrderChangeSubscription;
