@@ -34,14 +34,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/edgarcheverier/dumbwaiter-server.git"
+    "url": "git+https://github.com/edgarcheverier/smartwaiter-server.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/edgarcheverier/dumbwaiter-server/issues"
+    "url": "https://github.com/edgarcheverier/smartwaiter-server/issues"
   },
-  "homepage": "https://github.com/edgarcheverier/dumbwaiter-server#readme",
+  "homepage": "https://github.com/edgarcheverier/smartwaiter-server#readme",
   "devDependencies": {
     "ava": "^0.25.0",
     "babel-polyfill": "^6.26.0",

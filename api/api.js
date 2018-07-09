@@ -103,25 +103,18 @@ server.listen(config.port, () => {
         }
         if (token) {
           const user = await authUserService().getUser(token);
-          console.log('Connected throuh socket', user.type, user.id);
           if (user) {
             return { user };
           }
           throw new Error('Missing auth token!');
         }
-        // console.log('Subscription server connected');
       },
       onOperation: (message, params, webSocket) => {
-        // console.log('Subscription server operation');
-        // console.log(message);
-        // console.log(params);
         return message;
       },
       onOperationComplete: webSocket => {
-        // console.log('Subscription server operation complete');
       },
       onDisconnect: (webSocket, context) => {
-        // console.log('Subscription server disconnected');
       },
     },
     {
