@@ -9,6 +9,7 @@
 * For the frontends refer to the following repositories
 
 https://github.com/edgarcheverier/smartwaiter-customer
+
 https://github.com/lars-berger/smartwaiter-rms
 
 
