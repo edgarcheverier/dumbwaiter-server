@@ -7,7 +7,9 @@
 > For frontend users the validation includes a check with Facebook login
 
 * For the frontends refer to the following repositories
+
 https://github.com/edgarcheverier/smartwaiter-customer
+
 https://github.com/lars-berger/smartwaiter-rms
 
 
@@ -23,7 +25,11 @@ https://github.com/lars-berger/smartwaiter-rms
 
 A few things you have to take in consideration before using Smartwaiter Backend
 
+<<<<<<< HEAD
 After cloning the repo you'll have to :
+=======
+After cloning the repo you'll have to:
+>>>>>>> 9c19a414c738d236310463edbccb9fc8ee1b8111
 
 ### Install global and local dependancies:
 
