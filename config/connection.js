@@ -1,5 +1,5 @@
 const development = {
-  database: 'dumbwaiter_develop',
+  database: 'smartwaiter_develop',
   username: 'root',
   password: 'password',
   host: 'localhost',
@@ -7,7 +7,7 @@ const development = {
 };
 
 const testing = {
-  database: 'dumbwaiter_develop',
+  database: 'smartwaiter_develop',
   username: 'root',
   password: 'password',
   host: 'localhost',

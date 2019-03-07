@@ -81,7 +81,7 @@ api.get(
   '/explore',
   expressPlayground({
     endpoint: '/graphql',
-    subscriptionsEndpoint: 'ws://localhost:2017/subscriptions',
+    subscriptionsEndpoint: 'ws://localhost:2018/subscriptions',
   })
 );
 
