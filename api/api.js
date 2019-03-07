@@ -109,7 +109,7 @@ server.listen(config.port, () => {
           }
           throw new Error('Missing auth token!');
         }
-        // console.log('Subscription server connected');
+        console.log('Subscription server connected');
       },
       onOperation: (message, params, webSocket) => {
         // console.log('Subscription server operation');
