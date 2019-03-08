@@ -124,17 +124,20 @@ const AuthController = () => {
           },
         });
 
-        console.log(owner);
+        console.log('owner', owner);
         if (!owner) {
           return res.status(400).json({ msg: 'Bad Request: User not found' });
         }
 
         const restaurant = await Restaurant.findOne({
+          // where: { ownerId: owner.id },
+          // retaurant in our DB don't have an ownerId, comment for now
         });
-        console.log(restaurant);
+        console.log('restaurant', restaurant);
 
         if (bcryptService().comparePassword(password, owner.password)) {
           const token = authService().issue({
+            // If the password match, issue a token based on
             id: owner.id,
             type: 'OWNER',
             restaurantId: restaurant.id,
@@ -146,7 +149,7 @@ const AuthController = () => {
 
         return res.status(401).json({ msg: 'Unauthorized' });
       } catch (err) {
-        console.log(err);
+        console.log('error', err);
         return res.status(500).json({ msg: 'Internal server error' });
       }
     }

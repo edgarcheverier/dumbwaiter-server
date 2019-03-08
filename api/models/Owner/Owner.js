@@ -34,6 +34,8 @@ const Owner = sequelize.define(
   { hooks, tableName }
 );
 
+// Shouldn't owner have a hasMany pointing to restaurants?
+
 // eslint-disable-next-line
 Owner.prototype.toJSON = function() {
   const values = Object.assign({}, this.get());

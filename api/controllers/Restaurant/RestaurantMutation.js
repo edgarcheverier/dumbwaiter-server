@@ -39,7 +39,7 @@ const createRestaurant = {
     },
   },
   resolve: async (
-    restaurant,
+    restaurant, // this shouldn't be here since is never used
     { name, description, latitude, longitude, type, photo }
   ) => {
     const foundRestaurant = await Restaurant.findOne({
