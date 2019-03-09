@@ -15,7 +15,7 @@ const {
   createOwner,
   updateOwner,
   deleteOwner,
-} = require('./Owner/OwnerMutation');
+} = require('./Owner/OwnerMutation'); //
 
 //Owner querys and mutations
 const orderQuery = require('./Order/OrderQuery');
@@ -30,7 +30,7 @@ const {
   createRestaurant,
   updateRestaurant,
   deleteRestaurant,
-} = require('./Restaurant/RestaurantMutation');
+} = require('./Restaurant/RestaurantMutation'); //
 
 //Table querys and mutations
 const tableQuery = require('./Table/TableQuery');
@@ -178,3 +178,4 @@ const schema = new GraphQLSchema({
 });
 
 module.exports = schema;
+

@@ -31,14 +31,14 @@ const createOwner = {
       name: 'email',
       type: new GraphQLNonNull(GraphQLString),
     },
-    restaurantId: {
-      name: 'restaurantId',
-      type: GraphQLInt,
-    },
-    restaurantName: {
-      name: 'restaurantName',
-      type: GraphQLInt,
-    },
+    // restaurantId: {
+    //   name: 'restaurantId',
+    //   type: GraphQLInt,
+    // }, //This doesn't exist on owner table, TTD remove instances of resId
+    // restaurantName: {
+    //   name: 'restaurantName',
+    //   type: GraphQLInt,
+    // },
     latitude: {
       name: 'latitude',
       type: GraphQLString,
@@ -72,25 +72,30 @@ const createOwner = {
 
     const newOwner = await Owner.create(createOwner);
 
-    if (restaurantId) {
-      const foundRestaurant = await Restaurant.findById(
-        restaurantId
+    // selecting the last created restaurant
+    const foundRestaurant = await Restaurant.findAll({
+      limit: 1,
+      where: {
+        //your where conditions, or without them if you need ANY entry
+      },
+      order: [ [ 'createdAt', 'DESC' ]]
+    })
+
+    if (foundRestaurant) {
+      Restaurant.update(
+        { ownerId: newOwner.id },
+        { where: { id: foundRestaurant[0].dataValues.id}} 
       );
-      if (foundRestaurant) {
-        Restaurant.update(
-          { ownerId: newOwner.id },
-          { where: { id: restaurantId } }
-        );
-      }
     }
 
-    if (photo) {
-      Photo.create({
-        url: photo,
-        type: 'OWNER',
-        externalId: newOwner.id,
-      });
-    }
+    // Photos feat not yet implemented;
+    // if (photo) {
+    //   Photo.create({
+    //     url: photo,
+    //     type: 'OWNER',
+    //     externalId: newOwner.id,
+    //   }); //photo does not exist in owner table
+    // }
 
     return newOwner;
   },

@@ -23,6 +23,9 @@ const Restaurant = sequelize.define('Restaurant', {
   type: {
     type: Sequelize.STRING,
   },
+  // ownerId: {
+  //   type: Sequelize.STRING, // added
+  // },
 }, { tableName });
 
 Restaurant.hasMany(Table, { as: 'tables', foreignKey: 'restaurantId' });
