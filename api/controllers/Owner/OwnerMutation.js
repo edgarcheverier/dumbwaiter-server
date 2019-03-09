@@ -19,6 +19,10 @@ const createOwner = {
       name: 'name',
       type: GraphQLString,
     },
+    lastname: {
+      name: 'lastname',
+      type: GraphQLString,
+    },
     password: {
       name: 'password',
       type: new GraphQLNonNull(GraphQLString),
@@ -39,14 +43,14 @@ const createOwner = {
     //   name: 'restaurantName',
     //   type: GraphQLInt,
     // },
-    latitude: {
-      name: 'latitude',
-      type: GraphQLString,
-    },
-    longitude: {
-      name: 'longitude',
-      type: GraphQLString,
-    },
+    // latitude: {
+    //   name: 'latitude',
+    //   type: GraphQLString,
+    // },
+    // longitude: {
+    //   name: 'longitude',
+    //   type: GraphQLString,
+    // },
     address: {
       name: 'address',
       type: GraphQLString,
@@ -54,7 +58,7 @@ const createOwner = {
   },
   resolve: async (
     owner,
-    { name, email, photo, password, restaurantId }
+    { name, lastname, email, photo, password, restaurantId }
   ) => {
     const foundOwner = await Owner.findOne({
       where: { email },
@@ -66,6 +70,7 @@ const createOwner = {
 
     const createOwner = {
       name,
+      lastname,
       email,
       password,
     };
