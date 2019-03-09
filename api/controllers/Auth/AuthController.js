@@ -126,16 +126,13 @@ const AuthController = () => {
           },
         });
 
-        console.log('owner', owner);
         if (!owner) {
           return res.status(400).json({ msg: 'Bad Request: User not found' });
         }
 
         const restaurant = await Restaurant.findOne({
-          // where: { ownerId: owner.id },
-          // retaurant in our DB don't have an ownerId, comment for now
+          where: { ownerId: owner.dataValues.id },
         });
-        console.log('restaurant', restaurant);
 
         if (bcryptService().comparePassword(password, owner.password)) {
           const token = authService().issue({
@@ -144,8 +141,6 @@ const AuthController = () => {
             type: 'OWNER',
             restaurantId: restaurant.id,
           });
-          console.log('token', token);
-          // The token is not being stored in the frontend
           return res.status(200).json({ token, owner });
         }
 
