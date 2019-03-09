@@ -37,10 +37,14 @@ const createRestaurant = {
       name: 'longitude',
       type: GraphQLString,
     },
+    ownerId: {
+      name: 'ownerId',
+      type: GraphQLString, //added
+    },
   },
   resolve: async (
-    restaurant, // this shouldn't be here since is never used
-    { name, description, latitude, longitude, type, photo }
+    restaurant,
+    { name, description, latitude, longitude, type, photo, ownerId } //added
   ) => {
     const foundRestaurant = await Restaurant.findOne({
       where : {
@@ -59,6 +63,7 @@ const createRestaurant = {
       latitude,
       longitude,
       type,
+      ownerId //added
     };
 
     const newRestaurant = await Restaurant.create(

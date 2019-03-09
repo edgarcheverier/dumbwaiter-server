@@ -25,6 +25,7 @@ const AuthController = () => {
         lastname,
         email,
         password,
+        restaurantId //added
       });
 
       const restaurant = await Restaurant.create({
@@ -32,6 +33,7 @@ const AuthController = () => {
         latitude,
         longitude,
         description: 'Add your restaurant description',
+        //ownerId, // added
       });
 
       restaurant.setOwner(owner);

@@ -44,7 +44,7 @@ const QUERYS = {
           email: "${user.email}"
           password: "${user.password}"
           photo: "${user.photo}"
-          restaurantId: ${user.restaurantId}
+          restaurantId: "${user.restaurantId}"
         ) {
           id
         }
