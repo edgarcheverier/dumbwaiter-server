@@ -27,30 +27,14 @@ const createOwner = {
       name: 'password',
       type: new GraphQLNonNull(GraphQLString),
     },
-    photo: {
-      name: 'type',
-      type: GraphQLString,
-    },
+    // photo: {
+    //   name: 'type',
+    //   type: GraphQLString,
+    // },
     email: {
       name: 'email',
       type: new GraphQLNonNull(GraphQLString),
     },
-    // restaurantId: {
-    //   name: 'restaurantId',
-    //   type: GraphQLInt,
-    // }, //This doesn't exist on owner table, TTD remove instances of resId
-    // restaurantName: {
-    //   name: 'restaurantName',
-    //   type: GraphQLInt,
-    // },
-    // latitude: {
-    //   name: 'latitude',
-    //   type: GraphQLString,
-    // },
-    // longitude: {
-    //   name: 'longitude',
-    //   type: GraphQLString,
-    // },
     address: {
       name: 'address',
       type: GraphQLString,
@@ -58,7 +42,7 @@ const createOwner = {
   },
   resolve: async (
     owner,
-    { name, lastname, email, photo, password, restaurantId }
+    { name, lastname, email, password }
   ) => {
     const foundOwner = await Owner.findOne({
       where: { email },
