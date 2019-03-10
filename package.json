@@ -12,12 +12,12 @@
     "prepush": "npm test; npm run drop-sqlite-db; npm run create-sqlite-db",
     "pretest": "npm run lint",
     "production": "cross-env NODE_ENV=production node ./api/api.js",
-    "test": "cross-env NODE_ENV=testing nyc ava",
+    "test": "cross-env NODE_ENV=testing nyc ava jest",
     "test-ci": "nyc ava --no-color"
   },
   "babel": {
     "presets": [
-      "env"
+      "@babel/preset-env"
     ]
   },
   "ava": {
@@ -43,6 +43,8 @@
   },
   "homepage": "https://github.com/edgarcheverier/dumbwaiter-server#readme",
   "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
     "ava": "^0.25.0",
     "babel-polyfill": "^6.26.0",
     "cross-env": "^5.2.0",
@@ -50,6 +52,7 @@
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.6.1",
     "eslint-plugin-standard": "^3.1.0",
+    "jest": "^24.3.1",
     "nodemon": "^1.17.5",
     "nyc": "^12.0.2",
     "prettier": "^1.13.5",
