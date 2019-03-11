@@ -9,10 +9,11 @@
     "lint": "eslint ./api/. ./config/. ./test/.",
     "start": "npm run nodemon",
     "nodemon": "nodemon --exec npm run dev",
-    "prepush": "npm test; npm run drop-sqlite-db; npm run create-sqlite-db",
-    "pretest": "npm run lint",
+    "prepush": "npm test npm run drop-sqlite-db; npm run create-sqlite-db",
+    "precommit": "npm test",
+    "pretest": "",
     "production": "cross-env NODE_ENV=production node ./api/api.js",
-    "test": "cross-env NODE_ENV=testing nyc ava jest",
+    "test": "cross-env NODE_ENV=testing npx jest",
     "test-ci": "nyc ava --no-color"
   },
   "babel": {
