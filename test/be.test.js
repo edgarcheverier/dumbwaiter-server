@@ -3,7 +3,7 @@ import AuthController from './../api/controllers/Auth/AuthController';
 
 
 test('AuthController', () => {
-  expect(3).toBe(2);
+  expect(3).toBe(4);
 });
 
 //npx jest

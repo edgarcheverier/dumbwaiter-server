@@ -11,6 +11,7 @@
     "nodemon": "nodemon --exec npm run dev",
     "prepush": "npm test npm run drop-sqlite-db; npm run create-sqlite-db",
     "precommit": "npm test",
+    "pre-commit": "npm test",
     "pretest": "",
     "production": "cross-env NODE_ENV=production node ./api/api.js",
     "test": "cross-env NODE_ENV=testing npx jest",
