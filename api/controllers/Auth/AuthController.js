@@ -143,8 +143,7 @@ const AuthController = () => {
             type: 'OWNER',
             restaurantId: restaurant.id,
           });
-          return res.status(200).json({ token, owner, restaurant }); 
-          // add restaurant to the res so the FE can get retrieve the restaurant data
+          return res.status(200).json({ token, owner }); 
         }
 
         return res.status(401).json({ msg: 'Unauthorized' });
