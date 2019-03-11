@@ -111,7 +111,8 @@ const AuthController = () => {
   };
 
   const loginRms = async (req, res) => {
-    console.log(res);
+    console.log('req', req.headers) //Basic dGVzdEB0ZXN0LmNvbTp0ZXN0
+    console.log('res', res.rawHeaders)
     if (!req.headers.authorization) {
       return res.status(401).json({ msg: 'Unauthorized' });
     }
