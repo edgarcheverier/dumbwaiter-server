@@ -11,7 +11,6 @@
     "nodemon": "nodemon --exec npm run dev",
     "prepush": "npm test; npm run drop-sqlite-db; npm run create-sqlite-db",
     "pre-commit": "npm test",
-    "precommit": "npm test",
     "pretest": "",
     "production": "cross-env NODE_ENV=production node ./api/api.js",
     "test": "cross-env NODE_ENV=testing npx jest",
@@ -81,6 +80,7 @@
     "lodash.merge": "^4.6.1",
     "morgan": "^1.9.0",
     "mysql2": "^1.5.3",
+    "pre-commit": "^1.2.2",
     "randomstring": "^1.1.5",
     "sequelize": "^4.38.0",
     "subscriptions-transport-ws": "^0.9.12"
