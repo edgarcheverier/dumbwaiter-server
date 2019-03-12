@@ -1,57 +1,25 @@
-// import AuthController from './../api/controllers/Auth/AuthController';
-// import Category from './../api/models/Category/Category';
+import iconv from 'iconv-lite';
+import encodings from 'iconv-lite/encodings'; //This was needed for some errors, test if can be removed later
+iconv.encodings = encodings;
+import db from './../config/database';
 
-var SequelizeMock = require('sequelize-mock');
-var dbMock = new SequelizeMock();
+describe('Sequelize DB Testing',() => {
+  beforeAll(async () => {
+    await db.sequelize.sync( {force: true})
+  })
 
-var UserMock = dbMock.define('users', {
-  'name':'amber',
-})
+  beforeEach(() => {
+  })
 
-// describe('AuthController', () => {
-//   const request = {
-//     headers: {
-//       authorization: 'Basic dGVzdEB0ZXN0LmNvbTp0ZXN0'
-//     }
-//   }
-
-//   test('loginRms', () => {
-//     expect(
-//       AuthController.loginRms(request)
-//     ).toBe(3);
-//   });
-// })
-
-describe('Sequelize Model Testing',() => {
-  // let dbMock;
-
-  // before(() => {
-  //   dbMock = new SequelizeMock();
-  // })
-
-  // beforeEach(() => {
-  //   dbMock.Users.deleteAll
-
-  // })
+  afterAll(async () => {
+    await db.sequelize.drop();
+  })
 
   test('testingggg',  async () => {
-    // UserMock.insert("something")
-    let user = await UserMock.findOne({
-        where: {
-          name: 'amber'
-        }
-      }).then(response => {
-        return response;
-      });
-
-    expect(user.dataValues.name).toBe('amber');
-
-    // expect(user.dataValues).hasOwnProperty('name')
-    //   or
-    // try {
-    //   Users.insert()
-    // } catch (err) {
-    //   expect(err).to
-    // }
+    //accessing db tables,
+      //Check if each table exists
+      //check if each has correct columns
+      //Data types? Null?
+    expect('x').toBe('x');
   })
 })

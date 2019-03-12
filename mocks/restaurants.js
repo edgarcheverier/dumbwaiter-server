@@ -1,6 +1,6 @@
 module.exports = [
   {
-    name: 'Codeworks',
+    name: 'Codeworksssssssssssssss',
     latitude: '41.3949147',
     longitude: '2.1957668',
     description:
@@ -8,9 +8,10 @@ module.exports = [
     photo:
       'https://firebasestorage.googleapis.com/v0/b/dumbwaiter-69a9a.appspot.com/o/marlon_0000s_0000_codeworks.jpg?alt=media&token=497d943e-15a2-4c68-a4ae-d5ad9b029e77',
     type: 'japanese',
+    ownerId: '',
   },
   {
-    name: 'Raco de la Vila',
+    name: 'Raco de la Vilaaaaaaaaaaaaaaaaaa',
     latitude: '41.3949455',
     longitude: '2.1980524',
     description:
@@ -18,9 +19,10 @@ module.exports = [
     photo:
       'https://firebasestorage.googleapis.com/v0/b/dumbwaiter-69a9a.appspot.com/o/marlon_0000s_0001_restaurant.jpg?alt=media&token=a4549e76-bca8-4c5f-bc92-e0bf40a6bf6c',
     type: 'mediterranean',
+    ownerId: '',
   },
   {
-    name: "L' Escamarlà",
+    name: "L' Escamarlàaaaaaaaaaaaaa",
     latitude: '41.392506',
     longitude: '2.2024623',
     description:
@@ -28,5 +30,6 @@ module.exports = [
     photo:
       'https://firebasestorage.googleapis.com/v0/b/dumbwaiter-69a9a.appspot.com/o/marlon_0000s_0002_mussels.jpg?alt=media&token=b48ac1c5-4241-4ab4-9260-d72bb0d6c575',
     type: 'seafood restaurant',
+    ownerId: '',
   },
 ];

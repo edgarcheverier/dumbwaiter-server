@@ -95,8 +95,30 @@ npm install
 npm run dev
 ```
 * GraphQL
-You can access the GraphQL playground to do querys and mutations through the following link while running the project
-http://localhost:4000/explore
+  You can access the GraphQL playground to do querys and mutations through the following link while running the project
+  http://localhost:4000/explore
+
+## Testing 
+
+Run on one terminal
+
+```bash
+npm run testing 
+```
+
+Then on another terminal run to seed your mock data into your test database
+
+```bash
+npm run db:seed
+```
+
+Then run the tests
+
+```bash
+npm test
+```
+
+
 
 ## Tech Stack
 

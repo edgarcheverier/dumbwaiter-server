@@ -7,6 +7,7 @@ let database;
 
 switch (process.env.NODE_ENV) {
   case 'production':
+    
     database = new Sequelize(
       connection.production.database,
       connection.production.username,

@@ -7,7 +7,7 @@ const development = {
 };
 
 const testing = {
-  database: 'smartwaiter_develop',
+  database: 'smartwaiter_testing',
   username: 'root',
   password: 'password',
   host: 'localhost',
