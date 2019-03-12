@@ -42,9 +42,13 @@ const createOwner = {
   },
   resolve: async (
     owner,
-    { name, lastname, email, password }
+    // Implement dependency injection. The model is passed in the
+    // parameters of the controller. It makes it easy to test,
+    // mocking the model's methods.
+    { name, lastname, email, password },
+    context,
   ) => {
-    const foundOwner = await Owner.findOne({
+    const foundOwner = await context.ownerModel.findOne({
       where: { email },
     });
 
@@ -59,10 +63,10 @@ const createOwner = {
       password,
     };
 
-    const newOwner = await Owner.create(createOwner);
+    const newOwner = await context.ownerModel.create(createOwner);
 
     // selecting the last created restaurant
-    const foundRestaurant = await Restaurant.findAll({
+    const foundRestaurant = await context.restaurantModel.findAll({
       limit: 1,
       where: {
         //your where conditions, or without them if you need ANY entry
@@ -71,7 +75,7 @@ const createOwner = {
     })
 
     if (foundRestaurant) {
-      Restaurant.update(
+      context.restaurantModel.update(
         { ownerId: newOwner.id },
         { where: { id: foundRestaurant[0].dataValues.id}} 
       );
