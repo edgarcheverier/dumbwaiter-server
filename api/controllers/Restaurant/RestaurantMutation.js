@@ -47,7 +47,6 @@ const createRestaurant = {
     { name, description, latitude, longitude, type, photo }, //deleted
     context
   ) => {
-
     const foundRestaurant = await context.restaurantModel.findOne({
       where : {
         name: name,
