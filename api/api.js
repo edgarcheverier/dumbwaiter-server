@@ -33,6 +33,12 @@ const environment = process.env.NODE_ENV;
 const authorization = require('./middlewares/authorization');
 
 /**
+ * injected models
+ */
+const Restaurant = require('../api/models/Restaurant/Restaurant');
+const Owner = require('../api/models/Owner/Owner');
+
+/**
  * express application
  */
 const api = express();
@@ -71,7 +77,13 @@ api.use(
   bodyParser.json(),
   graphqlExpress(req => ({
     schema,
-    context: { auth: req.auth },
+    context: {
+      auth: req.auth,
+      // Passing the model through the context (dependency injection)
+      // to make it easy to test the controllers.
+      ownerModel: Owner,
+      restaurantModel: Restaurant
+    },
     cacheControl: true,
   }))
 );
