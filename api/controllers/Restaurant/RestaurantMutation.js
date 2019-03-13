@@ -45,7 +45,7 @@ const createRestaurant = {
   resolve: async (
     restaurant,
     { name, description, latitude, longitude, type, photo }, //deleted
-    context
+    context = { restaurantModel: Restaurant, photoModel: Photo}
   ) => {
     const foundRestaurant = await context.restaurantModel.findOne({
       where : {

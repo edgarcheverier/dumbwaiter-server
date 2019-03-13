@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon ./api/api.js",
-    "testing": "cross-env NODE_ENV=testing PORT=2018 nodemon ./api/api.js",
+    "testing": "cross-env NODE_ENV=testing ./api/api.js",
     "lint": "eslint ./api/. ./config/. ./test/.",
     "start": "npm run nodemon",
     "nodemon": "nodemon --exec npm run dev",
@@ -14,7 +14,7 @@
     "production": "cross-env NODE_ENV=production node ./api/api.js",
     "test": "cross-env NODE_ENV=testing jest --detectOpenHandles ./test ./api/controllers/.",
     "test-ci": "nyc ava --no-color",
-    "db:seed": "cross-env NODE_ENV=testing node ./mocks/seeds.js"
+    "db:seed": "node ./mocks/seeds.js"
   },
   "babel": {
     "presets": [

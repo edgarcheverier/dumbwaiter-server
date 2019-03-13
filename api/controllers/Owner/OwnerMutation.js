@@ -46,7 +46,7 @@ const createOwner = {
     // parameters of the controller. It makes it easy to test,
     // mocking the model's methods.
     { name, lastname, email, password },
-    context,
+    context = { ownerModel: Owner, restaurantModel: Restaurant },
   ) => {
     const foundOwner = await context.ownerModel.findOne({
       where: { email },
