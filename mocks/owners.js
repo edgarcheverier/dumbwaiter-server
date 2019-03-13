@@ -1,20 +1,20 @@
 module.exports = [
   {
-    name: 'Lars Berger',
+    name: 'Lars',
+    lastname: 'Berger',
     password: 'test',
     email: 'lars.berger@yahoo.com',
-    restaurantId: 1,
   },
   {
     name: 'McMardigan',
+    lastname: 'Berger2',
     password: 'test',
     email: 'mcmardigan@dumbwaiter.com',
-    restaurantId: 2,
   },
   {
     name: 'McDonalds',
+    lastname: 'Berger3',
     password: 'test',
     email: 'mcdonals@dumbwaiter.com',
-    restaurantId: 3,
   },
 ]

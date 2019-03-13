@@ -46,11 +46,13 @@ const createRestaurant = {
     restaurant,
     { name, description, latitude, longitude, type, photo, ownerId } //added
   ) => {
+
     const foundRestaurant = await Restaurant.findOne({
       where : {
         name: name,
       }
     });
+
     if (foundRestaurant) {
       throw new Error(
         'Restaurant already exists with the same name'

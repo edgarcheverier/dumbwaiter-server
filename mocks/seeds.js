@@ -7,14 +7,14 @@ const drinks = require('./drinks');
 const food = require('./food');
 
 const execute = {
-  CREATE_USERS: true,
-  CREATE_PRODUCT_CATEGORIES: true,
+  CREATE_USERS: false,
+  CREATE_PRODUCT_CATEGORIES: false,
   CREATE_OWNERS: true,
   CREATE_RESTAURANTS: true,
-  CREATE_RESTAURANT_TABLES: true,
-  CREATE_RESTAURANT_PRODUCTS_1: true,
-  CREATE_RESTAURANT_PRODUCTS_2: true,
-  CREATE_RESTAURANT_PRODUCTS_3: true,
+  CREATE_RESTAURANT_TABLES: false,
+  CREATE_RESTAURANT_PRODUCTS_1: false,
+  CREATE_RESTAURANT_PRODUCTS_2: false,
+  CREATE_RESTAURANT_PRODUCTS_3: false,
 };
 
 const QUERYS = {
@@ -28,6 +28,7 @@ const QUERYS = {
           latitude: "${restaurant.latitude}"
           longitude: "${restaurant.longitude}"
           photo: "${restaurant.photo}"
+          type: "${restaurant.type}"
         ) {
           id
         }
@@ -43,8 +44,6 @@ const QUERYS = {
           name: "${user.name}"
           email: "${user.email}"
           password: "${user.password}"
-          photo: "${user.photo}"
-          restaurantId: "${user.restaurantId}"
         ) {
           id
         }
@@ -52,112 +51,112 @@ const QUERYS = {
       `;
     }),
   ],
-  CREATE_USERS: [
-    ...users.map(user => {
-      return `
-      mutation {
-        createUser(
-          name: "${user.name}"
-          email: "${user.email}"
-          password: "${user.password}"
-          type: "${user.type}"
-        ) {
-          id
-        }
-      }
-      `;
-    }),
-  ],
-  CREATE_RESTAURANT_TABLES: [
-    ...tables.map(table => {
-      return `
-      mutation {
-      addTable(
-          name: "${table.name}"
-          restaurantId: "${table.restaurantId}"
-        ) {
-          id
-        }
-      }
-      `;
-    }),
-  ],
-  CREATE_PRODUCT_CATEGORIES: [
-    ...categories.map(category => {
-      return `
-      mutation {
-      createCategory(
-          name: "${category.name}"
-        ) {
-          id
-        }
-      }
-      `;
-    }),
-  ],
-  CREATE_RESTAURANT_PRODUCTS_1: [
-    ...[...drinks, ...food].map(product => {
-      return `
-    mutation {
-      createProduct(
-        name: "${product.name}"
-        description: "${product.description}"
-        price: "${product.price}"
-        photo: "${
-          product.photo
-            ? product.photo
-            : 'https://www.prikentik.be/media/wysiwyg/streekbieren/PrikenTik-bier.jpg'
-        }"
-        restaurantId: 1
-      ) {
-        id
-      }
-    }
-    `;
-    }),
-  ],
-  CREATE_RESTAURANT_PRODUCTS_2: [
-    ...[...drinks, ...food].map(product => {
-      return `
-    mutation {
-      createProduct(
-        name: "${product.name}"
-        description: "${product.description}"
-        price: "${product.price}"
-        photo: "${
-          product.photo
-            ? product.photo
-            : 'https://www.prikentik.be/media/wysiwyg/streekbieren/PrikenTik-bier.jpg'
-        }"
-        restaurantId: 2
-      ) {
-        id
-      }
-    }
-    `;
-    }),
-  ],
-  CREATE_RESTAURANT_PRODUCTS_3: [
-    ...[...drinks, ...food].map(product => {
-      return `
-    mutation {
-      createProduct(
-        name: "${product.name}"
-        description: "${product.description}"
-        price: "${product.price}"
-        photo: "${
-          product.photo
-            ? product.photo
-            : 'https://www.prikentik.be/media/wysiwyg/streekbieren/PrikenTik-bier.jpg'
-        }"
-        restaurantId: 3
-      ) {
-        id
-      }
-    }
-    `;
-    }),
-  ],
+  // CREATE_USERS: [
+  //   ...users.map(user => {
+  //     return `
+  //     mutation {
+  //       createUser(
+  //         name: "${user.name}"
+  //         email: "${user.email}"
+  //         password: "${user.password}"
+  //         type: "${user.type}"
+  //       ) {
+  //         id
+  //       }
+  //     }
+  //     `;
+  //   }),
+  // ],
+  // CREATE_RESTAURANT_TABLES: [
+  //   ...tables.map(table => {
+  //     return `
+  //     mutation {
+  //     addTable(
+  //         name: "${table.name}"
+  //         restaurantId: "${table.restaurantId}"
+  //       ) {
+  //         id
+  //       }
+  //     }
+  //     `;
+  //   }),
+  // ],
+  // CREATE_PRODUCT_CATEGORIES: [
+  //   ...categories.map(category => {
+  //     return `
+  //     mutation {
+  //     createCategory(
+  //         name: "${category.name}"
+  //       ) {
+  //         id
+  //       }
+  //     }
+  //     `;
+  //   }),
+  // ],
+  // CREATE_RESTAURANT_PRODUCTS_1: [
+  //   ...[...drinks, ...food].map(product => {
+  //     return `
+  //   mutation {
+  //     createProduct(
+  //       name: "${product.name}"
+  //       description: "${product.description}"
+  //       price: "${product.price}"
+  //       photo: "${
+  //         product.photo
+  //           ? product.photo
+  //           : 'https://www.prikentik.be/media/wysiwyg/streekbieren/PrikenTik-bier.jpg'
+  //       }"
+  //       restaurantId: 1
+  //     ) {
+  //       id
+  //     }
+  //   }
+  //   `;
+  //   }),
+  // ],
+  // CREATE_RESTAURANT_PRODUCTS_2: [
+  //   ...[...drinks, ...food].map(product => {
+  //     return `
+  //   mutation {
+  //     createProduct(
+  //       name: "${product.name}"
+  //       description: "${product.description}"
+  //       price: "${product.price}"
+  //       photo: "${
+  //         product.photo
+  //           ? product.photo
+  //           : 'https://www.prikentik.be/media/wysiwyg/streekbieren/PrikenTik-bier.jpg'
+  //       }"
+  //       restaurantId: 2
+  //     ) {
+  //       id
+  //     }
+  //   }
+  //   `;
+  //   }),
+  // ],
+  // CREATE_RESTAURANT_PRODUCTS_3: [
+  //   ...[...drinks, ...food].map(product => {
+  //     return `
+  //   mutation {
+  //     createProduct(
+  //       name: "${product.name}"
+  //       description: "${product.description}"
+  //       price: "${product.price}"
+  //       photo: "${
+  //         product.photo
+  //           ? product.photo
+  //           : 'https://www.prikentik.be/media/wysiwyg/streekbieren/PrikenTik-bier.jpg'
+  //       }"
+  //       restaurantId: 3
+  //     ) {
+  //       id
+  //     }
+  //   }
+  //   `;
+  //   }),
+  // ],
 };
 
 const schema = require('../api/controllers');
