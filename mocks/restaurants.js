@@ -1,6 +1,6 @@
 module.exports = [
   {
-    name: 'Codeworksssssssssssssss',
+    name: 'Codeworks',
     latitude: '41.3949147',
     longitude: '2.1957668',
     description:
@@ -11,7 +11,7 @@ module.exports = [
     ownerId: '',
   },
   {
-    name: 'Raco de la Vilaaaaaaaaaaaaaaaaaa',
+    name: 'Raco de la Vila',
     latitude: '41.3949455',
     longitude: '2.1980524',
     description:
@@ -22,7 +22,7 @@ module.exports = [
     ownerId: '',
   },
   {
-    name: "L' Escamarlàaaaaaaaaaaaaa",
+    name: "L' Escamarlà",
     latitude: '41.392506',
     longitude: '2.2024623',
     description:

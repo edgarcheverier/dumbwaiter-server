@@ -12,12 +12,8 @@
     "pre-commit": "npm test",
     "pretest": "",
     "production": "cross-env NODE_ENV=production node ./api/api.js",
-<<<<<<< HEAD
-    "test": "cross-env NODE_ENV=testing jest --detectOpenHandles /test",
+    "test": "cross-env NODE_ENV=testing jest --detectOpenHandles ./test ./api/controllers/.",
     "test-ci": "nyc ava --no-color",
-=======
-    "test": "cross-env NODE_ENV=testing jest ./test/. ./api/controllers/.",
->>>>>>> 4e929cef4ab03bc1253e229caf97d3699b3d92fa
     "db:seed": "cross-env NODE_ENV=testing node ./mocks/seeds.js"
   },
   "babel": {

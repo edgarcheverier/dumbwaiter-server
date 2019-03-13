@@ -1,13 +1,12 @@
 const Sequelize = require('sequelize');
 const path = require('path');
-
 const connection = require('./connection');
 
+const db        = {};
 let database;
 
 switch (process.env.NODE_ENV) {
   case 'production':
-    
     database = new Sequelize(
       connection.production.database,
       connection.production.username,
@@ -55,5 +54,6 @@ switch (process.env.NODE_ENV) {
       },
     );
 }
+//db.database = database;
 
 module.exports = database;
