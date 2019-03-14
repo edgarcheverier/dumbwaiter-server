@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const path = require('path');
 const connection = require('./connection');
 
-const db        = {};
+const db = {};
 let database;
 
 switch (process.env.NODE_ENV) {

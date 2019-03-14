@@ -3,9 +3,22 @@ import encodings from 'iconv-lite/encodings'; //This was needed for some errors,
 iconv.encodings = encodings;
 import db from './../config/database';
 
+import Owner from './../api/models/Owner/Owner';
+import Restaurant from './../api/models/Restaurant/Restaurant';
+import Product from './../api/models/Product/Product';
+import Category from './../api/models/Category/Category'
+
 describe('Sequelize DB Testing',() => {
   beforeAll(async () => {
-    await db.sync({force: true})
+    console.log('Tearing up…');
+    console.log('Syncing Owners…');
+    await Owner.sync({force: true})
+    console.log('Syncing Restaurants…');
+    await Restaurant.sync({force: true})
+    console.log('Syncing Categories…');
+    await Category.sync({force: true})
+    console.log('Syncing Products…');
+    await Product.sync({force: true})
   })
 
   beforeEach(() => {
@@ -13,20 +26,21 @@ describe('Sequelize DB Testing',() => {
 
   afterEach(async () => {
     // Drops all tables
-    await db.drop();
+    //await db.drop();
   });
 
   afterAll(async () => {
     // Drops all tables
-    db.close();
+   // db.close();
   });
 
 
   test('testingggg',  async () => {
 
+    // console.log(await Owner.findById(1))
 
     // let newRestaurant = {
-    //   name: 'Codeworksssssssssssssss',
+    //   name: 'Codeworks',
     //   latitude: '41.3949147',
     //   longitude: '2.1957668',
     //   description:

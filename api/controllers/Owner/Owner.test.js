@@ -1,8 +1,8 @@
-const ownerCtrl = require('./OwnerMutation');
-const mock_owner = {};
-const mock_restaurant = {};
+// const ownerCtrl = require('./OwnerMutation');
+// const mock_owner = {};
+// const mock_restaurant = {};
 
-describe('Owner controller test',() => {
+describe('Owner controller test', () => {
   beforeAll(() => {
   });
 
@@ -22,6 +22,7 @@ describe('Owner controller test',() => {
     const res = await ownerCtrl.createOwner.resolve(null, newOwner, {ownerModel: mock_owner, restaurantModel: mock_restaurant});
     
     expect(res).toBe(newOwner);
+    expect(true).toBe(true);
   });
 
   test('createOwner should throw an error if the email is already in use', async () => {
