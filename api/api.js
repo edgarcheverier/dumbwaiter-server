@@ -37,6 +37,7 @@ const authorization = require('./middlewares/authorization');
  */
 const Restaurant = require('../api/models/Restaurant/Restaurant');
 const Owner = require('../api/models/Owner/Owner');
+const Photo = require('../api/models/Photo/Photo');
 
 /**
  * express application
@@ -82,7 +83,8 @@ api.use(
       // Passing the model through the context (dependency injection)
       // to make it easy to test the controllers.
       ownerModel: Owner,
-      restaurantModel: Restaurant
+      restaurantModel: Restaurant,
+      photoModel: Photo,
     },
     cacheControl: true,
   }))
