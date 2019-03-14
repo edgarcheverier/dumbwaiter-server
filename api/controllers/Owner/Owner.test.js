@@ -2,11 +2,11 @@ const ownerCtrl = require('./OwnerMutation');
 const mock_owner = {};
 const mock_restaurant = {};
 
-describe('Owner controller test',() => {
+describe('Owner controller test', () => {
   beforeAll(() => {
   });
 
-  test('createOwner should return the new owner',  async () => {
+  test('createOwner should return the new owner', async () => {
     const newOwner = {
       name: 'Rod',
       lastname: 'Papa',

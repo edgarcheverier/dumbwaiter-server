@@ -6,7 +6,7 @@ const ProductOrder = require('../ProductOrder/ProductOrder');
 const tableName = 'order';
 
 const Order = sequelize.define(
-  'Order',
+  'FoodOrder',
   {
     status: {
       type: Sequelize.STRING, //PENDING_PAYMENT | PAID | CANCELLED
