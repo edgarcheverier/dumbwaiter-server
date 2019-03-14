@@ -37,13 +37,20 @@ const createRestaurant = {
       name: 'longitude',
       type: GraphQLString,
     },
+    // ownerId: {
+    //   name: 'ownerId',
+    //   type: GraphQLString, //added
+    // },
   },
   resolve: async (
     restaurant,
-    { name, description, latitude, longitude, type, photo }
+    { name, description, latitude, longitude, type, photo }, //deleted
+    context = { restaurantModel: Restaurant, photoModel: Photo}
   ) => {
-    const foundRestaurant = await Restaurant.findOne({
-      name,
+    const foundRestaurant = await context.restaurantModel.findOne({
+      where : {
+        name: name,
+      }
     });
 
     if (foundRestaurant) {
@@ -60,12 +67,12 @@ const createRestaurant = {
       type,
     };
 
-    const newRestaurant = await Restaurant.create(
+    const newRestaurant = await context.restaurantModel.create(
       createRestaurant
     );
 
     if (photo) {
-      Photo.create({
+      context.photoModel.create({
         url: photo,
         type: 'RESTAURANT',
         externalId: newRestaurant.id,
@@ -75,6 +82,8 @@ const createRestaurant = {
     return newRestaurant;
   },
 };
+
+
 const updateRestaurant = {
   type: RestaurantType,
   description:

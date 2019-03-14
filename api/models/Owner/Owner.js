@@ -20,9 +20,6 @@ const Owner = sequelize.define(
     lastname: {
       type: Sequelize.STRING,
     },
-    address: {
-      type: Sequelize.STRING,
-    },
     password: {
       type: Sequelize.STRING,
     },

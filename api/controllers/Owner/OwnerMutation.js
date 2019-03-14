@@ -19,33 +19,21 @@ const createOwner = {
       name: 'name',
       type: GraphQLString,
     },
+    lastname: {
+      name: 'lastname',
+      type: GraphQLString,
+    },
     password: {
       name: 'password',
       type: new GraphQLNonNull(GraphQLString),
     },
-    photo: {
-      name: 'type',
-      type: GraphQLString,
-    },
+    // photo: {
+    //   name: 'type',
+    //   type: GraphQLString,
+    // },
     email: {
       name: 'email',
       type: new GraphQLNonNull(GraphQLString),
-    },
-    restaurantId: {
-      name: 'restaurantId',
-      type: GraphQLInt,
-    },
-    restaurantName: {
-      name: 'restaurantName',
-      type: GraphQLInt,
-    },
-    latitude: {
-      name: 'latitude',
-      type: GraphQLString,
-    },
-    longitude: {
-      name: 'longitude',
-      type: GraphQLString,
     },
     address: {
       name: 'address',
@@ -54,9 +42,13 @@ const createOwner = {
   },
   resolve: async (
     owner,
-    { name, email, photo, password, restaurantId }
+    // Implement dependency injection. The model is passed in the
+    // parameters of the controller. It makes it easy to test,
+    // mocking the model's methods.
+    { name, lastname, email, password },
+    context = { ownerModel: Owner, restaurantModel: Restaurant },
   ) => {
-    const foundOwner = await Owner.findOne({
+    const foundOwner = await context.ownerModel.findOne({
       where: { email },
     });
 
@@ -66,31 +58,37 @@ const createOwner = {
 
     const createOwner = {
       name,
+      lastname,
       email,
       password,
     };
 
-    const newOwner = await Owner.create(createOwner);
+    const newOwner = await context.ownerModel.create(createOwner);
 
-    if (restaurantId) {
-      const foundRestaurant = await Restaurant.findById(
-        restaurantId
+    // selecting the last created restaurant
+    const foundRestaurant = await context.restaurantModel.findAll({
+      limit: 1,
+      where: {
+        //your where conditions, or without them if you need ANY entry
+      },
+      order: [ [ 'createdAt', 'DESC' ]]
+    })
+
+    if (foundRestaurant) {
+      context.restaurantModel.update(
+        { ownerId: newOwner.id },
+        { where: { id: foundRestaurant[0].dataValues.id}} 
       );
-      if (foundRestaurant) {
-        Restaurant.update(
-          { ownerId: newOwner.id },
-          { where: { id: restaurantId } }
-        );
-      }
     }
 
-    if (photo) {
-      Photo.create({
-        url: photo,
-        type: 'OWNER',
-        externalId: newOwner.id,
-      });
-    }
+    // Photos feat not yet implemented;
+    // if (photo) {
+    //   Photo.create({
+    //     url: photo,
+    //     type: 'OWNER',
+    //     externalId: newOwner.id,
+    //   }); //photo does not exist in owner table
+    // }
 
     return newOwner;
   },

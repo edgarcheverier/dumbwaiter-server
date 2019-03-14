@@ -10,6 +10,8 @@ const bcryptService = require('../../services/bcrypt.service');
 
 const AuthController = () => {
   const registerOwner = async (req, res) => {
+    console.log("registerOwner at AuthController")
+    // Suspecting this controller is never called
     const {
       name,
       lastname,
@@ -25,6 +27,7 @@ const AuthController = () => {
         lastname,
         email,
         password,
+        restaurantId //added
       });
 
       const restaurant = await Restaurant.create({
@@ -32,6 +35,7 @@ const AuthController = () => {
         latitude,
         longitude,
         description: 'Add your restaurant description',
+        //ownerId, // added
       });
 
       restaurant.setOwner(owner);
@@ -129,21 +133,22 @@ const AuthController = () => {
         }
 
         const restaurant = await Restaurant.findOne({
-          where: { ownerId: owner.id },
+          where: { ownerId: owner.dataValues.id },
         });
 
         if (bcryptService().comparePassword(password, owner.password)) {
           const token = authService().issue({
+            // If the password match, issue a token based on
             id: owner.id,
             type: 'OWNER',
             restaurantId: restaurant.id,
           });
-          return res.status(200).json({ token, owner });
+          return res.status(200).json({ token, owner }); 
         }
 
         return res.status(401).json({ msg: 'Unauthorized' });
       } catch (err) {
-        console.log(err);
+        console.log('error', err);
         return res.status(500).json({ msg: 'Internal server error' });
       }
     }

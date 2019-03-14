@@ -5,5 +5,5 @@ module.exports = {
   migrate: false,
   publicRoutes,
   privateRoutes,
-  port: process.env.PORT || '4001',
+  port: process.env.PORT || '2018',
 };

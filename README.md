@@ -25,21 +25,17 @@ https://github.com/lars-berger/smartwaiter-rms
 
 A few things you have to take in consideration before using Smartwaiter Backend
 
-<<<<<<< HEAD
-After cloning the repo you'll have to :
-=======
 After cloning the repo you'll have to:
->>>>>>> 9c19a414c738d236310463edbccb9fc8ee1b8111
 
 ### Install global and local dependancies:
 
 * [Node](https://nodejs.org/en/): `brew install node`
-* [Npm](https://www.npmjs.com/): `npm install`
+* [Npm](https://www.npmjs.com/): `npm install` (inside project folder)
 * [Homebrew](https://brew.sh/)
 
-### Install and configure Mysql database
+### Install and configure MySQL database
 
-* Install Mysql on your machine and run the service (macOS):
+* Install MySQL on your machine and run the service (macOS):
 
 ```bash
 brew info mysql
@@ -53,16 +49,24 @@ https://dev.mysql.com/downloads/windows/installer/8.0.html
 For Linux installation refer to:
 https://dev.mysql.com/doc/refman/8.0/en/linux-installation.html
 
-* Change your Msyql user password:
+* Get into MySQL workbench:
 
 ```bash
-mysqladmin -u username password 'yourpassword'
+sudo mysql
 ```
 
-* Access Mysql and create the needed databases:
+* Change your MySQL user *(root)* password:
 
 ```bash
-mysql -u username -pyourpassword
+mysql> ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+mysql> flush privileges;
+mysql> quit;
+```
+
+* Access MySQL and create the needed databases:
+
+```bash
+mysql -u username -yourpassword
 ```
 
 * Create developing database:
@@ -99,14 +103,40 @@ npm install
 npm run dev
 ```
 * GraphQL
-You can access the GraphQL playground to do querys and mutations through the following link while running the project
-http://localhost:4001/explore
+  You can access the GraphQL playground to do querys and mutations through the following link while running the project
+  http://localhost:4000/explore
+
+## Testing 
+
+Run on one terminal
+
+```bash
+npm run testing 
+```
+
+Then run the tests
+
+```bash
+npm test
+```
+
+
+
+## Seeding your database
+
+If you wish to input mock data into the database, on another terminal run:
+
+```bash
+npm run db:seed
+```
+
+
 
 ## Tech Stack
 
 * [Express](https://expressjs.com/)
 * [GraphQL](https://graphql.org/)
-* [Mysql](https://www.mysql.com/)
+* [MySQL](https://www.mysql.com/)
 * [Sequelize](http://docs.sequelizejs.com/)
 * [Facebook App](https://developers.facebook.com/docs/apps/)
 

@@ -35,6 +35,7 @@ module.exports = {
       return pubsub.asyncIterator('onProductOrderChanged');
     },
     (payload, args) => {
+      console.log('firing!');
       if (args.userId) {
         if (payload.onProductOrderChanged.userId == args.userId) {
           return true;

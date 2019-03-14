@@ -44,6 +44,9 @@ const restaurantQuery = {
       name: 'updatedAt',
       type: GraphQLString,
     },
+    // ownerId: {
+    //   type: GraphQLString, //added
+    // },
   },
   resolve: (restaurant, args) => {
     if(args.restaurantId) {

@@ -58,6 +58,10 @@ const RestaurantType = new GraphQLObjectType({
       type: GraphQLString,
       resolve: restaurant => restaurant.latitude,
     },
+    // ownerId: {
+    //   type: GraphQLString,
+    //   resolve: restaurant => restaurant.ownerId, //added
+    // },
     tables: {
       type: GraphQLList(TableType),
       resolve(restaurant) {

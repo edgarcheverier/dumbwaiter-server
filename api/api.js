@@ -33,6 +33,13 @@ const environment = process.env.NODE_ENV;
 const authorization = require('./middlewares/authorization');
 
 /**
+ * injected models
+ */
+const Restaurant = require('../api/models/Restaurant/Restaurant');
+const Owner = require('../api/models/Owner/Owner');
+const Photo = require('../api/models/Photo/Photo');
+
+/**
  * express application
  */
 const api = express();
@@ -71,7 +78,14 @@ api.use(
   bodyParser.json(),
   graphqlExpress(req => ({
     schema,
-    context: { auth: req.auth },
+    context: {
+      auth: req.auth,
+      // Passing the model through the context (dependency injection)
+      // to make it easy to test the controllers.
+      ownerModel: Owner,
+      restaurantModel: Restaurant,
+      photoModel: Photo,
+    },
     cacheControl: true,
   }))
 );
@@ -81,7 +95,7 @@ api.get(
   '/explore',
   expressPlayground({
     endpoint: '/graphql',
-    subscriptionsEndpoint: 'ws://localhost:2017/subscriptions',
+    subscriptionsEndpoint: 'ws://localhost:2018/subscriptions',
   })
 );
 
@@ -103,18 +117,25 @@ server.listen(config.port, () => {
         }
         if (token) {
           const user = await authUserService().getUser(token);
+          console.log('Connected throuh socket', user.type, user.id);
           if (user) {
             return { user };
           }
           throw new Error('Missing auth token!');
         }
+        console.log('Subscription server connected');
       },
       onOperation: (message, params, webSocket) => {
+        // console.log('Subscription server operation');
+        // console.log(message);
+        // console.log(params);
         return message;
       },
       onOperationComplete: webSocket => {
+        // console.log('Subscription server operation complete');
       },
       onDisconnect: (webSocket, context) => {
+        // console.log('Subscription server disconnected');
       },
     },
     {
