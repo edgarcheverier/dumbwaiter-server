@@ -30,12 +30,12 @@ After cloning the repo you'll have to:
 ### Install global and local dependancies:
 
 * [Node](https://nodejs.org/en/): `brew install node`
-* [Npm](https://www.npmjs.com/): `npm install`
+* [Npm](https://www.npmjs.com/): `npm install` (inside project folder)
 * [Homebrew](https://brew.sh/)
 
-### Install and configure Mysql database
+### Install and configure MySQL database
 
-* Install Mysql on your machine and run the service (macOS):
+* Install MySQL on your machine and run the service (macOS):
 
 ```bash
 brew info mysql
@@ -49,16 +49,24 @@ https://dev.mysql.com/downloads/windows/installer/8.0.html
 For Linux installation refer to:
 https://dev.mysql.com/doc/refman/8.0/en/linux-installation.html
 
-* Change your Msyql user password:
+* Get into MySQL workbench:
 
 ```bash
-mysqladmin -u username password 'yourpassword'
+sudo mysql
 ```
 
-* Access Mysql and create the needed databases:
+* Change your MySQL user *(root)* password:
 
 ```bash
-mysql -u username -pyourpassword
+mysql> ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+mysql> flush privileges;
+mysql> quit;
+```
+
+* Access MySQL and create the needed databases:
+
+```bash
+mysql -u username -yourpassword
 ```
 
 * Create developing database:
@@ -106,12 +114,6 @@ Run on one terminal
 npm run testing 
 ```
 
-Then on another terminal run to seed your mock data into your test database
-
-```bash
-npm run db:seed
-```
-
 Then run the tests
 
 ```bash
@@ -120,11 +122,21 @@ npm test
 
 
 
+## Seeding your database
+
+If you wish to input mock data into the database, on another terminal run:
+
+```bash
+npm run db:seed
+```
+
+
+
 ## Tech Stack
 
 * [Express](https://expressjs.com/)
 * [GraphQL](https://graphql.org/)
-* [Mysql](https://www.mysql.com/)
+* [MySQL](https://www.mysql.com/)
 * [Sequelize](http://docs.sequelizejs.com/)
 * [Facebook App](https://developers.facebook.com/docs/apps/)
 

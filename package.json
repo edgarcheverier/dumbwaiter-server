@@ -14,7 +14,7 @@
     "production": "cross-env NODE_ENV=production node ./api/api.js",
     "test": "cross-env NODE_ENV=testing jest --detectOpenHandles ./test ./api/controllers/.",
     "test-ci": "nyc ava --no-color",
-    "db:seed": "cross-env NODE_ENV=testing node ./mocks/seeds.js"
+    "db:seed": "node ./mocks/seeds.js"
   },
   "babel": {
     "presets": [
